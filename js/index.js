@@ -127,12 +127,6 @@ var app = new Vue({
 });
 
 function refreshGraph(grades) {
-    if (grades.length == 0) {
-        prestaties.innerHTML = null;
-        displayNoInfoBadge("Prestaties komen hier te staan als je meer cijfers haalt.", "fas", "fa-chart-line", prestaties);
-        return;
-    }
-
     var months = [
         "januari", "februari",
         "maart", "april",
