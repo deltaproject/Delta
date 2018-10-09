@@ -30,7 +30,12 @@
         <div class="card" id="prestaties">
             <h1>Prestaties</h1>
             <div>
-                <canvas id="perfChart" height="280"></canvas>
+                <div v-if="magister.getLastGrades().length == 0" class="no-info">
+                    <i class="fas fa-chart-line"></i>
+                    <p>Prestaties komen hier te staan als je meer cijfers haalt.</p>
+                </div>
+
+                <canvas v-show="magister.getLastGrades().length > 0" id="perfChart" height="280"></canvas>
             </div>
         </div>
 
