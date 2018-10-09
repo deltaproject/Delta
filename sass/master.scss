@@ -53,7 +53,7 @@ html {
     }
 
     .profileInfo {
-        margin-left: 50px;
+        margin-left: 20px;
 
         h1 {
             font-size: 22px;
@@ -70,6 +70,23 @@ html {
 
             &:hover {
                 transform: scale(1.2);
+            }
+        }
+
+        .btnRefresh {
+            vertical-align: middle;
+            transition: transform 0.2s, background-color 0.5s;
+            border-radius: 50%;
+            padding: 10px;
+            margin-right: 50px;
+            font-size: 24px;
+            color: white;
+            background: rgb(31, 130, 243);
+            cursor: pointer;
+
+            &:hover {
+                transform: rotate(180deg);
+                background: rgb(0, 183, 255);
             }
         }
     }
