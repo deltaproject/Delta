@@ -71,7 +71,7 @@
             <div>
                 <div v-if="magister.filterHomework(showDoneHomework) == 0" class="no-info">
                     <i class="far fa-smile-wink"></i>
-                    <p>Je hebt geen huiswerk.</p>
+                    <p>Je hebt geen huiswerk voor {{ agendaDate }}.</p>
                 </div>
 
                 <div v-for="i in magister.filterHomework(false)" class="smallCard">
