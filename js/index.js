@@ -190,6 +190,48 @@ function refreshGraph(grades) {
 
 function computeInsights() {
     let insights = [];
+
+    let failedCount = 0;
+    let lastGrades = app.magister.getLastGrades(6);
+    var allGrades = app.magister.grades;
+    let lowestFailed;
+
+    lastGrades.forEach(i => {
+        if (app.magister.isFailed(i.grade())) {
+            failedCount++;
+        }
+    });
+
+    for (let i = 0; i < allGrades.length; i++) {
+        const element = allGrades[i];
+        if (app.magister.isFailed(element.grade())) {
+            lowestFailed = element;
+            console.log("found");
+            
+            break;
+        } else console.log("not .. found");
+    }
+
+    if (failedCount > 0) {
+        let insight = {
+            severity: "high"
+        };
+
+        if (failedCount == 1) {
+            insight.name = "Voor de laatste 6 toetsen heb je " + failedCount + " onvoldoende gehaald.";
+        } else if (failedCount > 1) {
+            insight.name = "Voor de laatste 6 toetsen heb je " + failedCount + " onvoldoendes gehaald.";
+        }
+
+        insights.push(insight);
+    }
+
+    if (lowestFailed != "") {
+        insights.push({
+            name: "Je laagste onvoldoende was een " + lowestFailed.grade() + " voor " + lowestFailed.class().description  + "."
+        });
+    }
+
     return insights;
 }
 
