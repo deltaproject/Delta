@@ -155,6 +155,41 @@ $defaultShadow: 0 0 15px $shadowColor;
     }
 }
 
+// Attachment styling
+.attachContainer {
+    margin-bottom: 10px;
+
+    .attachment {
+        display: inline-block;
+        box-shadow: 0 0 8px $shadowColor;
+        border-radius: 15px;
+        width: auto;
+        height: 30px;
+        margin: 4px;
+        padding: 0 10px;
+        transition: color 0.5s, background-color 0.8s;
+
+        &:hover {
+            color: white;
+            background: rgb(0, 102, 255);
+        }
+    
+        .attachIcon {
+            vertical-align: middle;
+            width: 16px;
+            height: 16px;
+            margin: auto;
+        }
+    
+        p {
+            text-align: right;
+            font-size: 14px;
+            font-weight: normal;
+            margin: auto;
+        }
+    }
+}
+
 // Item descriptors
 .itemDesc {
     overflow: hidden;
