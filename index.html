@@ -163,6 +163,11 @@
         <div class="card" id="opdrachten">
             <h1>Opdrachten</h1>
             <div>
+                <div v-if="magister.assignments.length == 0" class="no-info">
+                    <i class="fas fa-book"></i>
+                    <p>Geen openstaande opdrachten.</p>
+                </div>
+
                 <div v-for="i in magister.assignments" class="smallCard">
                     <div class="todo">
                         <div class="itemContainer homeworkItem">
