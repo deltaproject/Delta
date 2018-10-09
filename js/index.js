@@ -1,12 +1,12 @@
-const { remote } = require('electron');
+const { remote } = require("electron");
 const path = require("path");
 const url = require("url");
 const moment = require("moment");
 const chart = require("chart.js");
-const _ = require('lodash');
-moment.locale('nl');
+const _ = require("lodash");
+moment.locale("nl");
 
-var m = remote.getGlobal('m');
+var m = remote.getGlobal("m");
 var today = new Date();
 var agendaDate = new Date();
 
@@ -55,7 +55,7 @@ function displayPerformance(grades) {
     var chartData = {
         labels: [],
         datasets: [{
-            label: 'Gemiddeld behaald cijfer',
+            label: "Gemiddeld behaald cijfer",
             data: [],
             backgroundColor: "rgba(255, 99, 132, 0.2)",
             borderColor: "rgba(255, 99, 132, 1)",
@@ -89,7 +89,7 @@ function displayPerformance(grades) {
 
     var context = document.getElementById("perfChart").getContext("2d");
     var perfChart = new Chart(context, {
-        type: 'line',
+        type: "line",
         data: chartData,
         options: {
             scales: {
@@ -139,15 +139,15 @@ function animateCards() {
 }
 
 var app = new Vue({
-    el: '#app',
+    el: "#app",
     data: {
         isBeta: true,
-        agendaDate: '',
+        agendaDate: "",
         showDoneHomework: false,
         showReadMail: false,
         profile: {
-            username: 'Onbekende gebruiker',
-            imgUrl: './img/user.png'
+            username: "Onbekende gebruiker",
+            imgUrl: "./img/user.png"
         },
         magister: {
             appointments: [],
@@ -204,11 +204,11 @@ var app = new Vue({
             return moment(date).format("H:mm");
         },
         trimContent(str, maxLength = 120) {
-            let finalString = '';
+            let finalString = "";
 
             finalString = str
-                .split('\n').join(' ')
-                .split('\r').join(' ');
+                .split("\n").join(" ")
+                .split("\r").join(" ");
 
             if (str.length > maxLength) {
                 finalString = str.substring(0, maxLength - 3) + "...";
@@ -221,7 +221,7 @@ var app = new Vue({
         getFileIcon(fileName) {
             var extIndex = fileName.lastIndexOf(".");
             var ext = fileName.substring(extIndex + 1);
-            
+
             if (ext == "doc" || ext == "docx") {
                 return "fa-file-word";
 
@@ -237,6 +237,11 @@ var app = new Vue({
             } else {
                 return "fa-file";
             }
+        },
+        getAttachmentTitle(file) {
+            return "Naam:\t" + file.name() + "\n" +
+                   "Grootte:\t" + Math.round(file.size() / 1024) + " KB" + "\n\n" +
+                   "Klik om te downloaden.";
         }
     }
 });
