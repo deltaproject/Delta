@@ -34,6 +34,7 @@ var app = new Vue({
             messages: [],
             grades: [],
             assignments: [],
+            insights: [],
             filterMessages(readState) {
                 let array = [];
                 for (let i = 0; i < this.messages.length; i++) {
@@ -187,6 +188,11 @@ function refreshGraph(grades) {
     });
 }
 
+function computeInsights() {
+    let insights = [];
+    return insights;
+}
+
 function refreshData() {
     m.appointments(agendaDate, agendaDate, function (e, appointments) {
         app.magister.appointments = appointments;
@@ -217,6 +223,7 @@ function refreshData() {
     
     m.assignments(function (e, assignments) {
         app.magister.assignments = assignments;
+        app.magister.insights = computeInsights();
     });
 }
 
