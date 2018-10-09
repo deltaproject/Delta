@@ -122,6 +122,12 @@
                             <span>{{ i.subject() }}</span>
                         </p>
                         <p>{{ trimContent(i.body()) }}</p>
+                        <div v-if="i.attachments().length > 0" class="attachContainer">
+                            <div v-for="file in i.attachments()" :title="getAttachmentTitle(file)" class="attachment">
+                                <i :class="getFileIcon(file.name())" class="attachIcon far"></i>
+                                <p>{{ trimContent(file.name(), 25) }}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -175,6 +181,24 @@
                 <div class="no-info">
                     <i class="far fa-frown"></i>
                     <p>Deze functie is helaas nog niet beschikbaar.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="inzichten">
+            <h1>Inzichten</h1>
+            <div>
+                <div v-if="magister.insights.length == 0" class="no-info">
+                    <i class="fas fa-search"></i>
+                    <p>Inzichten worden aangevuld in de loop van het schooljaar.</p>
+                </div>
+
+                <div v-for="i in magister.insights" class="smallCard">
+                    <div :class="{ high: i.severity == 'high' }" class="itemContainer insightItem">
+                        <i class="far fa-lightbulb"></i>
+                    </div>
+
+                    <p>{{ i.name }}</p>
                 </div>
             </div>
         </div>
