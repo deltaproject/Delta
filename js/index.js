@@ -211,6 +211,40 @@ var app = new Vue({
     }
 });
 
+function refreshData() {
+    m.appointments(agendaDate, agendaDate, function (e, appointments) {
+        app.magister.appointments = appointments;
+    });
+    
+    m.currentCourse(function (courseErr, course) {
+        course.grades(function(e, grades) {
+            grades.sort(function (a, b) {
+                var dateA = new Date(a.dateFilledIn());
+                var dateB = new Date(b.dateFilledIn());
+                return dateB - dateA;
+            });
+            
+            var validGrades = [];
+            grades.forEach(i => {
+                if (i.counts() && i.weight() > 0)
+                    validGrades.push(i);
+            });
+    
+            app.magister.grades = grades;
+    
+            displayPerformance(validGrades);
+        });
+    });
+    
+    m.inbox().messages(function (e, messages) {
+        app.magister.messages = messages;
+    });
+    
+    m.assignments(function (e, assignments) {
+        app.magister.assignments = assignments;
+    });
+}
+
 app.profile.username = m.profileInfo().fullName();
 app.agendaDate = dayFormat;
 
@@ -220,34 +254,4 @@ if (m != null) {
     console.log("Unable to authenticate with Magister.");
 }
 
-m.appointments(agendaDate, agendaDate, function (e, appointments) {
-    app.magister.appointments = appointments;
-});
-
-m.currentCourse(function (courseErr, course) {
-    course.grades(function(e, grades) {
-        grades.sort(function (a, b) {
-            var dateA = new Date(a.dateFilledIn());
-            var dateB = new Date(b.dateFilledIn());
-            return dateB - dateA;
-        });
-        
-        var validGrades = [];
-        grades.forEach(i => {
-            if (i.counts() && i.weight() > 0)
-                validGrades.push(i);
-        });
-
-        app.magister.grades = grades;
-
-        displayPerformance(validGrades);
-    });
-});
-
-m.inbox().messages(function (e, messages) {
-    app.magister.messages = messages;
-});
-
-m.assignments(function (e, assignments) {
-    app.magister.assignments = assignments;
-});
+// refreshData();
