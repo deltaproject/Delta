@@ -10,10 +10,6 @@ var m = remote.getGlobal("m");
 var today = new Date();
 var agendaDate = new Date();
 
-var allCards = document.querySelectorAll(".card");
-
-var prestaties = document.querySelector("#prestaties div");
-
 if ([5, 6].includes(today.getDay())) {
     agendaDate.setDate(today.getDate() + (1 + 7 - today.getDay()) % 7);
 } else {
@@ -21,87 +17,6 @@ if ([5, 6].includes(today.getDay())) {
 }
 
 var dayFormat = moment(agendaDate).format("dddd");
-
-function displayNoInfoBadge(title, iconType, iconName, target) {
-    var badge = document.createElement("div");
-    var badgeIcon = document.createElement("i");
-    var badgeTitle = document.createElement("p");
-
-    badge.className = "no-info";
-    badgeIcon.classList.add(iconType, iconName);
-    badgeTitle.innerText = title;
-
-    badge.appendChild(badgeIcon);
-    badge.appendChild(badgeTitle);
-    target.appendChild(badge);
-}
-
-function displayPerformance(grades) {
-    if (grades.length == 0) {
-        prestaties.innerHTML = null;
-        displayNoInfoBadge("Prestaties komen hier te staan als je meer cijfers haalt.", "fas", "fa-chart-line", prestaties);
-        return;
-    }
-
-    var months = [
-        "januari", "februari",
-        "maart", "april",
-        "mei", "juni",
-        "juli", "augustus",
-        "september", "oktober",
-        "november", "december"
-    ];
-
-    var chartData = {
-        labels: [],
-        datasets: [{
-            label: "Gemiddeld behaald cijfer",
-            data: [],
-            backgroundColor: "rgba(255, 99, 132, 0.2)",
-            borderColor: "rgba(255, 99, 132, 1)",
-            borderWidth: 1.5
-        }]
-    };
-
-    grades.forEach(i => {
-        var date = new Date(i.dateFilledIn()).getMonth();
-        var monthName = months[date];
-
-        if (!chartData.labels.includes(monthName)) {
-
-            var totalThisMonth = 0.0;
-            var averageThisMonth = 0.0;
-            var entriesThisMonth = 0;
-
-            grades.forEach(gradeThisMonth => {
-                if (new Date(gradeThisMonth.dateFilledIn()).getMonth() == date) {
-                    totalThisMonth += parseFloat(gradeThisMonth.grade().replace(",", "."));
-                    entriesThisMonth++;
-                }
-            });
-
-            averageThisMonth = totalThisMonth / entriesThisMonth;
-
-            chartData.labels.push(monthName);
-            chartData.datasets[0].data.push(Math.round(averageThisMonth * 100) / 100);
-        }
-    });
-
-    var context = document.getElementById("perfChart").getContext("2d");
-    var perfChart = new Chart(context, {
-        type: "line",
-        data: chartData,
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
-        }
-    });
-}
 
 var app = new Vue({
     el: "#app",
@@ -211,6 +126,73 @@ var app = new Vue({
     }
 });
 
+function refreshGraph(grades) {
+    if (grades.length == 0) {
+        prestaties.innerHTML = null;
+        displayNoInfoBadge("Prestaties komen hier te staan als je meer cijfers haalt.", "fas", "fa-chart-line", prestaties);
+        return;
+    }
+
+    var months = [
+        "januari", "februari",
+        "maart", "april",
+        "mei", "juni",
+        "juli", "augustus",
+        "september", "oktober",
+        "november", "december"
+    ];
+
+    var chartData = {
+        labels: [],
+        datasets: [{
+            label: "Gemiddeld behaald cijfer",
+            data: [],
+            backgroundColor: "rgba(255, 99, 132, 0.2)",
+            borderColor: "rgba(255, 99, 132, 1)",
+            borderWidth: 1.5
+        }]
+    };
+
+    grades.forEach(i => {
+        var date = new Date(i.dateFilledIn()).getMonth();
+        var monthName = months[date];
+
+        if (!chartData.labels.includes(monthName)) {
+
+            var totalThisMonth = 0.0;
+            var averageThisMonth = 0.0;
+            var entriesThisMonth = 0;
+
+            grades.forEach(gradeThisMonth => {
+                if (new Date(gradeThisMonth.dateFilledIn()).getMonth() == date) {
+                    totalThisMonth += parseFloat(gradeThisMonth.grade().replace(",", "."));
+                    entriesThisMonth++;
+                }
+            });
+
+            averageThisMonth = totalThisMonth / entriesThisMonth;
+
+            chartData.labels.push(monthName);
+            chartData.datasets[0].data.push(Math.round(averageThisMonth * 100) / 100);
+        }
+    });
+
+    var context = document.getElementById("perfChart").getContext("2d");
+    var perfChart = new Chart(context, {
+        type: "line",
+        data: chartData,
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+}
+
 function refreshData() {
     m.appointments(agendaDate, agendaDate, function (e, appointments) {
         app.magister.appointments = appointments;
@@ -231,8 +213,7 @@ function refreshData() {
             });
     
             app.magister.grades = grades;
-    
-            displayPerformance(validGrades);
+            refreshGraph(validGrades);
         });
     });
     
@@ -254,4 +235,4 @@ if (m != null) {
     console.log("Unable to authenticate with Magister.");
 }
 
-// refreshData();
+refreshData();
