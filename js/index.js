@@ -217,6 +217,26 @@ var app = new Vue({
             }
 
             return finalString;
+        },
+        getFileIcon(fileName) {
+            var extIndex = fileName.lastIndexOf(".");
+            var ext = fileName.substring(extIndex + 1);
+            
+            if (ext == "doc" || ext == "docx") {
+                return "fa-file-word";
+
+            } else if (ext == "ppt" || ext == "pptx" || ext == "ppsx") {
+                return "fa-file-powerpoint";
+
+            } else if (ext == "xls" || ext == "xlsx") {
+                return "fa-file-excel";
+
+            } else if (ext == "pdf") {
+                return "fa-file-pdf";
+
+            } else {
+                return "fa-file";
+            }
         }
     }
 });
