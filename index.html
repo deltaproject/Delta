@@ -22,6 +22,7 @@
         <div class="profileInfo">
             <h1 class="username">{{ profile.username }}</h1>
             <img class="profileIcon" :src="profile.imgUrl" title="Instellingen en profiel">
+            <i class="btnRefresh fas fa-sync-alt" title="Ververs gegevens" onclick="refreshData()"></i>
         </div>
     </div>
     
@@ -35,7 +36,12 @@
 
         <div class="card" id="agenda">
             <h1>Agenda <span id="agendaDate">voor {{ agendaDate }}</span></h1>
-            <div class="bigList">
+            <div :class="{ bigList: magister.appointments.length > 0 }">
+                <div v-if="magister.appointments.length == 0" class="no-info">
+                    <i class="far fa-calendar"></i>
+                    <p>Geen afspraken voor morgen.</p>
+                </div>
+
                 <div v-for="i in magister.appointments" :class="{ scrapped: i.scrapped() }" class="bigListItem">
                     <div class="itemContainer calendarItem">{{ i.beginBySchoolHour() }}</div>
                     <div v-if="i.beginBySchoolHour() != i.endBySchoolHour()" class="itemContainer calendarItem">{{ i.endBySchoolHour() }}</div>
@@ -56,6 +62,7 @@
                 <input v-model="showDoneHomework" name="huiswerkDone" type="checkbox">
                 <span>Toon voltooide</span>
             </div>
+
             <div>
                 <div v-if="magister.filterHomework(showDoneHomework) == 0" class="no-info">
                     <i class="far fa-smile-wink"></i>
@@ -92,6 +99,7 @@
                 <input v-model="showReadMail" name="readMail" type="checkbox">
                 <span>Toon gelezen</span>
             </div>
+
             <div>
                 <div v-if="magister.filterMessages(showReadMail).length == 0" class="no-info">
                     <i class="far fa-envelope-open"></i>
