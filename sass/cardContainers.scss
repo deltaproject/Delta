@@ -60,15 +60,29 @@
     margin-bottom: -20px;
 }
 
+.insightItem {
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+    color: black;
+    background: rgb(233, 233, 233);
+    border-radius: 50%;
+    font-size: 22px;
+
+    &.high {
+        color: white;
+        background: rgb(252, 46, 46);
+    }
+}
+
 // Message item container
 .messageItem {
-    // float: left;
     width: 30px;
     height: 30px;
     padding: 5px;
     border-radius: 50%;
-    margin-bottom: -20px;
-    font-size: 22px !important;
+    margin-bottom: -10px;
+    font-size: 22px;
 
     &.unread {
         color: white;
