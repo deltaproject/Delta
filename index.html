@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+    <!-- <link rel="stylesheet" href="https://raw.github.com/daneden/animate.css/master/animate.css"> -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500" rel="stylesheet">
+    <link rel="stylesheet" href="./dist/css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Project: Magister</title>
+</head>
+<body>
+    <div id="app">
+        
+    <div class="statusBar">
+        <h1 class="title-big no-select">
+            <span>Project: </span>Magister<span class="beta-badge" v-if="isBeta"></span>
+        </h1>
+
+        <div class="profileInfo">
+            <h1 class="username">{{ profile.username }}</h1>
+            <img class="profileIcon" :src="profile.imgUrl" title="Instellingen en profiel">
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="card" id="prestaties">
+            <h1>Prestaties</h1>
+            <div>
+                <canvas id="perfChart" height="280"></canvas>
+            </div>
+        </div>
+
+        <div class="card" id="agenda">
+            <h1>Agenda <span id="agendaDate">voor {{ agendaDate }}</span></h1>
+            <div class="bigList">
+                <div v-for="i in magister.appointments" :class="{ scrapped: i.scrapped() }" class="bigListItem">
+                    <div class="itemContainer calendarItem">{{ i.beginBySchoolHour() }}</div>
+                    <div v-if="i.beginBySchoolHour() != i.endBySchoolHour()" class="itemContainer calendarItem">{{ i.endBySchoolHour() }}</div>
+                    <div class="itemDesc">
+                        <p>
+                            {{ i.classes()[0] }}
+                            <span> {{ formatTime(i.begin()) }} - {{ formatTime(i.end()) }} </span>
+                            <span class="location">{{ i.location() }}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="huiswerk">
+            <h1>Huiswerk <span id="huiswerkDate">voor {{ agendaDate }}</span></h1>
+            <div class="checkContainer">
+                <input v-model="showDoneHomework" name="huiswerkDone" type="checkbox">
+                <span>Toon voltooide</span>
+            </div>
+            <div>
+                <div v-if="magister.filterHomework(showDoneHomework) == 0" class="no-info">
+                    <i class="far fa-smile-wink"></i>
+                    <p>Je hebt geen huiswerk.</p>
+                </div>
+
+                <div v-for="i in magister.filterHomework(false)" class="smallCard">
+                    <div class="todo">
+                        <div class="itemContainer homeworkItem">
+                            <i class="far fa-bookmark"></i>
+                        </div>
+
+                        <p>{{ i.classes()[0] }}</p>
+                        <p>{{ trimContent(i.content()) }}</p>
+                    </div>
+                </div>
+
+                <div v-for="i in magister.filterHomework(true)" v-if="showDoneHomework" class="smallCard">
+                    <div class="done">
+                        <div class="itemContainer homeworkItem">
+                            <i class="fas fa-check"></i>
+                        </div>
+
+                        <p>{{ i.classes()[0] }}</p>
+                        <p>{{ trimContent(i.content()) }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="berichten">
+            <h1>Berichten</h1>
+            <div class="checkContainer">
+                <input v-model="showReadMail" name="readMail" type="checkbox">
+                <span>Toon gelezen</span>
+            </div>
+            <div>
+                <div v-if="magister.filterMessages(showReadMail).length == 0" class="no-info">
+                    <i class="far fa-envelope-open"></i>
+                    <p>Geen nieuwe berichten.</p>
+                </div>
+
+                <div v-for="i in magister.filterMessages(false)" class="smallCard">
+                    <div class="itemContainer messageItem unread">
+                        <i class="far fa-envelope"></i>
+                    </div>
+
+                    <div class="itemDesc">
+                        <p>
+                            {{ i.sender().fullName() }} -
+                            <span>{{ i.subject() }}</span>
+                        </p>
+                        <p>{{ trimContent(i.body()) }}</p>
+                    </div>
+                </div>
+
+                <div v-for="i in magister.filterMessages(true)" v-if="showReadMail" class="smallCard">
+                    <div class="itemContainer messageItem">
+                        <i class="far fa-envelope-open"></i>
+                    </div>
+
+                    <div class="itemDesc">
+                        <p>
+                            {{ i.sender().fullName() }} -
+                            <span>{{ i.subject() }}</span>
+                        </p>
+                        <p>{{ trimContent(i.body()) }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="cijfers">
+            <h1>Laatste cijfers</h1>
+            <div>
+                <div v-if="magister.getLastGrades().length == 0" class="no-info">
+                    <i class="fas fa-chart-pie"></i>
+                    <p>Je hebt nog geen cijfers.</p>
+                </div>
+
+                <div v-for="i in magister.getLastGrades()" class="smallCard">
+                    <div>
+                        <div :class="{ failed: magister.isFailed(i.grade()), wellDone: magister.isWellDone(i.grade()) }"
+                            class="itemContainer gradeItem">
+                            
+                            <p>{{ i.grade() }}</p>
+                        </div>
+
+                        <p>{{ i.class().description }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="afwezigheid">
+            <h1>Afwezigheid</h1>
+            <div>
+                <div class="no-info">
+                    <i class="far fa-frown"></i>
+                    <p>Deze functie is helaas nog niet beschikbaar.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="opdrachten">
+            <h1>Opdrachten</h1>
+            <div>
+                <div v-for="i in magister.assignments" class="smallCard">
+                    <div class="todo">
+                        <div class="itemContainer homeworkItem">
+                            <i class="far fa-edit"></i>
+                        </div>
+                        <p>{{ i.name() }}</p>
+                        <p>{{ trimContent(i.description()) }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+    <script src="./js/index.js"></script>
+</body>
+</html>

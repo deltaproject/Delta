@@ -1,0 +1,23 @@
+{
+  "name": "projectmagister",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "author": "Kees van Voorthuizen",
+  "license": "MIT",
+  "devDependencies": {
+    "electron-reload": "^1.2.5"
+  },
+  "dependencies": {
+    "chart.js": "^2.7.2",
+    "electron": "^2.0.9",
+    "lodash": "^4.17.11",
+    "magister.js": "^1.24.2",
+    "moment": "^2.22.2",
+    "underscore": "^1.9.1"
+  }
+}

@@ -1,0 +1,169 @@
+$shadowColor: rgba(0, 0, 0, 0.315);
+$defaultShadow: 0 0 15px $shadowColor;
+
+// Container for all cards
+.container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+// Main card
+.card {
+    @extend .no-select;
+
+    width: 30%;
+    min-width: 300px;
+    max-width: 500px;
+    max-height: 400px;
+    min-height: 10px;
+    padding: 1px 10px 10px 10px;
+    border-radius: 8px;
+    margin: 10px 5px;
+    box-shadow: 2px 2px 20px $shadowColor;
+    display: inline-block;
+    overflow-y: auto;
+    transition: opacity 0.8s;
+
+    h1:first-of-type {
+        text-align: left;
+        font-size: 24px;
+
+        > span {
+            font-size: 60%;
+            font-weight: lighter;
+        }
+    }
+
+    // Individual cards
+    &#agenda {
+        color: white;
+        background: rgb(35, 117, 224);
+    }
+    
+    &#huiswerk {
+        color: black;
+        background: rgb(98, 233, 170);
+    }
+    
+    &#cijfers {
+        color: white;
+        background: rgb(152, 55, 209);
+    }
+
+    &#berichten {
+        color: black;
+        background: rgb(241, 98, 98);
+    }
+
+    &#afwezigheid {
+        color: black;
+        background: rgb(249, 184, 127);
+    }
+}
+
+// Small card
+.smallCard {
+    background: white;
+    color: black;
+    padding: 3px 10px;
+    border-radius: 8px;
+    margin: 10px 5px;
+    box-shadow: $defaultShadow;
+    transition: transform 0.2s, opacity 0.8s;
+    cursor: pointer;
+        
+    &:hover {
+        transform: scale(1.03);
+    }
+
+    .todo .homeworkItem {
+        font-size: 22px;
+        font-weight: bolder;
+    }
+
+    .done .homeworkItem {
+        background: rgb(67, 207, 137);
+        color: white;
+        font-size: 22px;
+        font-weight: bolder;
+    }
+
+    .done {
+        p:first-of-type {
+            color: rgb(112, 112, 112);
+        }
+
+        p:nth-of-type(2) {
+            color: rgb(202, 202, 202);
+            text-decoration: line-through;
+        }
+    }
+
+    p:first-of-type {
+        display: inline-block;
+        font-weight: bold;
+    }
+}
+
+// Big list
+.bigList {
+    background: white;
+    border-radius: 8px;
+    height: auto;
+    box-shadow: $defaultShadow;
+    padding-top: 15px;
+    margin: 10px 5px;
+
+    .bigListItem {
+        background: none;
+        padding: 3px 10px;
+        margin: 0 5px;
+        box-shadow: none;
+        height: auto;
+        color: black;
+        transition: opacity 1s;
+
+        p {
+            display: inline-block;
+            margin-top: -5px;
+        }
+
+        p:first-of-type,
+        span.bold,
+        .location {
+            font-weight: bold !important;
+        }
+
+        .location::before {
+            content: "(";
+        }
+
+        .location::after {
+            content: ")";
+        }
+
+        &.scrapped {
+            p {
+                color: rgb(175, 175, 175);
+                text-decoration: line-through;
+            }
+            
+            .calendarItem {
+                background: rgb(175, 175, 175);
+            }
+        }
+    }
+}
+
+// Item descriptors
+.itemDesc {
+    overflow: hidden;
+
+    p:nth-of-type(2) {
+        margin-top: -12px;
+    }
+
+    span {
+        font-weight: lighter;
+    }
+}

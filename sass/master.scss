@@ -1,0 +1,114 @@
+html {
+    padding: 0;
+    margin: 0;
+
+    body {
+        font-family: Poppins;
+        margin: 0 20px 20px 20px;
+    }
+}
+
+.center {
+    text-align: center;
+}
+
+.no-select {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: default;
+}
+
+.beta-badge {
+    color: white;
+    background: rgb(236, 31, 31);
+    font-size: 14px;
+    padding: 5px 8px;
+    border-radius: 6px;
+    margin-left: 15px;
+    vertical-align: middle;
+    box-shadow: $defaultShadow;
+
+    &::before {
+        content: "Beta";
+        text-transform: uppercase;
+    }
+}
+
+.title-big {
+    font-size: 38px;
+
+    span:first-of-type {
+        color: rgb(241, 107, 102);
+    }
+}
+
+.statusBar {
+    h1, .profileInfo {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .profileInfo {
+        margin-left: 50px;
+
+        h1 {
+            font-size: 22px;
+            font-weight: normal;
+        }
+
+        img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-left: 15px;
+            // display: inline-block;
+            vertical-align: middle;
+            transition: transform 0.3s;
+
+            &:hover {
+                transform: scale(1.2);
+            }
+        }
+    }
+}
+
+.no-info {
+    margin: auto;
+    margin-top: 50px;
+    vertical-align: middle;
+    text-align: center;
+
+    i {
+        font-size: 48px;
+    }
+
+    p {
+        font-size: 24px;
+        font-weight: 500;
+    }
+}
+
+// Scrollbar styling
+::-webkit-scrollbar {
+    background-color: rgb(209, 209, 209);
+    width: 14px;
+}
+
+::-webkit-scrollbar-thumb:window-inactive,
+::-webkit-scrollbar-thumb {
+    background: rgb(143, 143, 143);
+}
+
+// Checkbox styling
+input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+}
+
+.checkContainer input {
+    vertical-align: middle;
+}
