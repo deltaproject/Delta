@@ -103,41 +103,6 @@ function displayPerformance(grades) {
     });
 }
 
-function animateElements() {
-    var allSmallCards = document.querySelectorAll(".smallCard");
-    
-    for (let i = 0; i < allSmallCards.length; i++) {
-        const element = allSmallCards[i];
-        const timeout = 300;
-        setTimeout(function () {
-            element.style.opacity = 1;
-        }, timeout * i + timeout);
-    }
-}
-
-function animateLists() {
-    var allLists = document.querySelectorAll(".bigListItem");
-
-    for (let i = 0; i < allLists.length; i++) {
-        const element = allLists[i];
-        const timeout = 200;
-        setTimeout(function () {
-            element.style.opacity = 1;
-        }, timeout * i + timeout);
-    }
-}
-
-function animateCards() {
-    for (let i = 0; i < allCards.length; i++) {
-        const element = allCards[i];
-        const timeout = 200;
-        element.style.opacity = 0;
-        setTimeout(function () {
-            element.style.opacity = 1;
-        }, timeout * i + timeout);
-    }
-}
-
 var app = new Vue({
     el: "#app",
     data: {
