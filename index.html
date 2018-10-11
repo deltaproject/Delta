@@ -40,7 +40,7 @@
         </div>
 
         <div class="card" id="agenda">
-            <h1>Agenda <span id="agendaDate">voor {{ agendaDate }}</span></h1>
+            <h1>Agenda <span>voor {{ agendaDate }}</span></h1>
             <div :class="{ bigList: magister.appointments.length > 0 }">
                 <div v-if="magister.appointments.length == 0" class="no-info">
                     <i class="far fa-calendar"></i>
@@ -62,7 +62,7 @@
         </div>
 
         <div class="card" id="huiswerk">
-            <h1>Huiswerk <span id="huiswerkDate">voor {{ agendaDate }}</span></h1>
+            <h1>Huiswerk <span>voor {{ agendaDate }}</span></h1>
             <div class="checkContainer">
                 <input v-model="showDoneHomework" name="huiswerkDone" type="checkbox">
                 <span>Toon voltooide</span>
@@ -171,6 +171,16 @@
 
                         <p>{{ i.class().description }}</p>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="toetsen">
+            <h1>Toetsen</h1>
+            <div>
+                <div class="no-info">
+                    <i class="far fa-frown"></i>
+                    <p>Deze functie is helaas nog niet beschikbaar.</p>
                 </div>
             </div>
         </div>
