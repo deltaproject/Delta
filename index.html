@@ -178,9 +178,18 @@
         <div class="card" id="toetsen">
             <h1>Toetsen</h1>
             <div>
-                <div class="no-info">
-                    <i class="far fa-frown"></i>
-                    <p>Deze functie is helaas nog niet beschikbaar.</p>
+                <div v-if="magister.tests.length == 0" class="no-info">
+                    <i class="fas fa-pen-fancy"></i>
+                    <p>Je hebt geen toetsen voor de komende week.</p>
+                </div>
+
+                <div v-for="i in magister.tests" class="smallCard">
+                    <div class="itemContainer testItem">
+                        <p>PW</p>
+                    </div>
+
+                    <p>{{ i.classes()[0] }}</p>
+                    <p>{{ trimContent(i.content()) }}</p>
                 </div>
             </div>
         </div>

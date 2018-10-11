@@ -34,6 +34,7 @@ var app = new Vue({
             messages: [],
             grades: [],
             assignments: [],
+            tests: [],
             insights: [],
             filterMessages(readState) {
                 let array = [];
@@ -244,6 +245,12 @@ function computeInsights() {
 function refreshData() {
     m.appointments(agendaDate, agendaDate, function (e, appointments) {
         app.magister.appointments = appointments;
+        for (let i = 0; i < appointments.length; i++) {
+            const element = appointments[i];
+            if (element.infoTypeString() == "test") {
+                app.magister.tests.push(element);
+            }
+        }
     });
     
     m.currentCourse(function (courseErr, course) {
@@ -284,4 +291,4 @@ if (m != null) {
     console.log("Unable to authenticate with Magister.");
 }
 
-refreshData();
+// refreshData();
