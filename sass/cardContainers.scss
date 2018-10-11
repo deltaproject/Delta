@@ -60,6 +60,24 @@
     margin-bottom: -20px;
 }
 
+// Test item container
+.testItem {
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+    background: rgb(59, 126, 250);
+    color: white;
+    border-radius: 50%;
+
+    p {
+        vertical-align: middle;
+        margin: auto;
+        font-weight: bolder;
+        font-size: 16px;
+    }
+}
+
+// Insight item container
 .insightItem {
     width: 30px;
     height: 30px;
