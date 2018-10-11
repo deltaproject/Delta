@@ -92,6 +92,9 @@ var app = new Vue({
         formatTime(date) {
             return moment(date).format("H:mm");
         },
+        formatDateHuman(date) {
+            return moment(date).format("LL");
+        },
         trimContent(str, maxLength = 120) {
             let finalString = "";
 
