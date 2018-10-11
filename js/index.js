@@ -9,6 +9,7 @@ moment.locale("nl");
 var m = remote.getGlobal("m");
 var today = new Date();
 var agendaDate = new Date();
+var inTwoWeeks = new Date();
 
 if ([5, 6].includes(today.getDay())) {
     agendaDate.setDate(today.getDate() + (1 + 7 - today.getDay()) % 7);
@@ -17,6 +18,7 @@ if ([5, 6].includes(today.getDay())) {
 }
 
 var dayFormat = moment(agendaDate).format("dddd");
+inTwoWeeks.setDate(today.getDate() + 14);
 
 var app = new Vue({
     el: "#app",
@@ -245,6 +247,9 @@ function computeInsights() {
 function refreshData() {
     m.appointments(agendaDate, agendaDate, function (e, appointments) {
         app.magister.appointments = appointments;
+    });
+
+    m.appointments(agendaDate, inTwoWeeks, function (e, appointments) {
         for (let i = 0; i < appointments.length; i++) {
             const element = appointments[i];
             if (element.infoTypeString() == "test") {
@@ -252,7 +257,7 @@ function refreshData() {
             }
         }
     });
-    
+
     m.currentCourse(function (courseErr, course) {
         course.grades(function(e, grades) {
             grades.sort(function (a, b) {
