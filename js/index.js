@@ -261,6 +261,7 @@ function refreshData() {
             });
     
             app.magister.grades = grades;
+            app.magister.insights = computeInsights();
             refreshGraph(validGrades);
         });
     });
@@ -271,7 +272,6 @@ function refreshData() {
     
     m.assignments(function (e, assignments) {
         app.magister.assignments = assignments;
-        app.magister.insights = computeInsights();
     });
 }
 
