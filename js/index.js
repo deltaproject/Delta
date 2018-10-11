@@ -56,6 +56,11 @@ var app = new Vue({
 
                 return array;
             },
+            parseGrade(grade) {
+                if (!isNaN(parseFloat(grade.grade().replace(",", "."))) && grade.weight() > 0 && grade.counts()) {
+                    return parseFloat(grade.grade().replace(",", "."));
+                }
+            },
             getLastGrades(maxItems = 5) {
                 let lastGrades = [];
                 for (let i = 0; i < this.grades.length; i++) {
@@ -189,12 +194,16 @@ function refreshGraph(grades) {
 }
 
 function computeInsights() {
+    Array.prototype.min = function() {
+        return Math.min.apply(null, this);
+    };
+
     let insights = [];
 
     let failedCount = 0;
     let lastGrades = app.magister.getLastGrades(6);
-    var allGrades = app.magister.grades;
-    let lowestFailed;
+    var allGrades = app.magister.grades.slice(0);
+    allGrades.reverse();
 
     lastGrades.forEach(i => {
         if (app.magister.isFailed(i.grade())) {
@@ -202,14 +211,13 @@ function computeInsights() {
         }
     });
 
+    let validGrades = [];
     for (let i = 0; i < allGrades.length; i++) {
         const element = allGrades[i];
-        if (app.magister.isFailed(element.grade())) {
-            lowestFailed = element;
-            console.log("found");
-            
-            break;
-        } else console.log("not .. found");
+        var parsedGrade = app.magister.parseGrade(element);
+        if (parsedGrade != undefined) {
+            validGrades.push(parsedGrade);
+        }
     }
 
     if (failedCount > 0) {
@@ -226,11 +234,9 @@ function computeInsights() {
         insights.push(insight);
     }
 
-    if (lowestFailed != "") {
-        insights.push({
-            name: "Je laagste onvoldoende was een " + lowestFailed.grade() + " voor " + lowestFailed.class().description  + "."
-        });
-    }
+    insights.push({
+        name: "Je laagste cijfer was een " + validGrades.min()  + "."
+    });    
 
     return insights;
 }
