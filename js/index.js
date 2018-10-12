@@ -95,6 +95,9 @@ var app = new Vue({
         formatDateHuman(date) {
             return moment(date).format("LL");
         },
+        getDaysFromNow(date) {
+            return moment(date).fromNow();
+        },
         trimContent(str, maxLength = 120) {
             let finalString = "";
 
@@ -259,7 +262,7 @@ function refreshData() {
             
             if (element.infoTypeString() == "test" ||
                 element.infoTypeString() == "quiz") {
-                    
+
                 app.magister.tests.push(element);
             }
         }
