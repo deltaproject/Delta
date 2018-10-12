@@ -185,7 +185,8 @@
 
                 <div v-for="i in magister.tests" class="smallCard">
                     <div class="itemContainer testItem">
-                        <p>PW</p>
+                        <p v-if="i.infoTypeString() == 'test'">PW</p>
+                        <p v-if="i.infoTypeString() == 'quiz'">SO</p>
                     </div>
 
                     <p>{{ i.classes()[0] }}</p>

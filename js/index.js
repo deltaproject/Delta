@@ -18,7 +18,7 @@ if ([5, 6].includes(today.getDay())) {
 }
 
 var dayFormat = moment(agendaDate).format("dddd");
-inTwoWeeks.setDate(today.getDate() + 14);
+inTwoWeeks = moment(inTwoWeeks).add(14, 'days').toDate();
 
 var app = new Vue({
     el: "#app",
@@ -255,7 +255,11 @@ function refreshData() {
     m.appointments(agendaDate, inTwoWeeks, function (e, appointments) {
         for (let i = 0; i < appointments.length; i++) {
             const element = appointments[i];
-            if (element.infoTypeString() == "test") {
+            console.log(element.infoTypeString());
+            
+            if (element.infoTypeString() == "test" ||
+                element.infoTypeString() == "quiz") {
+                    
                 app.magister.tests.push(element);
             }
         }
