@@ -95,8 +95,15 @@ var app = new Vue({
         formatDateHuman(date) {
             return moment(date).format("LL");
         },
-        getDaysFromNow(date) {
-            return moment(date).fromNow();
+        getDateDifference(date1, date2, returnRawDays) {
+            var firstConvert = moment(date1);
+            var secondConvert = moment(date2);
+            var diff = moment(secondConvert.diff(firstConvert, 'days'));
+
+            if (!returnRawDays)
+                return diff;
+            else
+                return diff._i;
         },
         trimContent(str, maxLength = 120) {
             let finalString = "";
@@ -258,7 +265,6 @@ function refreshData() {
     m.appointments(agendaDate, inTwoWeeks, function (e, appointments) {
         for (let i = 0; i < appointments.length; i++) {
             const element = appointments[i];
-            console.log(element.infoTypeString());
             
             if (element.infoTypeString() == "test" ||
                 element.infoTypeString() == "quiz") {
