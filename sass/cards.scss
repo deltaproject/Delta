@@ -203,7 +203,12 @@ $defaultShadow: 0 0 15px $shadowColor;
     }
 }
 
-.dateItem {
+.detail {
     color: gray;
     font-size: 0.85em;
+}
+
+.right {
+    text-align: right;
+    display: inline-block;
 }
