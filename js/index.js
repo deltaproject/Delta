@@ -269,15 +269,18 @@ function refreshData() {
     });
 
     m.appointments(agendaDate, inTwoWeeks, function (e, appointments) {
+        let tests = [];
         for (let i = 0; i < appointments.length; i++) {
             const element = appointments[i];
             
             if (element.infoTypeString() == "test" ||
                 element.infoTypeString() == "quiz") {
 
-                app.magister.tests.push(element);
+                tests.push(element);
             }
         }
+
+        app.magister.tests = tests;
     });
 
     m.currentCourse(function (courseErr, course) {
