@@ -70,11 +70,11 @@ var app = new Vue({
             getLastGrades(maxItems = 5) {
                 let lastGrades = [];
                 for (let i = 0; i < this.grades.length; i++) {
-                    if (i == maxItems)
+                    if (lastGrades.length == maxItems)
                         break;
 
                     const element = this.grades[i];
-                    if (element.counts() && element.weight() > 0) {
+                    if (element.type().header() == null && element.weight() > 0) {
                         lastGrades.push(element);
                     }
                 }
