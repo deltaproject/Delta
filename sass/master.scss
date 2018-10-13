@@ -128,3 +128,18 @@ input[type="checkbox"] {
 .checkContainer input {
     vertical-align: middle;
 }
+
+.right {
+    float: right;
+}
+
+.warn {
+    color: red;
+    font-weight: bold;
+}
+
+.detail {
+    color: gray;
+    font-size: 0.85em;
+    vertical-align: middle;
+}
