@@ -22,6 +22,7 @@ $defaultShadow: 0 0 15px $shadowColor;
     box-shadow: 2px 2px 20px $shadowColor;
     display: inline-block;
     overflow-y: auto;
+    overflow-x: hidden;
 
     h1:first-of-type {
         text-align: left;
@@ -69,7 +70,7 @@ $defaultShadow: 0 0 15px $shadowColor;
     margin: 10px 5px;
     box-shadow: $defaultShadow;
     transition: transform 0.2s;
-    animation: fade 0.8s;
+    animation: bounceInLeft 0.8s;
     cursor: pointer;
 
     &:hover {
