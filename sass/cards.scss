@@ -69,13 +69,18 @@ $defaultShadow: 0 0 15px $shadowColor;
     border-radius: 8px;
     margin: 10px 5px;
     box-shadow: $defaultShadow;
-    transition: transform 0.2s;
+    transition: transform 0.2s, background-color 0.5s, color 0.2s;
     animation: bounceInLeft 0.8s;
     animation-delay: -0.2s;
     cursor: pointer;
 
     &:hover {
         transform: scale(1.03);
+    }
+
+    &:active {
+        background: rgb(122, 55, 209);
+        color: white;
     }
 
     .todo .homeworkItem {
