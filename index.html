@@ -123,7 +123,8 @@
                         </p>
                         <p>{{ trimContent(i.body()) }}</p>
                         <div v-if="i.attachments().length > 0" class="attachContainer">
-                            <div v-for="file in i.attachments()" :title="getAttachmentTitle(file)" class="attachment">
+                            <div v-for="file in i.attachments()"
+                                :title="getAttachmentTitle(file)" class="attachment">
                                 <i :class="getFileIcon(file.name())" class="attachIcon far"></i>
                                 <p>{{ trimContent(file.name(), 25) }}</p>
                             </div>
@@ -143,7 +144,9 @@
                         </p>
                         <p>{{ trimContent(i.body()) }}</p>
                         <div v-if="i.attachments().length > 0" class="attachContainer">
-                            <div v-for="file in i.attachments()" :title="getAttachmentTitle(file)" class="attachment">
+                            <div v-for="file in i.attachments()"
+                                :title="getAttachmentTitle(file)"
+                                class="attachment">
                                 <i :class="getFileIcon(file.name())" class="attachIcon far"></i>
                                 <p>{{ trimContent(file.name(), 25) }}</p>
                             </div>
@@ -163,7 +166,8 @@
 
                 <div v-for="i in magister.getLastGrades()" class="smallCard">
                     <div>
-                        <div :class="{ failed: magister.isFailed(i.grade()), wellDone: magister.isWellDone(i.grade()) }"
+                        <div
+                            :class="{ failed: magister.isFailed(i.grade()), wellDone: magister.isWellDone(i.grade()) }"
                             class="itemContainer gradeItem">
                             
                             <p>{{ i.grade() }}</p>
@@ -191,7 +195,9 @@
 
                     <p>{{ i.classes()[0] }}</p>
                     <p class="detail">
-                        {{ formatDateHuman(i.begin()) }} <span :class="{ warn: getDateDifference(new Date(), i.begin()) < 3 }" class="right">
+                        {{ formatDateHuman(i.begin()) }}
+                        <span :class="{ warn: getDateDifference(new Date(), i.begin()) < 3 }"
+                            class="right">
                             <i class="far fa-clock"></i>
                             over {{ getDateDifference(new Date(), i.begin(), true) }} dagen</span>
                     </p>
@@ -219,8 +225,11 @@
                 </div>
 
                 <div v-for="i in magister.insights" class="smallCard">
-                    <div :class="{ high: i.severity == 'high' }" class="itemContainer insightItem">
-                        <i class="far fa-lightbulb"></i>
+                    <div :class="{ high: i.severity == 'high' }"
+                        class="itemContainer insightItem"
+                        :style="{ background: i.colors.bg, color: i.colors.fg }">
+
+                        <i :class="i.icon"></i>
                     </div>
 
                     <p>{{ i.name }}</p>

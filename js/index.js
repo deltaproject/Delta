@@ -64,6 +64,9 @@ var app = new Vue({
                     return parseFloat(grade.grade().replace(",", "."));
                 }
             },
+            gradeToString(gradeFloat) {
+                return gradeFloat.toString().replace(".", ",");
+            },
             getLastGrades(maxItems = 5) {
                 let lastGrades = [];
                 for (let i = 0; i < this.grades.length; i++) {
@@ -210,13 +213,16 @@ function refreshGraph(grades) {
 }
 
 function computeInsights() {
+    let insights = [];
+
     Array.prototype.min = function() {
         return Math.min.apply(null, this);
     };
 
-    let insights = [];
+    Array.prototype.max = function() {
+        return Math.max.apply(null, this);
+    };
 
-    let failedCount = 0;
     let lastGrades = app.magister.getLastGrades(6);
     var allGrades = app.magister.grades.slice(0);
     allGrades.reverse();
@@ -236,23 +242,23 @@ function computeInsights() {
         }
     }
 
-    if (failedCount > 0) {
-        let insight = {
-            severity: "high"
-        };
-
-        if (failedCount == 1) {
-            insight.name = "Voor de laatste 6 toetsen heb je " + failedCount + " onvoldoende gehaald.";
-        } else if (failedCount > 1) {
-            insight.name = "Voor de laatste 6 toetsen heb je " + failedCount + " onvoldoendes gehaald.";
+    insights.push({
+        name: "Je hoogste cijfer was een " + app.magister.gradeToString(validGrades.max())  + ".",
+        icon: "fas fa-star",
+        colors: {
+            bg: "rgb(65, 244, 223)",
+            fg: "rgb(65, 133, 244)"
         }
-
-        insights.push(insight);
-    }
+    });
 
     insights.push({
-        name: "Je laagste cijfer was een " + validGrades.min()  + "."
-    });    
+        name: "Je laagste cijfer was een " + app.magister.gradeToString(validGrades.min())  + ".",
+        icon: "fas fa-angle-double-down",
+        colors: {
+            bg: "red",
+            fg: "white"
+        }
+    });
 
     return insights;
 }
@@ -312,4 +318,4 @@ if (m != null) {
     console.log("Unable to authenticate with Magister.");
 }
 
-// refreshData();
+refreshData();
