@@ -106,7 +106,7 @@ var app = new Vue({
             if (!returnRawDays)
                 return diff;
             else
-                return diff._i;
+                return diff._i + 1;
         },
         trimContent(str, maxLength = 120) {
             let finalString = "";
