@@ -69,7 +69,8 @@
             </div>
 
             <div>
-                <div v-if="magister.filterHomework(showDoneHomework) == 0" class="no-info">
+                <div v-if="(magister.filterHomework(false) == 0 && !showDoneHomework) ||
+                    magister.grades.length == 0" class="no-info">
                     <i class="far fa-smile-wink"></i>
                     <p>Je hebt geen huiswerk voor {{ agendaDate }}.</p>
                 </div>
