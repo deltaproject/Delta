@@ -71,6 +71,7 @@ $defaultShadow: 0 0 15px $shadowColor;
     box-shadow: $defaultShadow;
     transition: transform 0.2s;
     animation: bounceInLeft 0.8s;
+    animation-delay: -0.2s;
     cursor: pointer;
 
     &:hover {
