@@ -74,7 +74,7 @@
                     <p>Je hebt geen huiswerk voor {{ agendaDate }}.</p>
                 </div>
 
-                <div v-for="i in magister.filterHomework(false)" class="smallCard">
+                <div v-for="i in magister.filterHomework(false)" @click="toggleHomeworkState(i)" class="smallCard">
                     <div class="todo">
                         <div class="itemContainer homeworkItem">
                             <i class="far fa-bookmark"></i>
@@ -85,7 +85,7 @@
                     </div>
                 </div>
 
-                <div v-for="i in magister.filterHomework(true)" v-if="showDoneHomework" class="smallCard">
+                <div v-for="i in magister.filterHomework(true)" @click="toggleHomeworkState(i)" v-if="showDoneHomework" class="smallCard">
                     <div class="done">
                         <div class="itemContainer homeworkItem">
                             <i class="fas fa-check"></i>

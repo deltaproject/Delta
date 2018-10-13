@@ -148,6 +148,12 @@ var app = new Vue({
                    "Grootte:\t" + Math.round(file.size() / 1024) + " KB" + "\n\n" +
                    "Klik om te downloaden.";
         }
+    },
+    methods: {
+        toggleHomeworkState(appointment) {
+            appointment.isDone(!appointment.isDone());
+            refreshData(true);
+        }
     }
 });
 
@@ -276,7 +282,8 @@ function computeInsights() {
     return insights;
 }
 
-function refreshData() {
+function refreshData(homeworkOnly = false) {
+    if (!homeworkOnly)
     m.appointments(agendaDate, agendaDate, function (e, appointments) {
         app.magister.appointments = appointments;
     });
@@ -296,6 +303,7 @@ function refreshData() {
         app.magister.tests = tests;
     });
 
+    if (!homeworkOnly)
     m.currentCourse(function (courseErr, course) {
         course.grades(function(e, grades) {
             grades.sort(function (a, b) {
@@ -316,10 +324,12 @@ function refreshData() {
         });
     });
     
+    if (!homeworkOnly)
     m.inbox().messages(function (e, messages) {
         app.magister.messages = messages;
     });
     
+    if (!homeworkOnly)
     m.assignments(function (e, assignments) {
         app.magister.assignments = assignments;
     });
