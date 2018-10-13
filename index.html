@@ -229,7 +229,7 @@
                         class="itemContainer insightItem"
                         :style="{ background: i.colors.bg, color: i.colors.fg }">
 
-                        <i :class="i.icon"></i>
+                        <i :class="[i.icon, {'far fa-lightbulb': i.icon == null}]" ></i>
                     </div>
 
                     <p>{{ i.name }}</p>
