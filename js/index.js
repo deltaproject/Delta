@@ -273,7 +273,7 @@ function computeInsights() {
 
     insights.push({
         name: "Je hebt dit jaar " +
-            failedGrades.length + " onvoldoendes gehaald.",
+            failedGrades.length + ` onvoldoende${failedGrades.length > 1 ? "s" : ""} gehaald.`,
 
         icon: null,
         colors: {}
