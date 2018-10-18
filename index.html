@@ -201,7 +201,7 @@
                         <span :class="{ warn: getDateDifference(new Date(), i.begin()) < 3 }"
                             class="right">
                             <i class="far fa-clock"></i>
-                            over {{ getDateDifference(new Date(), i.begin(), true) }} dagen</span>
+                            over {{ getDateDifference(new Date(), i.begin(), true) }} dag{{ getDateDifference(new Date(), i.begin(), true) > 1 ? "en" : "" }}</span>
                     </p>
                     <p>{{ trimContent(i.content()) }}</p>
                 </div>
