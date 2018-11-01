@@ -13,8 +13,8 @@
     "electron-reload": "^1.2.5"
   },
   "dependencies": {
-    "chart.js": "^2.7.2",
-    "electron": "^2.0.9",
+    "chart.js": "^2.7.3",
+    "electron": "^2.0.13",
     "lodash": "^4.17.11",
     "magister.js": "^1.24.2",
     "moment": "^2.22.2",
