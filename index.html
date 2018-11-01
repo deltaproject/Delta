@@ -126,6 +126,7 @@
                         <p>{{ trimContent(i.body()) }}</p>
                         <div v-if="i.attachments().length > 0" class="attachContainer">
                             <div v-for="file in i.attachments()"
+                                @click="magister.downloadAttachment(file)"
                                 :title="getAttachmentTitle(file)" class="attachment">
                                 <i :class="getFileIcon(file.name())" class="attachIcon far"></i>
                                 <p>{{ trimContent(file.name(), 25) }}</p>
@@ -147,6 +148,7 @@
                         <p>{{ trimContent(i.body()) }}</p>
                         <div v-if="i.attachments().length > 0" class="attachContainer">
                             <div v-for="file in i.attachments()"
+                                @click="magister.downloadAttachment(file)"
                                 :title="getAttachmentTitle(file)"
                                 class="attachment">
                                 <i :class="getFileIcon(file.name())" class="attachIcon far"></i>
