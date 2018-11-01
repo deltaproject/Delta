@@ -4,6 +4,8 @@ const url = require("url");
 const moment = require("moment");
 const chart = require("chart.js");
 const _ = require("lodash");
+const electron = remote.app;
+const shell = remote.shell;
 moment.locale("nl");
 
 var m = remote.getGlobal("m");
@@ -90,6 +92,16 @@ var app = new Vue({
                 let gradeFloat;
                 gradeFloat = parseFloat(grade.replace(",", "."));
                 return gradeFloat > 8.0;
+            },
+            downloadAttachment(file) {
+                var downloadsPath = electron.getPath('downloads');
+                var filePath = path.join(downloadsPath, file.name())
+
+                file.download(downloadsPath, (err, result) => {
+                    if (err) console.log(err);
+                    shell.openItem(filePath)
+                    console.log(filePath)
+                });
             }
         },
         formatTime(date) {
