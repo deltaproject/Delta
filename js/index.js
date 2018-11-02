@@ -219,6 +219,11 @@ function refreshGraph(grades) {
         type: "line",
         data: chartData,
         options: {
+            plugins: {
+                deferred: {
+                    delay: 500
+                }
+            },
             scales: {
                 yAxes: [{
                     ticks: {
