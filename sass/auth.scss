@@ -38,5 +38,9 @@
         &:hover {
             background: #A826F6;
         }
+
+        &:disabled {
+            background: #949191;
+        }
     }
 }

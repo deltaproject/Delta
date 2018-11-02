@@ -12,17 +12,32 @@
     <title>Project: Magister</title>
 </head>
 <body>
+    <div id="app">
+
     <div class="containerAlt">
         <h1>Inloggen</h1>
         <div class="login">
             <form>
                 <div class="loginContainer">
-                    <input type="text" name="school" placeholder="Schoolnaam">
-                    <input type="text" name="username" placeholder="Gebruikersnaam">
-                    <input type="password" name="password" placeholder="Wachtwoord">
-                    <input type="submit" name="signIn" value="Log in">
+                    <input type="text" name="school" list="schools" v-model="school"
+                           placeholder="Schoolnaam">
+
+                    <datalist id="schools">
+                        <option v-for="i in getSchools()" :value="i.name">
+                    </datalist>
+
+                    <input type="text" name="username" v-model="username"
+                           placeholder="Gebruikersnaam">
+                    <input type="password" name="password" v-model="password"
+                           placeholder="Wachtwoord">
+                    <input type="submit" name="signIn" value="Log in"
+                           :disabled="!isFormFilled">
                 </div>
             </form>
         </div>
     </div>
+
+    </div>
+
+    <script src="./js/auth.js"></script>
 </body>
