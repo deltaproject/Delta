@@ -190,12 +190,12 @@ function refreshGraph(grades) {
         }]
     };
 
+    grades.reverse();
     grades.forEach(i => {
         var date = new Date(i.dateFilledIn()).getMonth();
         var monthName = months[date];
 
         if (!chartData.labels.includes(monthName)) {
-
             var totalThisMonth = 0.0;
             var averageThisMonth = 0.0;
             var entriesThisMonth = 0;
