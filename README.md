@@ -1,8 +1,7 @@
 <div align="center">
   <h1>ProjectMagister</h1>
-  <h3>📚 Een moderne versie van Magister, gemaakt voor leerlingen.</h3>
+  <p>📚 Een moderne versie van Magister, gemaakt voor leerlingen.</p>
 </div>
----
 
 # Installatie
 ProjectMagister is momenteel nog in de bètafase, dus verdere instructies en documentatie volgen later.
