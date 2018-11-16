@@ -14,6 +14,7 @@ div.notification {
     margin: 0 auto 10px auto;
     font-weight: bold;
     border-radius: 10px;
+    animation: fadeInLeft 0.5s;
 
     &.error {
         background: rgba(241, 58, 58, 0.80);
@@ -22,5 +23,9 @@ div.notification {
     &.success {
         color: black;
         background: rgba(66, 255, 59, 0.80);
+    }
+
+    &.dismissed {
+        animation: fadeOutRightBig 0.5s;
     }
 }
