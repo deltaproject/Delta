@@ -56,7 +56,10 @@ var app = new Vue({
                 let array = [];
                 for (let i = 0; i < this.appointments.length; i++) {
                     const element = this.appointments[i];
-                    if (element.isDone() == doneState && element.content().length > 0)
+                    if (element.isDone() == doneState
+                        && element.content().length > 0
+                        && !["test", "quiz"].includes(element.infoTypeString()))
+
                         array.push(element);
                 }
 
