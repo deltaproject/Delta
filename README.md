@@ -3,6 +3,8 @@
   <p>📚 Een moderne versie van Magister, gemaakt voor leerlingen.</p>
 </div>
 
+[![Licentie](https://img.shields.io/github/license/projectmagister/ProjectMagister.svg?style=flat-square)](https://github.com/projectmagister/ProjectMagister/blob/master/LICENSE)
+[![GitHub issues](https://img.shields.io/github/issues/projectmagister/ProjectMagister.svg?style=flat-square)](https://github.com/projectmagister/ProjectMagister/issues)
 [![CodeFactor](https://www.codefactor.io/repository/github/projectmagister/projectmagister/badge)](https://www.codefactor.io/repository/github/projectmagister/projectmagister)
 
 # Installatie
