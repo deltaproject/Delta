@@ -164,7 +164,13 @@ var app = new Vue({
     methods: {
         toggleHomeworkState(appointment) {
             appointment.isDone(!appointment.isDone());
-            refreshData(true);
+            refreshHomework();
+
+            if (appointment.isDone()) {
+                sendNotify("Huiswerk is afgerond!", "success");
+            } else {
+                sendNotify("Huiswerk gemarkeerd als onafgerond.", "success");
+            }
         }
     }
 });
@@ -299,12 +305,7 @@ function computeInsights() {
     return insights;
 }
 
-function refreshData(homeworkOnly = false) {
-    if (!homeworkOnly)
-    m.appointments(agendaDate, agendaDate, function (e, appointments) {
-        app.magister.appointments = appointments;
-    });
-
+function refreshHomework() {
     m.appointments(agendaDate, inTwoWeeks, function (e, appointments) {
         let tests = [];
         for (let i = 0; i < appointments.length; i++) {
@@ -319,6 +320,15 @@ function refreshData(homeworkOnly = false) {
 
         app.magister.tests = tests;
     });
+}
+
+function refreshData(homeworkOnly = false) {
+    if (!homeworkOnly)
+    m.appointments(agendaDate, agendaDate, function (e, appointments) {
+        app.magister.appointments = appointments;
+    });
+
+    refreshHomework();
 
     if (!homeworkOnly)
     m.currentCourse(function (courseErr, course) {
