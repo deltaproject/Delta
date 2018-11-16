@@ -3,6 +3,8 @@
   <p>📚 Een moderne versie van Magister, gemaakt voor leerlingen.</p>
 </div>
 
+[![CodeFactor](https://www.codefactor.io/repository/github/projectmagister/projectmagister/badge)](https://www.codefactor.io/repository/github/projectmagister/projectmagister)
+
 # Installatie
 ProjectMagister is momenteel nog in de bètafase, dus verdere instructies en documentatie volgen later.
 
