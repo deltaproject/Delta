@@ -19,6 +19,7 @@ if ([5, 6].includes(today.getDay())) {
     agendaDate.setDate(today.getDate() + 1);
 }
 
+var isRefreshCooldown = false;
 var dayFormat = moment(agendaDate).format("dddd");
 inTwoWeeks = moment(inTwoWeeks).add(14, 'days').toDate();
 
@@ -171,6 +172,16 @@ var app = new Vue({
             } else {
                 sendNotify("Huiswerk gemarkeerd als onafgerond.", "success");
             }
+        },
+        setRefreshCooldown() {
+            var btnRefresh = document.getElementsByClassName("btnRefresh")[0];
+            btnRefresh.classList.add("disabled");
+            isRefreshCooldown = true;
+
+            setTimeout(() => {
+                btnRefresh.classList.remove("disabled");
+                isRefreshCooldown = false;
+            }, 2500);
         }
     }
 });
@@ -322,15 +333,17 @@ function refreshHomework() {
     });
 }
 
-function refreshData(homeworkOnly = false) {
-    if (!homeworkOnly)
+function refreshData() {
+    if (isRefreshCooldown) {
+        return;
+    }
+
     m.appointments(agendaDate, agendaDate, function (e, appointments) {
         app.magister.appointments = appointments;
     });
 
     refreshHomework();
 
-    if (!homeworkOnly)
     m.currentCourse(function (courseErr, course) {
         course.grades(function(e, grades) {
             grades.sort(function (a, b) {
@@ -351,12 +364,10 @@ function refreshData(homeworkOnly = false) {
         });
     });
     
-    if (!homeworkOnly)
     m.inbox().messages(function (e, messages) {
         app.magister.messages = messages;
     });
     
-    if (!homeworkOnly)
     m.assignments(function (e, assignments) {
         app.magister.assignments = assignments;
     });

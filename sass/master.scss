@@ -88,6 +88,13 @@ html {
         background: rgb(31, 130, 243);
         cursor: pointer;
 
+        &.disabled {
+            background: rgb(202, 202, 202) !important;
+            color: rgb(151, 151, 151) !important;
+            transform: none !important;
+            cursor: default !important;
+        }
+
         &:hover {
             transform: rotate(180deg);
             background: rgb(0, 183, 255);
