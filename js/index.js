@@ -32,7 +32,7 @@ var app = new Vue({
         showReadMail: false,
         profile: {
             username: "Onbekende gebruiker",
-            imgUrl: "./img/user.png"
+            imgUrl: "./img/icons/user.png"
         },
         magister: {
             appointments: [],
