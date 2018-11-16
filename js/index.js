@@ -41,9 +41,13 @@ var app = new Vue({
             assignments: [],
             tests: [],
             insights: [],
-            filterMessages(readState) {
+            filterMessages(readState, maxMessages = 8) {
                 let array = [];
                 for (let i = 0; i < this.messages.length; i++) {
+                    if (i == maxMessages) {
+                        break;
+                    }
+
                     const element = this.messages[i];
                     if (element.isRead() == readState)
                         array.push(element);
@@ -51,7 +55,6 @@ var app = new Vue({
 
                 return array;
             },
-
             filterHomework(doneState) {
                 let array = [];
                 for (let i = 0; i < this.appointments.length; i++) {
