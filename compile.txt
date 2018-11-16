@@ -1,2 +1,1 @@
 sass --watch sass/styles.scss:dist/css/styles.css --style=compressed
-coffee -o dist/js/ -cw coffee/
