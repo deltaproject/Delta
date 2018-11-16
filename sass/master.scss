@@ -140,6 +140,7 @@ input[type="checkbox"] {
     outline: none;
     border-radius: 4px;
     text-align: center;
+    transition: background-color 0.3s, color 0.3s;
     
     background: rgba(255, 255, 255, 0.555);
     color: rgba(0, 0, 0, 0.322);
