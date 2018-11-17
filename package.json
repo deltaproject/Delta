@@ -6,7 +6,8 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ."
+    "start": "electron .",
+    "watch": "sass --watch sass/styles.scss:dist/css/styles.css --style=compressed"
   },
   "author": "Kees van Voorthuizen",
   "license": "MPL-2.0",
