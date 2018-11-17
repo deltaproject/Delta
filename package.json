@@ -6,8 +6,9 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron .",
-    "watch": "sass --watch sass/styles.scss:dist/css/styles.css --style=compressed"
+    "start": "ELECTRON_IS_DEV=1 electron .",
+    "watch": "sass --watch sass/styles.scss:dist/css/styles.css --style=compressed",
+    "package": "electron-packager . --all"
   },
   "author": "Kees van Voorthuizen",
   "license": "MPL-2.0",
@@ -18,6 +19,7 @@
     "chart.js": "^2.7.3",
     "chartjs-plugin-deferred": "^1.0.1",
     "electron": "^2.0.13",
+    "electron-is-dev": "^1.0.1",
     "lodash": "^4.17.11",
     "magister.js": "^1.24.2",
     "moment": "^2.22.2",

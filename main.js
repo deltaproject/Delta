@@ -4,10 +4,13 @@ const electron = require("electron");
 const { app, BrowserWindow } = require("electron");
 const path = require("path");
 const url = require("url");
+const isDev = require('electron-is-dev');
 
-require("electron-reload")(__dirname, {
-    electron: require(`${__dirname}/node_modules/electron`)
-});
+if (isDev) {
+    require("electron-reload")(__dirname, {
+        electron: require(`${__dirname}/node_modules/electron`)
+    });
+}
 
 function createWindow() {
     // Menu.setApplicationMenu(null);
