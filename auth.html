@@ -32,6 +32,10 @@
                         placeholder="Wachtwoord" :class="{ error: loginIncorrect }">
                 <input type="submit" name="signIn" value="Log in"
                         @click="login()" :disabled="!isFormFilled">
+                
+                <div class="spinner" :class="{ hidden: !isBusy }">
+                    <i class="fas fa-circle-notch spin"></i>
+                </div>
             </div>
         </div>
     </div>
