@@ -7,6 +7,7 @@ var app = new Vue({
     data: {
         loginIncorrect: false,
         schoolIncorrect: false,
+        isBusy: false,
         creds: {
             school: '',
             username: '',
@@ -28,12 +29,14 @@ var app = new Vue({
             });
         },
         login() {
+            app.isBusy = true;
             app.loginIncorrect = false;
             app.schoolIncorrect = false;
 
             Magister.MagisterSchool.getSchools(this.creds.school, (err, result) => {
                 if (result.length == 0 || err) {
                     app.schoolIncorrect = true;
+                    app.isBusy = false;
                     sendNotify("De schoolnaam die je hebt ingevoerd bestaat niet. Check of je de volledige naam hebt gebruikt van de school.", "error");
                     return;
                 }
@@ -51,6 +54,7 @@ var app = new Vue({
                         }
                     } catch (err) {
                         app.loginIncorrect = true;
+                        app.isBusy = false;
                         sendNotify("Je gebruikersnaam en/of wachtwoord kloppen niet.", "error");
                     }
                 });
