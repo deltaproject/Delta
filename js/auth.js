@@ -5,6 +5,8 @@ const Magister = remote.require("magister.js");
 var app = new Vue({
     el: "#app",
     data: {
+        loginIncorrect: false,
+        schoolIncorrect: false,
         creds: {
             school: '',
             username: '',
@@ -19,29 +21,38 @@ var app = new Vue({
         }
     },
     methods: {
-        getSchools() {
-            Magister.MagisterSchool.getSchools(this.creds.school, (err, result) => {
+        getSchools(schoolQuery) {
+            Magister.MagisterSchool.getSchools(schoolQuery, (err, result) => {
                 if (err) console.log(err);
-                console.log(result);
                 return result;
             });
         },
         login() {
-            var magister = new Magister.Magister({
-                school: this.creds.school,
-                username: this.creds.username,
-                password: this.creds.password
-            });
+            app.loginIncorrect = false;
+            app.schoolIncorrect = false;
 
-            magister.ready(function () {
-                try {
-                    if (magister.profileInfo().id() != undefined) {
-                        ipcRenderer.send("login-success", app.creds);
-                    }
-                } catch (err) {
-                    console.log("Error while logging in:");
-                    console.log(err);
+            Magister.MagisterSchool.getSchools(this.creds.school, (err, result) => {
+                if (err) console.log(err);
+                if (result.length == 0) {
+                    app.schoolIncorrect = true;
+                    return;
                 }
+    
+                var magister = new Magister.Magister({
+                    school: this.creds.school,
+                    username: this.creds.username,
+                    password: this.creds.password
+                });
+    
+                magister.ready(function () {
+                    try {
+                        if (magister.profileInfo().id() != undefined) {
+                            ipcRenderer.send("login-success", app.creds);
+                        }
+                    } catch (err) {
+                        app.loginIncorrect = true;
+                    }
+                });
             });
         }
     }
