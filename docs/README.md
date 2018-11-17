@@ -1,4 +1,5 @@
 <div align="center">
+  <img src="/img/icons/icon.jpg" alt="Logo" width="140" height="140">
   <h1>Delta</h1>
   <p>📚 Een moderne versie van Magister, gemaakt voor leerlingen.</p>
 </div>
