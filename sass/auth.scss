@@ -52,3 +52,16 @@
         }
     }
 }
+
+.spinner {
+    margin: auto;
+    margin-top: 20px;
+
+    i {
+        &.spin {
+            animation: fa-spin 1s infinite linear;
+        }
+
+        font-size: 30px;
+    }
+}
