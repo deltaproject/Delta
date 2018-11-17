@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500" rel="stylesheet">
     <link rel="stylesheet" href="./dist/css/styles.css">
-    <title>Project: Magister</title>
+    <title>Delta - Inloggen</title>
 </head>
 <body>
     <div id="app">
@@ -17,23 +17,21 @@
     <div class="containerAlt">
         <h1>Inloggen</h1>
         <div class="login">
-            <form>
-                <div class="loginContainer">
-                    <input type="text" name="school" list="schools" v-model="school"
-                           placeholder="Schoolnaam">
+            <div class="loginContainer">
+                <input type="text" name="school" list="schools" v-model="creds.school"
+                        placeholder="Schoolnaam">
 
-                    <datalist id="schools">
-                        <option v-for="i in getSchools()" :value="i.name">
-                    </datalist>
+                <!-- <datalist id="schools">
+                    <option v-for="i in getSchools()" :value="i.name">
+                </datalist> -->
 
-                    <input type="text" name="username" v-model="username"
-                           placeholder="Gebruikersnaam">
-                    <input type="password" name="password" v-model="password"
-                           placeholder="Wachtwoord">
-                    <input type="submit" name="signIn" value="Log in"
-                           :disabled="!isFormFilled">
-                </div>
-            </form>
+                <input type="text" name="username" v-model="creds.username"
+                        placeholder="Gebruikersnaam">
+                <input type="password" name="password" v-model="creds.password"
+                        placeholder="Wachtwoord">
+                <input type="submit" name="signIn" value="Log in"
+                        @click="login()" :disabled="!isFormFilled">
+            </div>
         </div>
     </div>
 
