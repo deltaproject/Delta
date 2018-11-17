@@ -8,6 +8,9 @@
   <a href="https://github.com/deltaproject/Delta/issues">
     <img src="https://img.shields.io/github/issues/deltaproject/Delta.svg?style=flat-square" alt="Issues"></img>
   </a>
+  <a href="https://github.com/deltaproject/Delta/pulls">
+    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square" alt="Pull Requests"></img>
+  </a>
   <a href="https://www.codefactor.io/repository/github/deltaproject/delta">
     <img src="https://www.codefactor.io/repository/github/deltaproject/delta/badge" alt="CodeFactor"></img>
   </a>
