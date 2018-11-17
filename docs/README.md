@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="/img/icons/icon.jpg" alt="Logo" width="140" height="140">
+  <img src="https://github.com/deltaproject/Delta/raw/master/img/icons/icon.jpg" alt="Logo" width="140" height="140">
   <h1>Delta</h1>
   <p>📚 Een moderne versie van Magister, gemaakt voor leerlingen.</p>
   <a href="https://github.com/deltaproject/Delta/blob/master/LICENSE">
@@ -33,6 +33,9 @@ var m = new Magister.Magister({
 });
 ```
 5. Start Delta met `electron .`
+6. Als je de stylesheets wilt aanpassen in `sass/*.scss`, typ `npm run watch` om deze te compilen naar `dist/css/styles.css`.
+> **Let op:** het is niet de bedoeling om handmatig de stylesheet aan te passen in `dist/css/styles.css`, dit is namelijk een automatisch gegenereerd bestand.
+Zie stap 5 voor informatie over het aanpassen van stylesheets.
 
 # Credits
 Met speciale dank aan [Lieuwe Rooijakkers (@lieuwex)](https://github.com/lieuwex) voor het maken van [MagisterJS](https://github.com/simplyGits/MagisterJS), die Delta mogelijk maakte.
