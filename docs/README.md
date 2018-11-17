@@ -24,16 +24,8 @@ Delta is momenteel nog in de bètafase, dus verdere instructies en documentatie 
 1. Clone deze repository naar je lokale schijf met `git clone https://github.com/deltaproject/Delta`
 2. Open je Terminal-emulator en navigeer naar de locatie waar je de repository hebt gecloned
 3. Typ `npm install` om alle dependencies te installeren
-4. Bewerk vervolgens `main.js` met een teksteditor en verander de volgende variabelen:
-```js
-var m = new Magister.Magister({
-    school: '<volledige schoolnaam>',
-    username: '<gebruikersnaam>',
-    password: '<wachtwoord>'
-});
-```
-5. Start Delta met `electron .`
-6. Als je de stylesheets wilt aanpassen in `sass/*.scss`, typ `npm run watch` om deze te compilen naar `dist/css/styles.css`.
+4. Start Delta met `npm start`
+5. Als je de stylesheets wilt aanpassen in `sass/*.scss`, typ `npm run watch` om deze te compilen naar `dist/css/styles.css`
 > **Let op:** het is niet de bedoeling om handmatig de stylesheet aan te passen in `dist/css/styles.css`, dit is namelijk een automatisch gegenereerd bestand.
 Zie stap 5 voor informatie over het aanpassen van stylesheets.
 
