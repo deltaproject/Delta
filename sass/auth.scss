@@ -13,39 +13,42 @@
         padding: 10px 8px;
         margin: 10px auto;
         font-size: 16px;
-        border-radius: 10px;
         border: none;
-        box-shadow: 0 0 8px #B5B5B5;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.247);
         transition: box-shadow 0.5s;
 
         &.error {
-            box-shadow: 0 0 8px rgb(218, 47, 47) !important;
+            box-shadow: 0 0 10px rgb(218, 47, 47) !important;
             animation: shake 0.8s;
         }
 
         &:focus {
-            border-color: #01C5FF;
-            box-shadow: 0 0 8px #129BFF;
+            box-shadow: 0 0 10px rgba(18, 156, 255, 0.795);
         }
     }
 
     &[type="submit"] {
-        padding: 8px 35px;
-        border: none;
-        border-radius: 6px;
-        background: #20D3FF;
+        padding: 10px 45px;
+        border: 2px solid transparent;
+        border-radius: 8px;
+        background: rgb(40, 212, 189);
         color: white;
-        font-size: 14px;
+        font-size: 16px;
         font-weight: bolder;
-        transition: background-color 0.5s;
+        transition: background-color 0.5s, border-color 0.5s ;
         margin-top: 10px;
 
         &:hover {
-            background: #A826F6;
+            background: rgb(85, 235, 255);
+        }
+
+        &:focus {
+            border-color: rgb(65, 174, 238);
         }
 
         &:disabled {
-            background: #949191;
+            background: #c2c2c2;
         }
     }
 }
