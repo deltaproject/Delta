@@ -18,6 +18,10 @@
         box-shadow: 0 0 8px #B5B5B5;
         transition: box-shadow 0.5s;
 
+        &.error {
+            box-shadow: 0 0 8px rgb(218, 47, 47) !important;
+        }
+
         &:focus {
             border-color: #01C5FF;
             box-shadow: 0 0 8px #129BFF;
@@ -32,7 +36,7 @@
         color: white;
         font-size: 14px;
         font-weight: bolder;
-        transition: background 0.5s;
+        transition: background-color 0.5s;
         margin-top: 10px;
 
         &:hover {
