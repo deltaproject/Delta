@@ -32,14 +32,9 @@ var app = new Vue({
             app.schoolIncorrect = false;
 
             Magister.MagisterSchool.getSchools(this.creds.school, (err, result) => {
-                if (err) {
-                    console.log(err);
+                if (result.length == 0 || err) {
                     app.schoolIncorrect = true;
-                    return;
-                }
-
-                if (result.length == 0) {
-                    app.schoolIncorrect = true;
+                    sendNotify("De schoolnaam die je hebt ingevoerd bestaat niet. Check of je de volledige naam hebt gebruikt van de school.", "error");
                     return;
                 }
     
@@ -56,6 +51,7 @@ var app = new Vue({
                         }
                     } catch (err) {
                         app.loginIncorrect = true;
+                        sendNotify("Je gebruikersnaam en/of wachtwoord kloppen niet.", "error");
                     }
                 });
             });
