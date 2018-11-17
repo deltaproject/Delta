@@ -238,7 +238,7 @@ function refreshGraph(grades) {
     });
 
     var context = document.getElementById("perfChart").getContext("2d");
-    var perfChart = new Chart(context, {
+    new Chart(context, {
         type: "line",
         data: chartData,
         options: {
