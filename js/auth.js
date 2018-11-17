@@ -1,28 +1,47 @@
-const { remote } = require("electron");
+const { remote, ipcRenderer } = require("electron");
 const electron = remote.app;
-var m = remote.getGlobal("m");
-var magister = remote.getGlobal("magister");
+const Magister = remote.require("magister.js");
 
 var app = new Vue({
     el: "#app",
     data: {
-        school: '',
-        username: '',
-        password: ''
+        creds: {
+            school: '',
+            username: '',
+            password: ''
+        }
     },
     computed: {
         isFormFilled: function() {
-            return this.school.length > 0 &&
-                   this.username.length > 0 &&
-                   this.password.length > 0;
+            return this.creds.school.length > 0 &&
+                   this.creds.username.length > 0 &&
+                   this.creds.password.length > 0;
         }
     },
     methods: {
         getSchools() {
-            magister.MagisterSchool.getSchools(this.school, (err, result) => {
+            Magister.MagisterSchool.getSchools(this.creds.school, (err, result) => {
                 if (err) console.log(err);
                 console.log(result);
                 return result;
+            });
+        },
+        login() {
+            var magister = new Magister.Magister({
+                school: this.creds.school,
+                username: this.creds.username,
+                password: this.creds.password
+            });
+
+            magister.ready(function () {
+                try {
+                    if (magister.profileInfo().id() != undefined) {
+                        ipcRenderer.send("login-success", app.creds);
+                    }
+                } catch (err) {
+                    console.log("Error while logging in:");
+                    console.log(err);
+                }
             });
         }
     }
