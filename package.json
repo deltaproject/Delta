@@ -12,11 +12,12 @@
   },
   "author": "Kees van Voorthuizen",
   "license": "MPL-2.0",
-  "devDependencies": {},
+  "devDependencies": {
+    "electron": "^3.0.9"
+  },
   "dependencies": {
     "chart.js": "^2.7.3",
     "chartjs-plugin-deferred": "^1.0.1",
-    "electron": "^2.0.13",
     "electron-is-dev": "^1.0.1",
     "electron-reload": "^1.2.5",
     "lodash": "^4.17.11",
