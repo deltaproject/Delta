@@ -11,7 +11,7 @@
   "author": "Kees van Voorthuizen",
   "license": "MPL-2.0",
   "devDependencies": {
-    "electron-reload": "^1.3.0"
+    "electron-reload": "^1.2.5"
   },
   "dependencies": {
     "chart.js": "^2.7.3",
