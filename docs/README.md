@@ -2,11 +2,17 @@
   <img src="/img/icons/icon.jpg" alt="Logo" width="140" height="140">
   <h1>Delta</h1>
   <p>📚 Een moderne versie van Magister, gemaakt voor leerlingen.</p>
+  <a href="https://github.com/deltaproject/Delta/blob/master/LICENSE">
+    <img src="https://img.shields.io/github/license/deltaproject/Delta.svg?style=flat-square" alt="Licentie"></img>
+  </a>
+  <a href="https://github.com/deltaproject/Delta/issues">
+    <img src="https://img.shields.io/github/issues/deltaproject/Delta.svg?style=flat-square" alt="Issues"></img>
+  </a>
+  <a href="https://www.codefactor.io/repository/github/deltaproject/delta">
+    <img src="https://www.codefactor.io/repository/github/deltaproject/delta/badge" alt="CodeFactor"></img>
+  </a>
+  <br><br>
 </div>
-
-[![Licentie](https://img.shields.io/github/license/deltaproject/Delta.svg?style=flat-square)](https://github.com/deltaproject/Delta/blob/master/LICENSE)
-[![GitHub issues](https://img.shields.io/github/issues/deltaproject/Delta.svg?style=flat-square)](https://github.com/deltaproject/Delta/issues)
-[![CodeFactor](https://www.codefactor.io/repository/github/deltaproject/delta/badge)](https://www.codefactor.io/repository/github/deltaproject/delta)
 
 # Installatie
 Delta is momenteel nog in de bètafase, dus verdere instructies en documentatie volgen later.
