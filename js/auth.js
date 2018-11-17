@@ -32,7 +32,12 @@ var app = new Vue({
             app.schoolIncorrect = false;
 
             Magister.MagisterSchool.getSchools(this.creds.school, (err, result) => {
-                if (err) console.log(err);
+                if (err) {
+                    console.log(err);
+                    app.schoolIncorrect = true;
+                    return;
+                }
+
                 if (result.length == 0) {
                     app.schoolIncorrect = true;
                     return;
