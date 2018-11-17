@@ -20,6 +20,7 @@
 
         &.error {
             box-shadow: 0 0 8px rgb(218, 47, 47) !important;
+            animation: shake 0.8s;
         }
 
         &:focus {
