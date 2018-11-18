@@ -44,6 +44,12 @@
                 <input type="password" name="password" v-model="creds.password"
                         placeholder="Wachtwoord" :class="{ error: loginIncorrect }"
                         :disabled="isBusy">
+                
+                <div class="checkContainer">
+                    <input v-model="saveCreds" name="saveCreds" type="checkbox" :disabled="isBusy">
+                    <span>Onthoud mij</span>
+                </div>
+
                 <input type="submit" name="signIn" value="Log in" id="btnSubmit"
                         @click="login()" :disabled="!isFormFilled || isBusy">
                 
