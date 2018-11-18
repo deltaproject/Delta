@@ -42,7 +42,7 @@
                 <input type="password" name="password" v-model="creds.password"
                         placeholder="Wachtwoord" :class="{ error: loginIncorrect }">
                 <input type="submit" name="signIn" value="Log in" id="btnSubmit"
-                        @click="login()" :disabled="!isFormFilled">
+                        @click="login()" :disabled="!isFormFilled || isBusy">
                 
                 <div class="spinner" :class="{ hidden: !isBusy }">
                     <i class="fas fa-circle-notch spin"></i>
