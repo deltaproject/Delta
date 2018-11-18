@@ -20,7 +20,7 @@ function createWindow() {
         width: 1220,
         height: 800,
         show: false,
-        icon: path.join(__dirname, 'img/icons/icon.png')
+        icon: path.join(__dirname, 'img/icons/icon@64px.png')
     });
 
     authWin = new BrowserWindow({
@@ -28,7 +28,7 @@ function createWindow() {
         width: 500,
         height: 700,
         frame: false,
-        icon: path.join(__dirname, 'img/icons/icon.png')
+        icon: path.join(__dirname, 'img/icons/icon@64px.png')
     });
 
     mainWin.on("closed", function () {
