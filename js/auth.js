@@ -9,6 +9,7 @@ var credsFile = path.join(electron.getPath("userData"), "delta.json");
 var app = new Vue({
     el: "#app",
     data: {
+        saveCreds: true,
         loginIncorrect: false,
         schoolIncorrect: false,
         isBusy: false,
