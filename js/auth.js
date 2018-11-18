@@ -93,4 +93,5 @@ document.getElementById("minimizeBtn").addEventListener("click", function () {
 if (fs.existsSync(credsFile)) {
     let rawJson = fs.readFileSync(credsFile);
     app.creds = JSON.parse(rawJson);
+    app.login();
 }
