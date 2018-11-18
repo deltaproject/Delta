@@ -56,12 +56,15 @@ var app = new Vue({
                     try {
                         if (magister.profileInfo().id() != undefined) {
                             let rawJson = JSON.stringify(app.creds);
-                            fs.writeFile(credsFile, rawJson, 'utf8', (err) => {
-                                if (err) {
-                                    console.log("Unable to save credentials to file: " + err);
-                                }
-                            }); 
 
+                            if (app.saveCreds) {
+                                fs.writeFile(credsFile, rawJson, 'utf8', (err) => {
+                                    if (err) {
+                                        console.log("Unable to save credentials to file: " + err);
+                                    }
+                                }); 
+                            }
+                            
                             ipcRenderer.send("login-success", app.creds);
                         }
                     } catch (err) {
@@ -94,5 +97,5 @@ document.getElementById("minimizeBtn").addEventListener("click", function () {
 if (fs.existsSync(credsFile)) {
     let rawJson = fs.readFileSync(credsFile);
     app.creds = JSON.parse(rawJson);
-    app.login();
+    // app.login();
 }
