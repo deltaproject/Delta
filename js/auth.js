@@ -9,6 +9,7 @@ var credsFile = path.join(electron.getPath("userData"), "delta.json");
 var app = new Vue({
     el: "#app",
     data: {
+        schoolQuery: [],
         saveCreds: true,
         loginIncorrect: false,
         schoolIncorrect: false,
@@ -27,10 +28,10 @@ var app = new Vue({
         }
     },
     methods: {
-        getSchools(schoolQuery) {
-            Magister.MagisterSchool.getSchools(schoolQuery, (err, result) => {
+        getSchools() {
+            Magister.MagisterSchool.getSchools(this.creds.school, (err, result) => {
                 if (err) console.log(err);
-                return result;
+                app.schoolQuery = result;
             });
         },
         login() {
@@ -84,7 +85,7 @@ document.querySelector("body").addEventListener("keyup", function () {
     if (event.keyCode == 13) {
         document.getElementById("btnSubmit").click();
     }
-})
+});
 
 document.getElementById("closeBtn").addEventListener("click", function () {
     electron.quit();
