@@ -62,3 +62,10 @@ var app = new Vue({
         }
     }
 });
+
+document.querySelector("body").addEventListener("keyup", function () {
+    event.preventDefault();
+    if (event.keyCode == 13) {
+        document.getElementById("btnSubmit").click();
+    }
+})
