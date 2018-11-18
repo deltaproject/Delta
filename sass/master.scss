@@ -132,6 +132,9 @@ html {
 
 // Checkbox styling
 input[type="checkbox"] {
+    $defaultBackground: rgba(255, 255, 255, 0.555);
+    $checkedBackground: rgb(52, 133, 255);
+
     -webkit-appearance: none;
     width: 20px;
     height: 20px;
@@ -142,7 +145,7 @@ input[type="checkbox"] {
     text-align: center;
     transition: background-color 0.3s, color 0.3s;
     
-    background: rgba(255, 255, 255, 0.555);
+    background: $defaultBackground;
     color: rgba(0, 0, 0, 0.322);
 
     &::after {
@@ -154,12 +157,20 @@ input[type="checkbox"] {
         content: "\f00d";
     }
 
+    &:focus {
+        background: lighten($color: $defaultBackground, $amount: 15);
+    }
+
     &:checked {
         color: white;
-        background: rgb(52, 133, 255);
+        background: $checkedBackground;
 
         &::after {
             content: "\f00c";
+        }
+
+        &:focus {
+            background: lighten($color: $checkedBackground, $amount: 15);
         }
 
         &:disabled {
