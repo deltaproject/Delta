@@ -63,9 +63,18 @@ var app = new Vue({
     }
 });
 
+// Event listeners
 document.querySelector("body").addEventListener("keyup", function () {
     event.preventDefault();
     if (event.keyCode == 13) {
         document.getElementById("btnSubmit").click();
     }
 })
+
+document.getElementById("closeBtn").addEventListener("click", function () {
+    electron.quit();
+});
+
+document.getElementById("minimizeBtn").addEventListener("click", function () {
+    remote.BrowserWindow.getFocusedWindow().minimize();
+});
