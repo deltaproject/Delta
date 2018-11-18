@@ -58,10 +58,11 @@
     margin-top: 20px;
 
     i {
+        font-size: 30px;
+        color: grey;
+
         &.spin {
             animation: fa-spin 1s infinite linear;
         }
-
-        font-size: 30px;
     }
 }
