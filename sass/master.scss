@@ -161,6 +161,14 @@ input[type="checkbox"] {
         &::after {
             content: "\f00c";
         }
+
+        &:disabled {
+            color: rgb(92, 92, 92);
+        }
+    }
+
+    &:disabled {
+        background: rgb(175, 175, 175);
     }
 }
 
