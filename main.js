@@ -57,10 +57,12 @@ ipcMain.on("login-success", (event, creds) => {
             protocol: "file:",
             slashes: true
         }));
-
-        authWin.close();
-        mainWin.show();
     })
+});
+
+ipcMain.on("content-loaded", (event) => {
+    authWin.close();
+    mainWin.show();
 });
 
 app.on("ready", function () {
