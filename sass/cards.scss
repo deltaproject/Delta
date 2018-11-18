@@ -70,8 +70,7 @@ $defaultShadow: 0 0 15px $shadowColor;
     margin: 10px 5px;
     box-shadow: $defaultShadow;
     transition: transform 0.2s, background-color 0.5s, color 0.2s;
-    animation: bounceInLeft 0.8s;
-    animation-delay: -0.2s;
+    animation: fadeInLeft 0.4s;
     cursor: pointer;
 
     &:hover {
