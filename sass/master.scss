@@ -157,20 +157,12 @@ input[type="checkbox"] {
         content: "\f00d";
     }
 
-    &:focus {
-        background: lighten($color: $defaultBackground, $amount: 15);
-    }
-
     &:checked {
         color: white;
         background: $checkedBackground;
 
         &::after {
             content: "\f00c";
-        }
-
-        &:focus {
-            background: lighten($color: $checkedBackground, $amount: 15);
         }
 
         &:disabled {
