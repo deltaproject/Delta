@@ -25,14 +25,14 @@ function createWindow() {
 
     authWin = new BrowserWindow({
         parent: mainWin,
-        width: 1220,
-        height: 800,
+        width: 500,
+        height: 700,
+        frame: false,
         icon: path.join(__dirname, 'img/icons/icon.png')
     });
 
     mainWin.on("closed", function () {
-        mainWin = null;
-        authWin = null;
+        app.quit();
     });
 
     authWin.loadURL(url.format({
