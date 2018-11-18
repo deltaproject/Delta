@@ -1,6 +1,10 @@
 const { remote, ipcRenderer } = require("electron");
 const electron = remote.app;
 const Magister = remote.require("magister.js");
+const fs = require("fs");
+const path = require('path');
+
+var credsFile = path.join(electron.getPath("userData"), "delta.json");
 
 var app = new Vue({
     el: "#app",
@@ -50,6 +54,13 @@ var app = new Vue({
                 magister.ready(function () {
                     try {
                         if (magister.profileInfo().id() != undefined) {
+                            let rawJson = JSON.stringify(app.creds);
+                            fs.writeFile(credsFile, rawJson, 'utf8', (err) => {
+                                if (err) {
+                                    console.log("Unable to save credentials to file: " + err);
+                                }
+                            }); 
+
                             ipcRenderer.send("login-success", app.creds);
                         }
                     } catch (err) {
@@ -78,3 +89,8 @@ document.getElementById("closeBtn").addEventListener("click", function () {
 document.getElementById("minimizeBtn").addEventListener("click", function () {
     remote.BrowserWindow.getFocusedWindow().minimize();
 });
+
+if (fs.existsSync(credsFile)) {
+    let rawJson = fs.readFileSync(credsFile);
+    app.creds = JSON.parse(rawJson);
+}
