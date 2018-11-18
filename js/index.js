@@ -1,4 +1,4 @@
-const { remote } = require("electron");
+const { remote, ipcRenderer } = require("electron");
 const path = require("path");
 const url = require("url");
 const moment = require("moment");
@@ -21,6 +21,7 @@ if ([5, 6].includes(today.getDay())) {
 
 var isRefreshCooldown = false;
 var dayFormat = moment(agendaDate).format("dddd");
+var contentLoaded = 0;
 inTwoWeeks = moment(inTwoWeeks).add(14, 'days').toDate();
 
 var app = new Vue({
@@ -322,7 +323,17 @@ function computeInsights() {
     return insights;
 }
 
-function refreshHomework() {
+function isContentLoaded(callback) {
+    if (contentLoaded == 5) {
+        callback();
+    } else {
+        window.setTimeout(() => {
+            isContentLoaded(callback);
+        }, 100)
+    }
+}
+
+function refreshHomework(initial = false) {
     m.appointments(agendaDate, inTwoWeeks, function (e, appointments) {
         let tests = [];
         for (let i = 0; i < appointments.length; i++) {
@@ -336,19 +347,24 @@ function refreshHomework() {
         }
 
         app.magister.tests = tests;
+
+        if (initial)
+            contentLoaded++;
     });
 }
 
-function refreshData() {
+function refreshData(initial = false) {
     if (isRefreshCooldown) {
         return;
     }
 
     m.appointments(agendaDate, agendaDate, function (e, appointments) {
         app.magister.appointments = appointments;
+        if (initial)
+            contentLoaded++;
     });
 
-    refreshHomework();
+    refreshHomework(true);
 
     m.currentCourse(function (courseErr, course) {
         course.grades(function(e, grades) {
@@ -367,16 +383,28 @@ function refreshData() {
             app.magister.grades = grades;
             app.magister.insights = computeInsights();
             refreshGraph(validGrades);
+            if (initial)
+                contentLoaded++;
         });
     });
     
     m.inbox().messages(function (e, messages) {
         app.magister.messages = messages;
+        if (initial)
+            contentLoaded++;
     });
     
     m.assignments(function (e, assignments) {
         app.magister.assignments = assignments;
+        if (initial)
+            contentLoaded++;
     });
+
+    if (initial) {
+        isContentLoaded(() => {
+            ipcRenderer.send("content-loaded");
+        })
+    }
 }
 
 function printBanner() {
@@ -399,5 +427,5 @@ if (m != null) {
     console.log("Unable to authenticate with Magister.");
 }
 
-refreshData();
+refreshData(true);
 printBanner();
