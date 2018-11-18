@@ -92,3 +92,9 @@
         }
     }
 }
+
+input[name="saveCreds"] {
+    &::after {
+        vertical-align: -10% !important;
+    }    
+}
