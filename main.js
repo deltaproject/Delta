@@ -56,7 +56,7 @@ ipcMain.on("validate-creds", (event, creds) => {
                 authWin.webContents.send("login-success", true);
             }
         } catch (err) {
-            authWin.webContents.send("login-success", false);
+                authWin.webContents.send("login-success", false);
         }
     });
 });
