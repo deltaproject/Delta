@@ -76,14 +76,19 @@
                     <p>Je hebt geen huiswerk voor {{ agendaDate }}.</p>
                 </div>
 
-                <div v-for="i in magister.filterHomework(false)" @click="toggleHomeworkState(i)" class="smallCard">
+                <div v-for="i in magister.filterHomework(false)" class="smallCard">
                     <div class="todo">
                         <div class="itemContainer homeworkItem">
                             <i class="far fa-bookmark"></i>
                         </div>
 
+
                         <p>{{ i.classes()[0] }}</p>
                         <p>{{ trimContent(i.content()) }}</p>
+                    </div>
+
+                    <div class="btnPanel">
+                        <div class="cardButton" @click="toggleHomeworkState(i)"><i class="far fa-check-circle"></i></div>
                     </div>
                 </div>
 
