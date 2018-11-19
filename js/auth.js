@@ -47,33 +47,25 @@ var app = new Vue({
                     return;
                 }
     
-                var magister = new Magister.Magister({
-                    school: this.creds.school,
-                    username: this.creds.username,
-                    password: this.creds.password
-                });
-    
-                magister.ready(function () {
-                    try {
-                        if (magister.profileInfo().id() != undefined) {
-                            let rawJson = JSON.stringify(app.creds);
-
-                            if (app.saveCreds) {
-                                fs.writeFile(credsFile, rawJson, 'utf8', (err) => {
-                                    if (err) {
-                                        console.log("Unable to save credentials to file: " + err);
-                                    }
-                                }); 
-                            }
-                            
-                            ipcRenderer.send("login-success", app.creds);
+                ipcRenderer.send("validate-creds", app.creds);
+                ipcRenderer.on("login-success", (event, isSuccess) => {
+                    if (isSuccess) {
+                        let rawJson = JSON.stringify(app.creds);
+                        if (app.saveCreds) {
+                            fs.writeFile(credsFile, rawJson, 'utf8', (err) => {
+                                if (err) {
+                                    console.log("Unable to save credentials to file: " + err);
+                                }
+                            }); 
                         }
-                    } catch (err) {
+
+                        ipcRenderer.send("prepare-main");
+                    } else {
                         app.loginIncorrect = true;
                         app.isBusy = false;
                         sendNotify("Je gebruikersnaam en/of wachtwoord kloppen niet.", "error");
                     }
-                });
+                })
             });
         }
     }
@@ -98,5 +90,5 @@ document.getElementById("minimizeBtn").addEventListener("click", function () {
 if (fs.existsSync(credsFile)) {
     let rawJson = fs.readFileSync(credsFile);
     app.creds = JSON.parse(rawJson);
-    // app.login();
+    app.login();
 }

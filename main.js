@@ -42,23 +42,32 @@ function createWindow() {
     }));
 }
 
-ipcMain.on("login-success", (event, creds) => {
-    var m = new Magister.Magister({
+ipcMain.on("validate-creds", (event, creds) => {
+    var magister = new Magister.Magister({
         school: creds.school,
         username: creds.username,
         password: creds.password
     });
 
-    m.ready(function () {
-        global.m = m;
-
-        mainWin.loadURL(url.format({
-            pathname: path.join(__dirname, "index.html"),
-            protocol: "file:",
-            slashes: true
-        }));
-    })
+    magister.ready(function () {
+        try {
+            if (magister.profileInfo().id() != undefined) {
+                global.m = magister;
+                authWin.webContents.send("login-success", true);
+            }
+        } catch (err) {
+            authWin.webContents.send("login-success", false);
+        }
+    });
 });
+
+ipcMain.on("prepare-main", (event) => {
+    mainWin.loadURL(url.format({
+        pathname: path.join(__dirname, "index.html"),
+        protocol: "file:",
+        slashes: true
+    }));
+})
 
 ipcMain.on("content-loaded", (event) => {
     authWin.close();
