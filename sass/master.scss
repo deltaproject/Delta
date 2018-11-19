@@ -41,6 +41,10 @@ html {
 
 .title-big {
     font-size: 38px;
+    box-sizing: border-box;
+    display: inline-block;
+    width: 30%;
+    min-width: 350px;
 
     span:first-of-type {
         color: rgb(241, 107, 102);
@@ -56,8 +60,11 @@ html {
     }
 
     .profileInfo {
-        width: 63%;
         text-align: right;
+        box-sizing: border-box;
+        width: 66%;
+        display: inline-block;
+        min-width: 400px;
 
         h1 {
             font-size: 22px;
