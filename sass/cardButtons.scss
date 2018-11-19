@@ -10,7 +10,7 @@
     border-radius: 50%;
     background: white;
     border: 2px solid rgb(214, 214, 214);
-    margin: 0 10px;
+    margin: 0 10px 0 0;
     width: 45px;
     height: 45px;
     transition: background-color 0.5s;
@@ -22,8 +22,8 @@
         color: $btnForeground;
         vertical-align: middle;
         margin: auto;
-        width: 20px;
-        height: 20px;
+        width: auto;
+        height: 4px;
     }
 
     &:hover {
@@ -42,11 +42,7 @@
         }
     }
 
-    &:first-of-type {
-        margin-left: 0;
-    }
-
-    &:first-of-type {
+    &:last-of-type {
         margin-right: 0;
     }
 }
