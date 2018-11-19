@@ -88,7 +88,7 @@
                     </div>
 
                     <div class="btnPanel">
-                        <div class="cardButton" @click="toggleHomeworkState(i)"><i class="far fa-check-circle"></i></div>
+                        <div class="cardButton finishHomework" @click="toggleHomeworkState(i)"><i class="far fa-check-circle"></i></div>
                     </div>
                 </div>
 
@@ -100,6 +100,10 @@
 
                         <p>{{ i.classes()[0] }}</p>
                         <p>{{ trimContent(i.content()) }}</p>
+                    </div>
+
+                    <div class="btnPanel">
+                        <div class="cardButton finishHomework" @click="toggleHomeworkState(i)"><i class="far fa-check-circle"></i></div>
                     </div>
                 </div>
             </div>
