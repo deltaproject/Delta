@@ -54,4 +54,8 @@
     &.finishHomework {
         @include buttonColor(rgb(6, 189, 61));
     }
+
+    &.infoDetails i {
+        font-size: 20px;
+    }
 }
