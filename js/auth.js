@@ -14,6 +14,7 @@ var app = new Vue({
         loginIncorrect: false,
         schoolIncorrect: false,
         isBusy: false,
+        loginSuccess: false,
         creds: {
             school: '',
             username: '',
@@ -38,6 +39,7 @@ var app = new Vue({
             app.isBusy = true;
             app.loginIncorrect = false;
             app.schoolIncorrect = false;
+            app.loginSuccess = false;
 
             Magister.MagisterSchool.getSchools(this.creds.school, (err, result) => {
                 if (result.length == 0 || err) {
@@ -50,6 +52,8 @@ var app = new Vue({
                 ipcRenderer.send("validate-creds", app.creds);
                 ipcRenderer.on("login-success", (event, isSuccess) => {
                     if (isSuccess) {
+                        app.loginSuccess = true;
+
                         let rawJson = JSON.stringify(app.creds);
                         if (app.saveCreds) {
                             fs.writeFile(credsFile, rawJson, 'utf8', (err) => {
