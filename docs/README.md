@@ -25,7 +25,7 @@ Delta is momenteel nog in de bètafase, dus verdere instructies en documentatie 
 2. Open je Terminal-emulator en navigeer naar de locatie waar je de repository hebt gecloned
 3. Typ `npm install` om alle dependencies te installeren
 4. Start Delta met `npm start`
-5. Als je de stylesheets wilt aanpassen in `sass/*.scss`, typ `npm run watch` om deze te compilen naar `dist/css/styles.css`
+5. Als je de stylesheets wilt aanpassen in `sass/*.scss`, typ `npm run watch` om deze te compilen naar `dist/css/styles.css`. Hiervoor heb je het programma `sass` nodig die je op Debian-gebaseerde systemen kunt installeren met `sudo apt install sass`.
 > **Let op:** het is niet de bedoeling om handmatig de stylesheet aan te passen in `dist/css/styles.css`, dit is namelijk een automatisch gegenereerd bestand.
 Zie stap 5 voor informatie over het aanpassen van stylesheets.
 
