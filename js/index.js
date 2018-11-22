@@ -4,8 +4,10 @@ const url = require("url");
 const moment = require("moment");
 const chart = require("chart.js");
 const _ = require("lodash");
+const fs = require("fs");
 const electron = remote.app;
 const shell = remote.shell;
+const dialog = remote.dialog;
 moment.locale("nl");
 
 var m = remote.getGlobal("m");
@@ -182,6 +184,17 @@ var app = new Vue({
         },
         showInfoDetails(appointment) {
             alert("Deze functie is helaas nog niet beschikbaar.")
+        },
+        signOff() {
+            var credsFile = path.join(electron.getPath("userData"), "delta.json");
+            try {
+                fs.unlinkSync(credsFile);
+                electron.relaunch();
+                electron.quit();
+            } catch (error) {
+                dialogError("Er ging iets fout tijdens het afmelden. " +
+                    "Probeer Delta opnieuw op te starten en vervolgens opnieuw af te melden.");
+            }
         },
         setRefreshCooldown() {
             this.isRefreshCooldown = true;
@@ -405,6 +418,24 @@ function refreshData(initial = false) {
             ipcRenderer.send("content-loaded");
         })
     }
+}
+
+function dialogInfo(message) {
+    dialog.showMessageBox({
+        title: "Informatie",
+        type: "info",
+        buttons: ["OK"],
+        message: message
+    });
+}
+
+function dialogError(message) {
+    dialog.showMessageBox({
+        title: "Fout",
+        type: "error",
+        buttons: ["OK"],
+        message: message
+    });
 }
 
 function printBanner() {
