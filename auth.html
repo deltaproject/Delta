@@ -55,6 +55,7 @@
                 
                 <div class="spinner" :class="{ hidden: !isBusy }">
                     <i class="fas fa-circle-notch spin"></i>
+                    <p class="detail" :class="{ hidden: !loginSuccess }">Gegevens laden...</p>
                 </div>
             </div>
         </div>
