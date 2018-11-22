@@ -28,7 +28,7 @@ inTwoWeeks = moment(inTwoWeeks).add(14, 'days').toDate();
 var app = new Vue({
     el: "#app",
     data: {
-        isBeta: true,
+        isBeta: false,
         isRefreshCooldown: false,
         agendaDate: "",
         showDoneHomework: false,
