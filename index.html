@@ -21,6 +21,7 @@
         </h1>
 
         <div class="profileInfo">
+            <p class="btnSignOff" title="Meld je af bij Delta" @click="signOff()">Afmelden</p>
             <i class="btnRefresh fas fa-sync-alt" title="Ververs gegevens"
                 @click="setRefreshCooldown()"
                 :class="{ disabled: isRefreshCooldown, refreshPending: isRefreshCooldown }"
