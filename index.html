@@ -21,7 +21,8 @@
         </h1>
 
         <div class="profileInfo">
-            <i class="btnRefresh fas fa-sync-alt" title="Ververs gegevens" @click="setRefreshCooldown()" onclick="refreshData()"></i>
+            <i class="btnRefresh fas fa-sync-alt" title="Ververs gegevens"
+                @click="setRefreshCooldown()" :class="{ disabled: isRefreshCooldown }" onclick="refreshData()"></i>
             <h1 class="username">{{ profile.username }}</h1>
             <img class="profileIcon" :src="profile.imgUrl" title="Instellingen en profiel">
         </div>

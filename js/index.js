@@ -19,7 +19,6 @@ if ([5, 6].includes(today.getDay())) {
     agendaDate.setDate(today.getDate() + 1);
 }
 
-var isRefreshCooldown = false;
 var dayFormat = moment(agendaDate).format("dddd");
 var contentLoaded = 0;
 inTwoWeeks = moment(inTwoWeeks).add(14, 'days').toDate();
@@ -28,6 +27,7 @@ var app = new Vue({
     el: "#app",
     data: {
         isBeta: true,
+        isRefreshCooldown: false,
         agendaDate: "",
         showDoneHomework: false,
         showReadMail: false,
@@ -181,13 +181,10 @@ var app = new Vue({
             }
         },
         setRefreshCooldown() {
-            var btnRefresh = document.getElementsByClassName("btnRefresh")[0];
-            btnRefresh.classList.add("disabled");
-            isRefreshCooldown = true;
+            this.isRefreshCooldown = true;
 
             setTimeout(() => {
-                btnRefresh.classList.remove("disabled");
-                isRefreshCooldown = false;
+                this.isRefreshCooldown = false;
             }, 2500);
         }
     }
@@ -354,7 +351,7 @@ function refreshHomework(initial = false) {
 }
 
 function refreshData(initial = false) {
-    if (isRefreshCooldown) {
+    if (app.isRefreshCooldown) {
         return;
     }
 
