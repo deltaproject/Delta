@@ -14,7 +14,7 @@
 <body>
     <div id="app">
 
-    <div class="btnBar">
+    <div class="btnBar no-select">
         <div id="closeBtn">
             <i class="fas fa-times"></i>
         </div>
@@ -27,7 +27,7 @@
     <div id="notifyContainer"></div>
 
     <div class="containerAlt">
-        <h1>Inloggen</h1>
+        <h1 class="no-select">Inloggen</h1>
         <div class="login">
             <div class="loginContainer">
                 <input type="text" name="school" list="schools" v-model="creds.school"
@@ -45,7 +45,7 @@
                         placeholder="Wachtwoord" :class="{ error: loginIncorrect }"
                         :disabled="isBusy">
                 
-                <div class="checkContainer">
+                <div class="checkContainer no-select">
                     <input v-model="saveCreds" name="saveCreds" type="checkbox" :disabled="isBusy">
                     <span>Onthoud mij</span>
                 </div>
@@ -55,7 +55,7 @@
                 
                 <div v-if="isBusy" class="spinner">
                     <i class="fas fa-circle-notch spin"></i>
-                    <p v-if="loginSuccess" class="detail" >Gegevens laden...</p>
+                    <p v-if="loginSuccess" class="detail no-select" >Gegevens laden...</p>
                 </div>
             </div>
         </div>
