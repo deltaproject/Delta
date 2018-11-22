@@ -180,6 +180,9 @@ var app = new Vue({
                 sendNotify("Huiswerk gemarkeerd als onafgerond.", "success");
             }
         },
+        showInfoDetails(appointment) {
+            alert("Deze functie is helaas nog niet beschikbaar.")
+        },
         setRefreshCooldown() {
             this.isRefreshCooldown = true;
 
