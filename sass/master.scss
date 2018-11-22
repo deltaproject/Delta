@@ -110,16 +110,23 @@ html {
     }
 
     .btnSignOff {
+        $bgColor: rgb(212, 16, 16);
+
         cursor: pointer;
         display: inline-block;
         color: rgb(255, 255, 255);
-        background: rgb(212, 16, 16);
+        background: $bgColor;
         margin-right: 25px;
         font-weight: bold;
         font-size: 0.9em;
         text-align: center;
-        border-radius: 8px;
+        border-radius: 7px;
         padding: 5px 10px;
+        transition: background-color 0.5s;
+
+        &:hover {
+            background: lighten($color: $bgColor, $amount: 15)
+        }
     }
 }
 
