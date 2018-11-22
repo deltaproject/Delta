@@ -103,3 +103,7 @@ input[name="saveCreds"] {
         vertical-align: -10% !important;
     }    
 }
+
+.refreshPending {
+    animation: fa-spin 3s infinite linear;
+}
