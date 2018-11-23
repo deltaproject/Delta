@@ -28,14 +28,23 @@ mv "Delta-win32-x64" "$windows"
 mv "Delta-darwin-x64" "$macos"
 mv "Delta-linux-x64" "$linux"
 
+# Download a fresh copy of DeltaSetup
+git clone https://github.com/deltaproject/DeltaSetup deltasetup
+
+# Compile Windows setup
+cp -r $windows deltasetup/input
+cd deltasetup
+innosetup-compiler DeltaSetup.iss --verbose
+mv output/*.exe ..
+cd ..
+
 # Compress all builds
-zip -r "$windows.zip" "$windows"
 zip -r "$macos.zip" "$macos"
 zip -r "$linux.zip" "$linux"
 
 # Clean up
 echo "Cleaning up..."
-rm -R $windows $macos $linux
+rm -rf $windows $macos $linux deltasetup
 
 # Print the build files
 echo "Done."
