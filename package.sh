@@ -34,7 +34,8 @@ git clone https://github.com/deltaproject/DeltaSetup deltasetup
 # Compile Windows setup
 cp -r $windows deltasetup/input
 cd deltasetup
-innosetup-compiler DeltaSetup.iss --verbose
+cat DeltaSetup.iss | sed "s/0.0.0/$version/g" > .compile.iss
+innosetup-compiler .compile.iss --verbose
 mv output/*.exe ..
 cd ..
 
