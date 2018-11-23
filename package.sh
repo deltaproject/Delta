@@ -39,13 +39,49 @@ innosetup-compiler .compile.iss --verbose
 mv output/*.exe ..
 cd ..
 
-# Compress all builds
+# Compile Debian package
+deb_control="
+Package: delta
+Version: $version
+Section: unknown
+Priority: optional
+Architecture: amd64
+Maintainer: DeltaProject <deltaproject-gh@protonmail.com>
+Description: Een moderne versie van Magister, gemaakt voor leerlingen.
+"
+
+deb_postinst="
+#!/bin/bash
+sudo ln -s /opt/Delta/Delta /usr/bin/delta
+"
+
+deb_postrm="
+#!/bin/bash
+if [ -f /usr/bin/delta ]
+then
+    sudo rm /usr/bin/delta
+fi
+"
+
+mkdir debian-pkg
+cd debian-pkg
+
+mkdir DEBIAN opt
+echo "$deb_control" > DEBIAN/control
+echo "$deb_postinst" > DEBIAN/postinst
+echo "$deb_postrm" > DEBIAN/postrm
+chmod 755 DEBIAN/post*
+cp -r ../$linux opt/Delta
+cd ..
+dpkg-deb --verbose --build debian-pkg
+mv debian-pkg.deb $linux.deb
+
+# Compress macOS app
 zip -r "$macos.zip" "$macos"
-zip -r "$linux.zip" "$linux"
 
 # Clean up
 echo "Cleaning up..."
-rm -rf $windows $macos $linux deltasetup
+rm -rf $windows $macos $linux deltasetup debian-pkg
 
 # Print the build files
 echo "Done."
