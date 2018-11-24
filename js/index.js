@@ -236,7 +236,7 @@ var app = new Vue({
                 };
     
                 dialogQuestion(
-                    `Er is een update beschikbaar, versie ${releaseData.version}. ` +
+                    `Er is een update beschikbaar, versie ${releaseData.tag_name}. ` +
                     "Hij is al gedownload op je computer.\nWil je hem nu installeren?",
                     "Update",
                     ["Installeer nu", "Later"], 1,
@@ -261,7 +261,7 @@ var app = new Vue({
         checkUpdates() {
             var url = "https://api.github.com/repos/deltaproject/Delta/releases";
             $.getJSON(url, function(data) {
-                $.getJSON(`https://raw.githubusercontent.com/deltaproject/Delta/${data[1].tag_name}/package.json`, function(packageData) {
+                $.getJSON(`https://raw.githubusercontent.com/deltaproject/Delta/${data[0].tag_name}/package.json`, function(packageData) {
                     var currentVersion = electron.getVersion();
                     var latestVersion = packageData.version;
                     if (currentVersion != latestVersion) {
