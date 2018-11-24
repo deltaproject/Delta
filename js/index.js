@@ -186,7 +186,7 @@ var app = new Vue({
             }
         },
         showInfoDetails(appointment) {
-            alert("Deze functie is helaas nog niet beschikbaar.")
+            dialogInfo("Deze functie is helaas nog niet beschikbaar.")
         },
         signOff() {
             var credsFile = path.join(electron.getPath("userData"), "delta.json");
