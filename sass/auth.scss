@@ -56,7 +56,7 @@
 .spinner {
     margin: auto;
     margin-top: 20px;
-    animation: fadeIn 0.8s;
+    animation: fadeIn 1s;
 
     i {
         font-size: 30px;
@@ -68,7 +68,7 @@
     }
 
     p.detail {
-        animation: fadeIn 0.8s;
+        animation: fadeInUp 1s;
     }
 }
 
