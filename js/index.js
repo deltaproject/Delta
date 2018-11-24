@@ -1,6 +1,7 @@
 const { remote, ipcRenderer } = require("electron");
 const path = require("path");
 const url = require("url");
+const os = require("os");
 const moment = require("moment");
 const chart = require("chart.js");
 const _ = require("lodash");
@@ -8,6 +9,8 @@ const fs = require("fs");
 const electron = remote.app;
 const shell = remote.shell;
 const dialog = remote.dialog;
+const download = require("download");
+const $ = require("jquery/dist/jquery");
 moment.locale("nl");
 
 var m = remote.getGlobal("m");
@@ -195,6 +198,77 @@ var app = new Vue({
                 dialogError("Er ging iets fout tijdens het afmelden. " +
                     "Probeer Delta opnieuw op te starten en vervolgens opnieuw af te melden.");
             }
+        },
+        downloadUpdates(releaseData) {
+            let targetPlatform;
+            let targetUrl;
+            let targetFilename;
+
+            switch (os.type()) {
+                case "Windows_NT":
+                    targetPlatform = "windows";
+                    break;
+                case "Linux":
+                    targetPlatform = "linux";
+                    break;
+                case "Darwin":
+                    targetPlatform = "macOS";
+                    break;
+            }
+
+            for (let i = 0; i < releaseData.assets.length; i++) {
+                const element = releaseData.assets[i];
+                if (element.name.indexOf(targetPlatform) != -1) {
+                    targetUrl = element.browser_download_url;
+                    targetFilename = element.name;
+                }
+            }
+
+            var downloadsPath = electron.getPath('downloads');
+            var filePath = path.join(downloadsPath, targetFilename);
+
+            download(targetUrl, downloadsPath).then(() => {
+                var updateData = {
+                    targetPlatform: targetPlatform,
+                    targetUrl: targetUrl,
+                    targetFilename: targetFilename,
+                    targetPath: filePath
+                };
+    
+                dialogQuestion(
+                    `Er is een update beschikbaar, versie ${releaseData.version}. ` +
+                    "Hij is al gedownload op je computer.\nWil je hem nu installeren?",
+                    "Update",
+                    ["Installeer nu", "Later"], 1,
+                    function(response) {
+                        var install = response == 0 ? true : false;
+                        if (install) {
+                            app.installUpdates(updateData);
+                        }
+                    }
+                );
+            });
+        },
+        installUpdates(updateData) {
+            if (updateData.targetPlatform == "windows") {
+                shell.openItem(updateData.targetPath);
+            } else {
+                shell.showItemInFolder(updateData.targetPath);
+            }
+
+            electron.quit();
+        },
+        checkUpdates() {
+            var url = "https://api.github.com/repos/deltaproject/Delta/releases";
+            $.getJSON(url, function(data) {
+                $.getJSON(`https://raw.githubusercontent.com/deltaproject/Delta/${data[1].tag_name}/package.json`, function(packageData) {
+                    var currentVersion = electron.getVersion();
+                    var latestVersion = packageData.version;
+                    if (currentVersion != latestVersion) {
+                        app.downloadUpdates(data[0]);
+                    }
+                });
+            });
         },
         setRefreshCooldown() {
             this.isRefreshCooldown = true;
@@ -416,6 +490,7 @@ function refreshData(initial = false) {
     if (initial) {
         isContentLoaded(() => {
             ipcRenderer.send("content-loaded");
+            app.checkUpdates();
         })
     }
 }
@@ -426,6 +501,18 @@ function dialogInfo(message) {
         type: "info",
         buttons: ["OK"],
         message: message
+    });
+}
+
+function dialogQuestion(message, title, buttons, cancelId, callback) {
+    dialog.showMessageBox({
+        title: title,
+        type: "question",
+        buttons: buttons,
+        message: message,
+        cancelId: cancelId
+    }, function (response, checked) {
+        callback(response);
     });
 }
 
