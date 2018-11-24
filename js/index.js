@@ -3,7 +3,6 @@ const path = require("path");
 const url = require("url");
 const os = require("os");
 const moment = require("moment");
-const chart = require("chart.js");
 const _ = require("lodash");
 const fs = require("fs");
 const electron = remote.app;
@@ -280,72 +279,6 @@ var app = new Vue({
     }
 });
 
-function refreshGraph(grades) {
-    var months = [
-        "januari", "februari",
-        "maart", "april",
-        "mei", "juni",
-        "juli", "augustus",
-        "september", "oktober",
-        "november", "december"
-    ];
-
-    var chartData = {
-        labels: [],
-        datasets: [{
-            label: "Gemiddeld behaald cijfer",
-            data: [],
-            backgroundColor: "rgba(255, 99, 132, 0.2)",
-            borderColor: "rgba(255, 99, 132, 1)",
-            borderWidth: 1.5
-        }]
-    };
-
-    grades.reverse();
-    grades.forEach(i => {
-        var date = new Date(i.dateFilledIn()).getMonth();
-        var monthName = months[date];
-
-        if (!chartData.labels.includes(monthName)) {
-            var totalThisMonth = 0.0;
-            var averageThisMonth = 0.0;
-            var entriesThisMonth = 0;
-
-            grades.forEach(gradeThisMonth => {
-                if (new Date(gradeThisMonth.dateFilledIn()).getMonth() == date) {
-                    totalThisMonth += parseFloat(gradeThisMonth.grade().replace(",", "."));
-                    entriesThisMonth++;
-                }
-            });
-
-            averageThisMonth = totalThisMonth / entriesThisMonth;
-
-            chartData.labels.push(monthName);
-            chartData.datasets[0].data.push(Math.round(averageThisMonth * 100) / 100);
-        }
-    });
-
-    var context = document.getElementById("perfChart").getContext("2d");
-    new Chart(context, {
-        type: "line",
-        data: chartData,
-        options: {
-            plugins: {
-                deferred: {
-                    delay: 500
-                }
-            },
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
-        }
-    });
-}
-
 function computeInsights() {
     let insights = [];
 
@@ -493,36 +426,6 @@ function refreshData(initial = false) {
             app.checkUpdates();
         })
     }
-}
-
-function dialogInfo(message) {
-    dialog.showMessageBox({
-        title: "Informatie",
-        type: "info",
-        buttons: ["OK"],
-        message: message
-    });
-}
-
-function dialogQuestion(message, title, buttons, cancelId, callback) {
-    dialog.showMessageBox({
-        title: title,
-        type: "question",
-        buttons: buttons,
-        message: message,
-        cancelId: cancelId
-    }, function (response, checked) {
-        callback(response);
-    });
-}
-
-function dialogError(message) {
-    dialog.showMessageBox({
-        title: "Fout",
-        type: "error",
-        buttons: ["OK"],
-        message: message
-    });
 }
 
 function printBanner() {
