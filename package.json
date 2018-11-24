@@ -13,7 +13,7 @@
   "author": "Kees van Voorthuizen",
   "license": "MPL-2.0",
   "devDependencies": {
-    "electron": "^3.0.9"
+    "electron": "^3.0.10"
   },
   "dependencies": {
     "chart.js": "^2.7.3",
