@@ -82,14 +82,22 @@ var app = new Vue({
                 return gradeFloat > 8.0;
             },
             downloadAttachment(file) {
-                // var downloadsPath = electron.getPath('downloads');
-                // var filePath = path.join(downloadsPath, file.name())
+                var downloadsPath = electron.getPath("downloads");
+                var filePath = path.join(downloadsPath, file.name)
+                var fileStream = fs.createWriteStream(filePath);
 
-                // file.download(downloadsPath, (err, result) => {
-                //     if (err) console.log(err);
-                //     shell.openItem(filePath)
-                //     console.log(filePath)
-                // });
+                fileStream.on("open", () => {
+                    file.download()
+                    .then((stream) => {
+                        console.log(stream);
+
+                        stream.on("data", (data) => {
+                            fileStream.write(data);
+                        })
+
+                        // shell.openItem(filePath)
+                    });
+                });
             }
         },
         formatTime(date) {
