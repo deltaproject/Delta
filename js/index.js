@@ -82,7 +82,7 @@ function refreshData(initial = false) {
                 
                 var validGrades = [];
                 grades.forEach(i => {
-                    if (i.counts)
+                    if (i.counts && i.weight > 0)
                         validGrades.push(i);
                 });
         
