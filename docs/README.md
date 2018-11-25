@@ -18,7 +18,9 @@
 </div>
 
 # Installatie
-Delta is momenteel nog in de bètafase, dus verdere instructies en documentatie volgen later.
+Je kunt de laatste versie van Delta installeren door naar [deltaproject.github.io](https://deltaproject.github.io) te gaan, naar de sectie Downloads te scrollen en vervolgens op de download te klikken die geschikt is voor jouw besturingssysteem.
+
+Voor een overzicht van alle (bèta)versies/releases van Delta kun je terecht op de pagina [Releases](https://github.com/deltaproject/Delta/releases).
 
 # Voor ontwikkelaars
 1. Clone deze repository naar je lokale schijf met `git clone https://github.com/deltaproject/Delta`
