@@ -117,16 +117,17 @@ var app = new Vue({
                 return diff._i + 1;
         },
         trimContent(str, maxLength = 120) {
-            let finalString = "";
-
-            finalString = str
+            let element = document.createElement("p");
+            let finalString;
+            element.innerHTML = str;
+            finalString = element.textContent || element.innerText || "";
+            
+            finalString = finalString
                 .split("\n").join(" ")
                 .split("\r").join(" ");
 
-            if (str.length > maxLength) {
-                finalString = str.substring(0, maxLength - 3) + "...";
-            } else {
-                finalString = str;
+            if (finalString.length > maxLength) {
+                finalString = finalString.substring(0, maxLength - 3) + "...";
             }
 
             return finalString;
