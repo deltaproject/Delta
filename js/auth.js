@@ -36,13 +36,13 @@ var app = new Vue({
                 });
         },
         login() {
-            this.getSchools();
-
             app.isBusy = true;
             app.loginIncorrect = false;
             app.schoolIncorrect = false;
             app.loginSuccess = false;
             
+            this.getSchools();
+
             if (this.schoolQuery.length == 0) {
                 app.schoolIncorrect = true;
                 app.isBusy = false;
