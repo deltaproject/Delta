@@ -197,13 +197,13 @@
                 <div v-for="i in magister.getLastGrades()" class="smallCard">
                     <div>
                         <div
-                            :class="{ failed: magister.isFailed(i.grade()), wellDone: magister.isWellDone(i.grade()) }"
+                            :class="{ failed: magister.isFailed(i.grade), wellDone: magister.isWellDone(i.grade) }"
                             class="itemContainer gradeItem">
                             
-                            <p>{{ i.grade() }}</p>
+                            <p>{{ i.grade }}</p>
                         </div>
 
-                        <p>{{ i.class().description }} <p class="detail">{{ i.weight().toFixed(1) }}x</p></p>
+                        <p>{{ i.class.description }} <p class="detail">{{ i.weight.toFixed(1) }}x</p></p>
                     </div>
                 </div>
             </div>
