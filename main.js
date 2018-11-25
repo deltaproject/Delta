@@ -1,5 +1,5 @@
 const _ = require("lodash");
-const Magister = require("magister.js");
+const { default: magister, getSchools } = require("magister.js");
 const electron = require("electron");
 const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
@@ -43,22 +43,19 @@ function createWindow() {
 }
 
 ipcMain.on("validate-creds", (event, creds) => {
-    var magister = new Magister.Magister({
-        school: creds.school,
-        username: creds.username,
-        password: creds.password
-    });
-
-    magister.ready(function () {
-        try {
-            if (magister.profileInfo().id() != undefined) {
-                global.m = magister;
-                authWin.webContents.send("login-success", true);
-            }
-        } catch (err) {
-                authWin.webContents.send("login-success", false);
-        }
-    });
+    getSchools(creds.school)
+	    .then((schools) => schools[0])
+	    .then((school) => magister({
+		    school,
+		    username: creds.username,
+		    password: creds.password,
+        }))
+        .then((m) => {
+            global.m = m;
+            authWin.webContents.send("login-success", true);
+        }, (err) => {
+            authWin.webContents.send("login-success", false);
+        });
 });
 
 ipcMain.on("prepare-main", (event) => {
