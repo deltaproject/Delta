@@ -67,8 +67,10 @@ ipcMain.on("prepare-main", (event) => {
 })
 
 ipcMain.on("content-loaded", (event) => {
-    authWin.close();
-    mainWin.show();
+    try {
+        authWin.close();
+        mainWin.show();
+    } catch (err) { }
 });
 
 app.on("ready", function () {
