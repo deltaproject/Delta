@@ -1,7 +1,7 @@
 {
   "name": "delta",
   "productName": "Delta",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "Een moderne versie van Magister, gemaakt voor leerlingen.",
   "main": "main.js",
   "scripts": {
