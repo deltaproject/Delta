@@ -99,7 +99,7 @@ function refreshData(initial = false) {
     
     m.messageFolders()
         .then((folders) => {
-            folders[0].then((messages) => {
+            folders[0].messages().then((messages) => {
                 app.magister.messages = messages;
                 if (initial)
                     contentLoaded++;
