@@ -16,6 +16,7 @@
     "electron": "^3.0.10"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.5.0",
     "chart.js": "^2.7.3",
     "chartjs-plugin-deferred": "^1.0.1",
     "download": "^7.1.0",
