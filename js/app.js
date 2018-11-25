@@ -47,7 +47,7 @@ var app = new Vue({
             },
             parseGrade(grade) {
                 if (!isNaN(parseFloat(grade.grade.replace(",", ".")))
-                    && parseFloat(grade.weight.replace(",", ".")) > 0 && grade.counts) {
+                    && grade.weight > 0 && grade.counts) {
 
                     return parseFloat(grade.grade.replace(",", "."));
                 }
@@ -63,7 +63,8 @@ var app = new Vue({
 
                     const element = this.grades[i];
                     if (element.type.header == null
-                        && parseFloat(element.weight.replace(",", ".")) > 0) {
+                        && element.weight > 0) {
+
                         lastGrades.push(element);
                     }
                 }
