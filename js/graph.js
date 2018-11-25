@@ -23,7 +23,7 @@ function refreshGraph(grades) {
 
     grades.reverse();
     grades.forEach(i => {
-        var date = new Date(i.dateFilledIn()).getMonth();
+        var date = new Date(i.dateFilledIn).getMonth();
         var monthName = months[date];
 
         if (!chartData.labels.includes(monthName)) {
@@ -32,7 +32,7 @@ function refreshGraph(grades) {
             var entriesThisMonth = 0;
 
             grades.forEach(gradeThisMonth => {
-                if (new Date(gradeThisMonth.dateFilledIn()).getMonth() == date) {
+                if (new Date(gradeThisMonth.dateFilledIn).getMonth() == date) {
                     totalThisMonth += parseFloat(gradeThisMonth.grade().replace(",", "."));
                     entriesThisMonth++;
                 }
