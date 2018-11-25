@@ -98,7 +98,7 @@ function refreshData(initial = false) {
     m.messageFolders()
         .then((folders) => {
             folders[0].messages().then((messages) => {
-                app.magister.messages = messages;
+                app.magister.messages = messages.messages;
                 if (initial)
                     contentLoaded++;
             })
