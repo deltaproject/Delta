@@ -80,14 +80,14 @@ var app = new Vue({
                 return gradeFloat > 8.0;
             },
             downloadAttachment(file) {
-                var downloadsPath = electron.getPath('downloads');
-                var filePath = path.join(downloadsPath, file.name())
+                // var downloadsPath = electron.getPath('downloads');
+                // var filePath = path.join(downloadsPath, file.name())
 
-                file.download(downloadsPath, (err, result) => {
-                    if (err) console.log(err);
-                    shell.openItem(filePath)
-                    console.log(filePath)
-                });
+                // file.download(downloadsPath, (err, result) => {
+                //     if (err) console.log(err);
+                //     shell.openItem(filePath)
+                //     console.log(filePath)
+                // });
             }
         },
         formatTime(date) {
