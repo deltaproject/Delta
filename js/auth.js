@@ -1,6 +1,6 @@
 const { remote, ipcRenderer } = require("electron");
 const electron = remote.app;
-const Magister = remote.require("magister.js");
+const { default: magister, getSchools } = remote.require("magister.js");
 const fs = require("fs");
 const path = require("path");
 
@@ -30,10 +30,10 @@ var app = new Vue({
     },
     methods: {
         getSchools() {
-            Magister.MagisterSchool.getSchools(this.creds.school, (err, result) => {
-                if (err) console.log(err);
-                app.schoolQuery = result;
-            });
+            getSchools(this.creds.school)
+                .then((schools) => {
+                    app.schoolQuery = schools;
+                });
         },
         login() {
             app.isBusy = true;
