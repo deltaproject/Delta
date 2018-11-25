@@ -2,7 +2,7 @@ const { remote, ipcRenderer } = require("electron");
 const electron = remote.app;
 const Magister = remote.require("magister.js");
 const fs = require("fs");
-const path = require('path');
+const path = require("path");
 
 var credsFile = path.join(electron.getPath("userData"), "delta.json");
 

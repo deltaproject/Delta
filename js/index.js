@@ -10,6 +10,7 @@ const shell = remote.shell;
 const dialog = remote.dialog;
 const download = require("download");
 const $ = require("jquery/dist/jquery");
+const Vue = require("vue/dist/vue");
 moment.locale("nl");
 
 var m = remote.getGlobal("m");

@@ -25,6 +25,7 @@
     "lodash": "^4.17.11",
     "magister.js": "^1.24.2",
     "moment": "^2.22.2",
-    "underscore": "^1.9.1"
+    "underscore": "^1.9.1",
+    "vue": "^2.5.17"
   }
 }
