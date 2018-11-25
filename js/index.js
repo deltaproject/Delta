@@ -71,8 +71,8 @@ function refreshData(initial = false) {
 
     refreshHomework(true);
 
-    m.courses().then((course) => {
-        course[0].grades()
+    m.courses().then((courses) => {
+        _.last(courses).grades()
             .then((grades) => {
                 grades.sort(function (a, b) {
                     var dateA = new Date(a.dateFilledIn);
