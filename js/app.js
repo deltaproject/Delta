@@ -33,11 +33,12 @@ var app = new Vue({
             },
             filterHomework(doneState) {
                 let array = [];
+
                 for (let i = 0; i < this.appointments.length; i++) {
                     const element = this.appointments[i];
                     if (element.isDone == doneState
-                        && element.content.length > 0
-                        && !["test", "quiz"].includes(element.infoType))
+                        && element.content != undefined
+                        && element.infoType == 1)
 
                         array.push(element);
                 }
@@ -149,7 +150,8 @@ var app = new Vue({
     },
     methods: {
         toggleHomeworkState(appointment) {
-            appointment.isDone(!appointment.isDone);
+            appointment.isDone = !appointment.isDone;
+            appointment.saveChanges();
             refreshHomework();
 
             if (appointment.isDone) {
