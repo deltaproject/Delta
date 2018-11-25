@@ -25,7 +25,7 @@ var app = new Vue({
                     }
 
                     const element = this.messages[i];
-                    if (element.isRead() == readState)
+                    if (element.isRead == readState)
                         array.push(element);
                 }
 
@@ -33,11 +33,12 @@ var app = new Vue({
             },
             filterHomework(doneState) {
                 let array = [];
+
                 for (let i = 0; i < this.appointments.length; i++) {
                     const element = this.appointments[i];
-                    if (element.isDone() == doneState
-                        && element.content().length > 0
-                        && !["test", "quiz"].includes(element.infoTypeString()))
+                    if (element.isDone == doneState
+                        && element.content != undefined
+                        && element.infoType == 1)
 
                         array.push(element);
                 }
@@ -45,8 +46,10 @@ var app = new Vue({
                 return array;
             },
             parseGrade(grade) {
-                if (!isNaN(parseFloat(grade.grade().replace(",", "."))) && grade.weight() > 0 && grade.counts()) {
-                    return parseFloat(grade.grade().replace(",", "."));
+                if (!isNaN(parseFloat(grade.grade.replace(",", ".")))
+                    && grade.weight > 0 && grade.counts) {
+
+                    return parseFloat(grade.grade.replace(",", "."));
                 }
             },
             gradeToString(gradeFloat) {
@@ -59,7 +62,9 @@ var app = new Vue({
                         break;
 
                     const element = this.grades[i];
-                    if (element.type().header() == null && element.weight() > 0) {
+                    if (element.type.header == null
+                        && element.weight > 0) {
+
                         lastGrades.push(element);
                     }
                 }
@@ -77,13 +82,21 @@ var app = new Vue({
                 return gradeFloat > 8.0;
             },
             downloadAttachment(file) {
-                var downloadsPath = electron.getPath('downloads');
-                var filePath = path.join(downloadsPath, file.name())
+                var downloadsPath = electron.getPath("downloads");
+                var filePath = path.join(downloadsPath, file.name)
+                var fileStream = fs.createWriteStream(filePath);
 
-                file.download(downloadsPath, (err, result) => {
-                    if (err) console.log(err);
-                    shell.openItem(filePath)
-                    console.log(filePath)
+                fileStream.on("open", () => {
+                    file.download()
+                    .then((stream) => {
+                        console.log(stream);
+
+                        stream.on("data", (data) => {
+                            fileStream.write(data);
+                        })
+
+                        // shell.openItem(filePath)
+                    });
                 });
             }
         },
@@ -139,17 +152,18 @@ var app = new Vue({
             }
         },
         getAttachmentTitle(file) {
-            return "Naam:\t" + file.name() + "\n" +
-                   "Grootte:\t" + Math.round(file.size() / 1024) + " KB" + "\n\n" +
+            return "Naam:\t" + file.name + "\n" +
+                   "Grootte:\t" + Math.round(file.size / 1024) + " KB" + "\n\n" +
                    "Klik om te downloaden.";
         }
     },
     methods: {
         toggleHomeworkState(appointment) {
-            appointment.isDone(!appointment.isDone());
+            appointment.isDone = !appointment.isDone;
+            appointment.saveChanges();
             refreshHomework();
 
-            if (appointment.isDone()) {
+            if (appointment.isDone) {
                 sendNotify("Huiswerk is afgerond!", "success");
             } else {
                 sendNotify("Huiswerk gemarkeerd als onafgerond.", "success");

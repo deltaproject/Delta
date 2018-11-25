@@ -1,6 +1,6 @@
 const { remote, ipcRenderer } = require("electron");
 const electron = remote.app;
-const Magister = remote.require("magister.js");
+const { default: magister, getSchools } = remote.require("magister.js");
 const fs = require("fs");
 const path = require("path");
 
@@ -29,20 +29,21 @@ var app = new Vue({
         }
     },
     methods: {
-        getSchools() {
-            Magister.MagisterSchool.getSchools(this.creds.school, (err, result) => {
-                if (err) console.log(err);
-                app.schoolQuery = result;
-            });
+        getSchools(callback = null) {
+            getSchools(this.creds.school)
+                .then((schools) => {
+                    app.schoolQuery = schools;
+                    if (callback != null) callback();
+                });
         },
         login() {
             app.isBusy = true;
             app.loginIncorrect = false;
             app.schoolIncorrect = false;
             app.loginSuccess = false;
-
-            Magister.MagisterSchool.getSchools(this.creds.school, (err, result) => {
-                if (result.length == 0 || err) {
+            
+            this.getSchools(() => {
+                if (this.schoolQuery.length == 0) {
                     app.schoolIncorrect = true;
                     app.isBusy = false;
                     sendNotify("De schoolnaam die je hebt ingevoerd bestaat niet. Check of je de volledige naam hebt gebruikt van de school.", "error");
@@ -53,7 +54,7 @@ var app = new Vue({
                 ipcRenderer.on("login-success", (event, isSuccess) => {
                     if (isSuccess) {
                         app.loginSuccess = true;
-
+    
                         let rawJson = JSON.stringify(app.creds);
                         if (app.saveCreds) {
                             fs.writeFile(credsFile, rawJson, 'utf8', (err) => {
@@ -62,14 +63,14 @@ var app = new Vue({
                                 }
                             }); 
                         }
-
+    
                         ipcRenderer.send("prepare-main");
                     } else {
                         app.loginIncorrect = true;
                         app.isBusy = false;
                         sendNotify("Je gebruikersnaam en/of wachtwoord kloppen niet.", "error");
                     }
-                })
+                });
             });
         }
     }

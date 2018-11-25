@@ -52,14 +52,14 @@
                     <p>Geen afspraken voor morgen.</p>
                 </div>
 
-                <div v-for="i in magister.appointments" :class="{ scrapped: i.scrapped() }" class="bigListItem">
-                    <div class="itemContainer calendarItem">{{ i.beginBySchoolHour() }}</div>
-                    <div v-if="i.beginBySchoolHour() != i.endBySchoolHour()" class="itemContainer calendarItem">{{ i.endBySchoolHour() }}</div>
+                <div v-for="i in magister.appointments" :class="{ scrapped: i.isCancelled }" class="bigListItem">
+                    <div class="itemContainer calendarItem">{{ i.startBySchoolhour }}</div>
+                    <div v-if="i.startBySchoolhour != i.endBySchoolhour" class="itemContainer calendarItem">{{ i.endBySchoolhour }}</div>
                     <div class="itemDesc">
                         <p>
-                            {{ i.classes()[0] }}
-                            <span> {{ formatTime(i.begin()) }} - {{ formatTime(i.end()) }} </span>
-                            <span class="location">{{ i.location() }}</span>
+                            {{ i.classes[0] }}
+                            <span> {{ formatTime(i.start) }} - {{ formatTime(i.end) }} </span>
+                            <span class="location">{{ i.location }}</span>
                         </p>
                     </div>
                 </div>
@@ -87,8 +87,8 @@
                         </div>
 
 
-                        <p>{{ i.classes()[0] }}</p>
-                        <p>{{ trimContent(i.content()) }}</p>
+                        <p>{{ i.classes[0] }}</p>
+                        <p>{{ trimContent(i.content) }}</p>
                     </div>
 
                     <div class="btnPanel">
@@ -108,8 +108,8 @@
                             <i class="fas fa-check"></i>
                         </div>
 
-                        <p>{{ i.classes()[0] }}</p>
-                        <p>{{ trimContent(i.content()) }}</p>
+                        <p>{{ i.classes[0] }}</p>
+                        <p>{{ trimContent(i.content) }}</p>
                     </div>
 
                     <div class="btnPanel">
@@ -146,16 +146,16 @@
 
                     <div class="itemDesc">
                         <p>
-                            {{ i.sender().fullName() }} -
-                            <span>{{ i.subject() }}</span>
+                            {{ i.sender.fullName }} -
+                            <span>{{ i.subject }}</span>
                         </p>
-                        <p>{{ trimContent(i.body()) }}</p>
-                        <div v-if="i.attachments().length > 0" class="attachContainer">
-                            <div v-for="file in i.attachments()"
+                        <p>{{ trimContent(i.body) }}</p>
+                        <div v-if="i.attachments != undefined" class="attachContainer">
+                            <div v-for="file in i.attachments"
                                 @click="magister.downloadAttachment(file)"
                                 :title="getAttachmentTitle(file)" class="attachment">
-                                <i :class="getFileIcon(file.name())" class="attachIcon far"></i>
-                                <p>{{ trimContent(file.name(), 25) }}</p>
+                                <i :class="getFileIcon(file.name)" class="attachIcon far"></i>
+                                <p>{{ trimContent(file.name, 25) }}</p>
                             </div>
                         </div>
                     </div>
@@ -168,17 +168,17 @@
 
                     <div class="itemDesc">
                         <p>
-                            {{ i.sender().fullName() }} -
-                            <span>{{ i.subject() }}</span>
+                            {{ i.sender.fullName }} -
+                            <span>{{ i.subject }}</span>
                         </p>
-                        <p>{{ trimContent(i.body()) }}</p>
-                        <div v-if="i.attachments().length > 0" class="attachContainer">
-                            <div v-for="file in i.attachments()"
+                        <p>{{ trimContent(i.body) }}</p>
+                        <div v-if="i.attachments != undefined" class="attachContainer">
+                            <div v-for="file in i.attachments"
                                 @click="magister.downloadAttachment(file)"
                                 :title="getAttachmentTitle(file)"
                                 class="attachment">
-                                <i :class="getFileIcon(file.name())" class="attachIcon far"></i>
-                                <p>{{ trimContent(file.name(), 25) }}</p>
+                                <i :class="getFileIcon(file.name)" class="attachIcon far"></i>
+                                <p>{{ trimContent(file.name, 25) }}</p>
                             </div>
                         </div>
                     </div>
@@ -197,13 +197,13 @@
                 <div v-for="i in magister.getLastGrades()" class="smallCard">
                     <div>
                         <div
-                            :class="{ failed: magister.isFailed(i.grade()), wellDone: magister.isWellDone(i.grade()) }"
+                            :class="{ failed: magister.isFailed(i.grade), wellDone: magister.isWellDone(i.grade) }"
                             class="itemContainer gradeItem">
                             
-                            <p>{{ i.grade() }}</p>
+                            <p>{{ i.grade }}</p>
                         </div>
 
-                        <p>{{ i.class().description }} <p class="detail">{{ i.weight().toFixed(1) }}x</p></p>
+                        <p>{{ i.class.description }} <p class="detail">{{ i.weight.toFixed(1) }}x</p></p>
                     </div>
                 </div>
             </div>
@@ -219,19 +219,20 @@
 
                 <div v-for="i in magister.tests" class="smallCard">
                     <div class="itemContainer testItem">
-                        <p v-if="i.infoTypeString() == 'test'">PW</p>
-                        <p v-if="i.infoTypeString() == 'quiz'">SO</p>
+                        <p v-if="i.infoType == 2">PW</p>
+                        <p v-if="i.infoType == 4">SO</p>
+                        <p v-if="i.infoType == 5">MO</p>
                     </div>
 
-                    <p>{{ i.classes()[0] }}</p>
+                    <p>{{ i.classes[0] }}</p>
                     <p class="detail">
-                        {{ formatDateHuman(i.begin()) }}
-                        <span :class="{ warn: getDateDifference(new Date(), i.begin()) < 3 }"
+                        {{ formatDateHuman(i.start) }}
+                        <span :class="{ warn: getDateDifference(new Date(), i.start) < 3 }"
                             class="right">
                             <i class="far fa-clock"></i>
-                            over {{ getDateDifference(new Date(), i.begin(), true) }} dag{{ getDateDifference(new Date(), i.begin(), true) > 1 ? "en" : "" }}</span>
+                            over {{ getDateDifference(new Date(), i.start, true) }} dag{{ getDateDifference(new Date(), i.start, true) > 1 ? "en" : "" }}</span>
                     </p>
-                    <p>{{ trimContent(i.content()) }}</p>
+                    <p>{{ trimContent(i.content) }}</p>
                 </div>
             </div>
         </div>
@@ -280,8 +281,8 @@
                         <div class="itemContainer homeworkItem">
                             <i class="far fa-edit"></i>
                         </div>
-                        <p>{{ i.name() }}</p>
-                        <p>{{ trimContent(i.description()) }}</p>
+                        <p>{{ i.name }}</p>
+                        <p>{{ trimContent(i.description) }}</p>
                     </div>
                 </div>
             </div>

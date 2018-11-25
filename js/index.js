@@ -39,23 +39,22 @@ function isContentLoaded(callback) {
 }
 
 function refreshHomework(initial = false) {
-    m.appointments(agendaDate, inTwoWeeks, function (e, appointments) {
-        let tests = [];
-        for (let i = 0; i < appointments.length; i++) {
-            const element = appointments[i];
-            
-            if (element.infoTypeString() == "test" ||
-                element.infoTypeString() == "quiz") {
-
-                tests.push(element);
+    m.appointments(agendaDate, inTwoWeeks)
+        .then((appointments) => {
+            let tests = [];
+            for (let i = 0; i < appointments.length; i++) {
+                const element = appointments[i];
+                
+                if ([2, 4, 5].includes(element.infoType)) {
+                    tests.push(element);
+                }
             }
-        }
 
-        app.magister.tests = tests;
+            app.magister.tests = tests;
 
-        if (initial)
-            contentLoaded++;
-    });
+            if (initial)
+                contentLoaded++;
+        });
 }
 
 function refreshData(initial = false) {
@@ -63,47 +62,54 @@ function refreshData(initial = false) {
         return;
     }
 
-    m.appointments(agendaDate, agendaDate, function (e, appointments) {
-        app.magister.appointments = appointments;
-        if (initial)
-            contentLoaded++;
-    });
-
-    refreshHomework(true);
-
-    m.currentCourse(function (courseErr, course) {
-        course.grades(function(e, grades) {
-            grades.sort(function (a, b) {
-                var dateA = new Date(a.dateFilledIn());
-                var dateB = new Date(b.dateFilledIn());
-                return dateB - dateA;
-            });
-            
-            var validGrades = [];
-            grades.forEach(i => {
-                if (i.counts() && i.weight() > 0)
-                    validGrades.push(i);
-            });
-    
-            app.magister.grades = grades;
-            app.magister.insights = computeInsights();
-            refreshGraph(validGrades);
+    m.appointments(agendaDate, agendaDate)
+        .then((appointments) => {
+            app.magister.appointments = appointments;
             if (initial)
                 contentLoaded++;
         });
+
+    refreshHomework(true);
+
+    m.courses().then((courses) => {
+        _.last(courses).grades()
+            .then((grades) => {
+                grades.sort(function (a, b) {
+                    var dateA = new Date(a.dateFilledIn);
+                    var dateB = new Date(b.dateFilledIn);
+                    return dateB - dateA;
+                });
+                
+                var validGrades = [];
+                grades.forEach(i => {
+                    if (i.counts && i.weight > 0)
+                        validGrades.push(i);
+                });
+        
+                app.magister.grades = grades;
+                app.magister.insights = computeInsights();
+
+                refreshGraph(validGrades);
+                if (initial)
+                    contentLoaded++;
+        });
     });
     
-    m.inbox().messages(function (e, messages) {
-        app.magister.messages = messages;
-        if (initial)
-            contentLoaded++;
-    });
+    m.messageFolders()
+        .then((folders) => {
+            folders[0].messages().then((messages) => {
+                app.magister.messages = messages.messages;
+                if (initial)
+                    contentLoaded++;
+            })
+        });
     
-    m.assignments(function (e, assignments) {
-        app.magister.assignments = assignments;
-        if (initial)
-            contentLoaded++;
-    });
+    m.assignments()
+        .then((assignments) => {
+            app.magister.assignments = assignments;
+            if (initial)
+                contentLoaded++;
+        });
 
     if (initial) {
         isContentLoaded(() => {
@@ -113,7 +119,7 @@ function refreshData(initial = false) {
     }
 }
 
-app.profile.username = m.profileInfo().fullName();
+app.profile.username = m.profileInfo.getFullName(false);
 app.agendaDate = dayFormat;
 
 if (m != null) {
