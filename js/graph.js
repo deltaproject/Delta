@@ -31,9 +31,9 @@ function refreshGraph(grades) {
             var averageThisMonth = 0.0;
             var entriesThisMonth = 0;
 
-            grades.forEach(gradeThisMonth => {
-                if (new Date(gradeThisMonth.dateFilledIn).getMonth() == date) {
-                    totalThisMonth += parseFloat(gradeThisMonth.grade().replace(",", "."));
+            grades.forEach(i => {
+                if (new Date(i.dateFilledIn).getMonth() == date) {
+                    totalThisMonth += parseFloat(i.grade.replace(",", "."));
                     entriesThisMonth++;
                 }
             });
