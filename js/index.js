@@ -119,7 +119,7 @@ function refreshData(initial = false) {
     }
 }
 
-app.profile.username = m.profileInfo.getFullName(true);
+app.profile.username = m.profileInfo.getFullName(false);
 app.agendaDate = dayFormat;
 
 if (m != null) {
