@@ -45,9 +45,7 @@ function refreshHomework(initial = false) {
             for (let i = 0; i < appointments.length; i++) {
                 const element = appointments[i];
                 
-                if (element.infoType == "test" ||
-                    element.infoType == "quiz") {
-
+                if ([2, 4, 5].includes(element.infoType)) {
                     tests.push(element);
                 }
             }
