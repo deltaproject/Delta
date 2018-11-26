@@ -28,17 +28,17 @@ function refreshGraph(grades) {
 
         if (!chartData.labels.includes(monthName)) {
             var totalThisMonth = 0.0;
+            var weightThisMonth = 0.0;
             var averageThisMonth = 0.0;
-            var entriesThisMonth = 0;
 
             grades.forEach(i => {
                 if (new Date(i.dateFilledIn).getMonth() == date) {
-                    totalThisMonth += parseFloat(i.grade.replace(",", "."));
-                    entriesThisMonth++;
+                    totalThisMonth += i.weight * parseFloat(i.grade.replace(",", "."));
+                    weightThisMonth += i.weight;
                 }
             });
 
-            averageThisMonth = totalThisMonth / entriesThisMonth;
+            averageThisMonth = totalThisMonth / weightThisMonth;
 
             chartData.labels.push(monthName);
             chartData.datasets[0].data.push(Math.round(averageThisMonth * 100) / 100);
