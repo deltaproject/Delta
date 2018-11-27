@@ -34,6 +34,9 @@ Zie stap 5 voor informatie over het aanpassen van stylesheets.
 # Een bijdrage leveren
 Zie [Een bijdrage leveren](https://github.com/deltaproject/Delta/blob/master/docs/CONTRIBUTING.md) voor details over het maken voor Pull Requests enzovoorts.
 
+# Roadmap
+Je kunt [hier de Roadmap bekijken](https://github.com/deltaproject/Delta/projects/1) van Delta. Hierin staan de mogelijk verwachte functies die je binnenkort zult tegenkomen in Delta. Wil jij bijdragen aan een van deze nieuwe functies? Zie **Een bijdrage leveren** voor details.
+
 # Credits
 Met speciale dank aan [Lieuwe Rooijakkers (@lieuwex)](https://github.com/lieuwex) voor het maken van [MagisterJS](https://github.com/simplyGits/MagisterJS), die Delta mogelijk maakte.
 
