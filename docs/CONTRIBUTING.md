@@ -7,5 +7,6 @@ Wij vinden het erg leuk als je een bijdrage wilt leveren aan Delta. Zo wordt het
 - [x] Verander niets aan het licentiebestand, de Code of Conduct of CONTRIBUTING.md.
 - [x] Wees er zeker van dat jouw ingebrachte code **werkt** en dat het niet voor problemen zorgt.
 - [x] Backdoors, malware en andere verdachte code zijn uiteraard niet toegestaan.
+- [x] Pas je stijl zo veel mogelijk aan aan die van de codebase, zo wordt verwarring voorkomen.
 
 Succes!
