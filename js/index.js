@@ -34,7 +34,7 @@ function isContentLoaded(callback) {
     } else {
         window.setTimeout(() => {
             isContentLoaded(callback);
-        }, 100)
+        }, 100);
     }
 }
 
@@ -101,7 +101,7 @@ function refreshData(initial = false) {
                 app.magister.messages = messages.messages;
                 if (initial)
                     contentLoaded++;
-            })
+            });
         });
     
     m.assignments()
@@ -115,7 +115,7 @@ function refreshData(initial = false) {
         isContentLoaded(() => {
             ipcRenderer.send("content-loaded");
             app.checkUpdates();
-        })
+        });
     }
 }
 
