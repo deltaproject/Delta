@@ -72,32 +72,6 @@
     }
 }
 
-.btnBar {
-    position: absolute;
-    top: 7px;
-    left: 12px;
-
-    div {
-        display: inline;
-        vertical-align: middle;
-        cursor: pointer;
-
-        &#closeBtn {
-            margin-right: 10px;
-
-            i {
-                font-size: 16px;
-            }
-        }
-
-        &#minimizeBtn {
-            i {
-                font-size: 14px;
-            }
-        }
-    }
-}
-
 input[name="saveCreds"] {
     &::after {
         vertical-align: -10% !important;
