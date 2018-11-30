@@ -1,6 +1,6 @@
 .containerAlt {
     text-align: center;
-    margin-top: 25vh;
+    margin-top: 17vh;
 }
 
 .loginContainer input {
@@ -80,4 +80,10 @@ input[name="saveCreds"] {
 
 .refreshPending {
     animation: fa-spin 3s infinite linear;
+}
+
+.logo {
+    width: 128px;
+    height: 128px;
+    -webkit-user-drag: none;
 }
