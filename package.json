@@ -7,7 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
-    "watch": "sass --watch sass/styles.scss:dist/css/styles.css --style=compressed",
+    "watch": "sass --watch scss:dist/css --style=compressed",
     "package": "electron-packager . --platform=win32,darwin,linux"
   },
   "author": "Kees van Voorthuizen",
