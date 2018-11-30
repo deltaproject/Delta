@@ -15,11 +15,11 @@ function closeWindow(quitOnClose = true) {
 Vue.component('title-bar', {
     template: `
     <div class="titleBar no-select">
-        <div class="segmentLeft">
+        <div class="titleContainer">
             <p>${$("title").html()}</p>
         </div>
 
-        <div class="segmentRight">
+        <div class="btnContainer">
             <div id="minimizeBtn" onclick="minimizeWindow()">
                 <i class="fas fa-window-minimize"></i>
             </div>
