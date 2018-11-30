@@ -84,14 +84,6 @@ document.querySelector("body").addEventListener("keyup", function () {
     }
 });
 
-document.getElementById("closeBtn").addEventListener("click", function () {
-    electron.quit();
-});
-
-document.getElementById("minimizeBtn").addEventListener("click", function () {
-    remote.BrowserWindow.getFocusedWindow().minimize();
-});
-
 if (fs.existsSync(credsFile)) {
     let rawJson = fs.readFileSync(credsFile);
     app.creds = JSON.parse(rawJson);
