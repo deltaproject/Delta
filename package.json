@@ -19,7 +19,6 @@
     "@fortawesome/fontawesome-free": "^5.5.0",
     "animate.css": "^3.7.0",
     "chart.js": "^2.7.3",
-    "chartjs-plugin-deferred": "^1.0.1",
     "download": "^7.1.0",
     "electron-is-dev": "^1.0.1",
     "electron-reload": "^1.3.0",
