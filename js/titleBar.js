@@ -20,12 +20,12 @@ Vue.component('title-bar', {
         </div>
 
         <div class="segmentRight">
-            <div id="closeBtn" onclick="closeWindow()">
-                <i class="fas fa-times"></i>
-            </div>
-            
             <div id="minimizeBtn" onclick="minimizeWindow()">
                 <i class="fas fa-window-minimize"></i>
+            </div>
+
+            <div id="closeBtn" onclick="closeWindow()">
+                <i class="fas fa-times"></i>
             </div>
         </div>
     </div>
