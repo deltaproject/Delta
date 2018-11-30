@@ -1,27 +1,10 @@
-html {
-    padding: 0;
-    margin: 0;
-
-    body {
-        font-family: Poppins;
-        margin: 0 20px 20px;
-        overflow-x: hidden;
-    }
-}
-
-.center {
-    text-align: center;
-}
-
-.no-select {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    cursor: default;
-}
+@import '../global';
+@import '../keyframes';
+@import '../titleBar';
+@import '../notify';
+@import 'cards';
+@import 'cardContainers';
+@import 'cardButtons';
 
 .beta-badge {
     color: white;
@@ -149,83 +132,13 @@ html {
     }
 }
 
-// Scrollbar styling
-::-webkit-scrollbar {
-    background-color: rgb(209, 209, 209);
-    width: 14px;
-}
-
-::-webkit-scrollbar-thumb:window-inactive,
-::-webkit-scrollbar-thumb {
-    background: rgb(143, 143, 143);
-}
-
-// Checkbox styling
-input[type="checkbox"] {
-    $defaultBackground: rgba(211, 211, 211, 0.555);
-    $checkedBackground: rgb(52, 133, 255);
-
-    -webkit-appearance: none;
-    width: 20px;
-    height: 20px;
-    margin-right: 5px;
-    vertical-align: middle;
-    outline: none;
-    border-radius: 4px;
-    text-align: center;
-    transition: background-color 0.3s, color 0.3s;
-    
-    background: $defaultBackground;
-    color: rgba(0, 0, 0, 0.322);
-
-    &::after {
-        font-family: "Font Awesome 5 Free";
-        font-style: normal;
-        font-weight: 900;
-        font-size: 13px;
-        vertical-align: -20%;
-        content: "\f00d";
-    }
-
-    &:checked {
-        color: white;
-        background: $checkedBackground;
-
-        &::after {
-            content: "\f00c";
-        }
-
-        &:disabled {
-            color: rgb(92, 92, 92);
-        }
-    }
-
-    &:disabled {
-        background: rgb(175, 175, 175);
-    }
-}
-
 .checkContainer input {
     vertical-align: middle;
-}
-
-.right {
-    float: right;
 }
 
 .warn {
     color: red;
     font-weight: bold;
-}
-
-.detail {
-    color: gray;
-    font-size: 0.85em;
-    vertical-align: middle;
-}
-
-.hidden {
-    display: none;
 }
 
 .contextMenu {
