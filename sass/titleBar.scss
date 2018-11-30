@@ -1,11 +1,18 @@
 .titleBar {
-    position: absolute;
+    -webkit-app-region: drag;
+    padding: 0;
+    margin: 0;
+    position: fixed;
     top: 7px;
     left: 12px;
+    background: rgb(235, 235, 235);
+    width: 100%;
 
     div {
         display: inline;
         vertical-align: middle;
+        margin: 0 20px;
+        -webkit-app-region: no-drag;
         cursor: pointer;
 
         &#closeBtn {
