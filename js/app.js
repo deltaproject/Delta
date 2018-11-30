@@ -36,9 +36,9 @@ var app = new Vue({
 
                 for (let i = 0; i < this.appointments.length; i++) {
                     const element = this.appointments[i];
-                    if (element.isDone == doneState
-                        && element.content != undefined
-                        && element.infoType == 1)
+                    if (element.isDone == doneState &&
+                        element.content != undefined &&
+                        element.infoType == 1)
 
                         array.push(element);
                 }
@@ -46,8 +46,8 @@ var app = new Vue({
                 return array;
             },
             parseGrade(grade) {
-                if (!isNaN(parseFloat(grade.grade.replace(",", ".")))
-                    && grade.weight > 0 && grade.counts) {
+                if (!isNaN(parseFloat(grade.grade.replace(",", "."))) &&
+                    grade.weight > 0 && grade.counts) {
 
                     return parseFloat(grade.grade.replace(",", "."));
                 }
@@ -62,8 +62,8 @@ var app = new Vue({
                         break;
 
                     const element = this.grades[i];
-                    if (element.type.header == null
-                        && element.weight > 0) {
+                    if (element.type.header == null &&
+                        element.weight > 0) {
 
                         lastGrades.push(element);
                     }
@@ -83,7 +83,7 @@ var app = new Vue({
             },
             downloadAttachment(file) {
                 var downloadsPath = electron.getPath("downloads");
-                var filePath = path.join(downloadsPath, file.name)
+                var filePath = path.join(downloadsPath, file.name);
                 var fileStream = fs.createWriteStream(filePath);
 
                 fileStream.on("open", () => {
@@ -93,7 +93,7 @@ var app = new Vue({
 
                         stream.on("data", (data) => {
                             fileStream.write(data);
-                        })
+                        });
 
                         // shell.openItem(filePath)
                     });
@@ -171,7 +171,7 @@ var app = new Vue({
             }
         },
         showInfoDetails(appointment) {
-            dialogInfo("Deze functie is helaas nog niet beschikbaar.")
+            dialogInfo("Deze functie is helaas nog niet beschikbaar.");
         },
         signOff() {
             var credsFile = path.join(electron.getPath("userData"), "delta.json");
