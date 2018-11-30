@@ -9,8 +9,8 @@ const electron = remote.app;
 const shell = remote.shell;
 const dialog = remote.dialog;
 const download = require("download");
-const $ = require("jquery/dist/jquery");
 const Vue = require("vue/dist/vue");
+var $ = require("jquery/dist/jquery");
 moment.locale("nl");
 
 var m = remote.getGlobal("m");
