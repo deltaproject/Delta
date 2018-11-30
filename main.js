@@ -29,6 +29,7 @@ function createWindow() {
         width: 500,
         height: 700,
         frame: false,
+        resizable: false,
         icon: path.join(__dirname, 'img/icons/icon@64px.png')
     });
 
