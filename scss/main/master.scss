@@ -6,6 +6,10 @@
 @import 'cardContainers';
 @import 'cardButtons';
 
+body {
+    margin: 0 20px 20px;
+}
+
 .beta-badge {
     color: white;
     background: rgb(236, 31, 31);
