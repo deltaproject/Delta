@@ -1,15 +1,14 @@
 const chart = require("chart.js");
+const months = [
+    "januari", "februari",
+    "maart", "april",
+    "mei", "juni",
+    "juli", "augustus",
+    "september", "oktober",
+    "november", "december"
+];
 
 function refreshGraph(grades) {
-    var months = [
-        "januari", "februari",
-        "maart", "april",
-        "mei", "juni",
-        "juli", "augustus",
-        "september", "oktober",
-        "november", "december"
-    ];
-
     var chartData = {
         labels: [],
         datasets: [{
