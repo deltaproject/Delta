@@ -1,4 +1,12 @@
 @import '../global';
 @import '../keyframes';
-@import '../titleBar';
-@import '../notify';
+@import 'infoIcon';
+
+body {
+    margin: 40px 10px;
+}
+
+.container {
+    text-align: center;
+    margin: 0 auto;
+}
