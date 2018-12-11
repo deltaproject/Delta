@@ -1,11 +1,9 @@
 .titleBar {
     -webkit-app-region: drag;
-    display: flex;
     position: fixed;
     top: 0;
     left: 0;
     background: rgb(242, 242, 242);
-    justify-content: space-between;
     width: 100%;
 
     div {
@@ -14,12 +12,13 @@
 
         &.titleContainer {
             padding-left: 10px;
-            width: 80%;
         }
 
         &.btnContainer {
+            position: absolute;
+            right: 0;
+            top: 25%;
             padding-right: 10px;
-            width: 20%;
 
             div {
                 margin: 0 5px;
