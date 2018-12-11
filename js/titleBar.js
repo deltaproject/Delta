@@ -4,6 +4,14 @@ function minimizeWindow() {
     remote.BrowserWindow.getFocusedWindow().minimize();
 }
 
+function maximizeWindow() {
+    var win = remote.BrowserWindow.getFocusedWindow();
+    if (win.isMaximized())
+        win.restore();
+    else
+        win.maximize();
+}
+
 function closeWindow(quitOnClose = true) {
     if (quitOnClose) {
         electron.quit();
@@ -22,6 +30,10 @@ Vue.component('title-bar', {
         <div class="btnContainer">
             <div id="minimizeBtn" onclick="minimizeWindow()">
                 <i class="fas fa-window-minimize"></i>
+            </div>
+
+            <div id="maximizeBtn" onclick="maximizeWindow()">
+                <i class="far fa-window-maximize"></i>
             </div>
 
             <div id="closeBtn" onclick="closeWindow()">
