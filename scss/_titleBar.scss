@@ -1,3 +1,9 @@
+.no-resize {
+    #maximizeBtn {
+        display: none;
+    }
+}
+
 .titleBar {
     -webkit-app-region: drag;
     position: fixed;
@@ -17,25 +23,19 @@
         &.btnContainer {
             position: absolute;
             right: 0;
-            top: 25%;
+            top: 30%;
             padding-right: 10px;
+            font-size: 14px;
+            display: inline-block;
 
             div {
                 margin: 0 5px;
                 -webkit-app-region: no-drag;
                 cursor: pointer;
-            }
-        }
-
-        &#closeBtn {
-            i {
-                font-size: 16px;
-            }
-        }
-
-        &#minimizeBtn {
-            i {
-                font-size: 14px;
+                
+                &#minimizeBtn i {
+                    font-size: 12px;
+                }
             }
         }
     }
