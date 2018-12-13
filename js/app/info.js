@@ -1,30 +1,21 @@
+var ipc = require("electron").ipcRenderer;
+
 var app = new Vue({
     el: "#app",
     data: {
-        header: "bedrijfseconomie",
+        header: "",
         content: null,
-        tableData: [
-            {
-                "name": "Datum",
-                "value": "12 november 2018"
-            },
-            {
-                "name": "Locatie",
-                "value": "102"
-            },
-            {
-                "name": "Docent",
-                "value": "A.B. Test"
-            },
-            {
-                "name": "Opgegeven op",
-                "value": "7 november 2018"
-            }
-        ]
+        tableData: []
     },
     methods: {
         closeInfo() {
             close();
         }
     }
+});
+
+ipc.on("info-data", function (event, data) {
+    app.header = data.header;
+    app.content = data.content;
+    app.tableData = data.tableData;
 });
