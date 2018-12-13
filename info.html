@@ -18,29 +18,18 @@
         <div class="infoIcon">
             <i class="far fa-calendar-check icon"></i>
         </div>
-        <h1>bedrijfseconomie</h1>
+
+        <h1>{{ header }}</h1>
         <table>
-            <tr>
-                <td>Datum</td>
-                <td>12 november 2018</td>
-            </tr>
-            <tr>
-                <td>Locatie</td>
-                <td>102</td>
-            </tr>
-            <tr>
-                <td>Docent</td>
-                <td>A.B. Test</td>
-            </tr>
-            <tr>
-                <td>Opgegeven op</td>
-                <td>7 november 2018</td>
+            <tr v-for="i in tableData">
+                <td>{{ i.name }}</td>
+                <td>{{ i.value }}</td>
             </tr>
         </table>
 
-        <h1>Inhoud</h1>
-        <div class="infoContent">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur rerum corrupti quas, vel culpa numquam saepe possimus ex optio vero sunt exercitationem ea facere, fuga aut doloremque, dolores praesentium porro.
+        <div class="contentContainer" v-if="content">
+            <h1>Inhoud</h1>
+            <div class="infoContent" v-html="content"></div>
         </div>
 
         <div class="infoClose">
