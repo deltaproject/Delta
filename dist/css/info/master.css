@@ -102,9 +102,14 @@ input[type=checkbox]:disabled {
 .infoIcon i {
   color: white;
   vertical-align: middle;
-  font-size: 36px;
   font-style: normal;
   font-weight: bold;
+}
+.infoIcon i.icon {
+  font-size: 40px;
+}
+.infoIcon i.text {
+  font-size: 36px;
 }
 
 table {
