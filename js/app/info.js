@@ -21,5 +21,10 @@ var app = new Vue({
                 "value": "7 november 2018"
             }
         ]
+    },
+    methods: {
+        closeInfo() {
+            close();
+        }
     }
 });
