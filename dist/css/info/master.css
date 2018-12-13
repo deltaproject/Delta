@@ -129,12 +129,16 @@ tr:nth-child(even) {
 }
 
 body {
-  margin: 40px 10px;
+  margin: 40px 20px;
 }
 
 .container {
   text-align: center;
   margin: 0 auto;
+}
+
+.infoContent {
+  text-align: left;
 }
 
 /*# sourceMappingURL=master.css.map */
