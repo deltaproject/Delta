@@ -90,16 +90,21 @@ input[type=checkbox]:disabled {
   }
 }
 .infoIcon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 50%;
   width: 120px;
   height: 120px;
   margin: 0 auto;
   background: linear-gradient(to right bottom, #3154f1, cyan);
 }
-.infoIcon h1 {
+.infoIcon i {
   color: white;
   vertical-align: middle;
   font-size: 36px;
+  font-style: normal;
+  font-weight: bold;
 }
 
 table {
@@ -110,6 +115,8 @@ table {
 td, th {
   text-align: left;
   padding: 8px;
+  word-wrap: break-word;
+  max-width: 1px;
 }
 
 tr:nth-child(even) {
