@@ -20,6 +20,10 @@
         background: linear-gradient(to right bottom, rgb(49, 84, 241), rgb(0, 255, 255));
     }
 
+    &.assignmentInfo {
+        background: linear-gradient(to right bottom, rgb(9, 199, 9), rgb(49, 241, 145));
+    }
+
     &.gradeInfo {
         background: linear-gradient(to right bottom, rgb(139, 49, 241), rgb(204, 0, 255));
 
