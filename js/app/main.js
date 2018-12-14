@@ -185,7 +185,7 @@ var app = new Vue({
                     { "name": "Datum van afname", "value": moment(grade.testDate).format("LL") },
                     { "name": "Invoerdatum", "value": moment(grade.dateFilledIn).format("LL") },
                     { "name": "Weging", "value": grade.weight.toString() }
-                ]);
+                ], null, "gradeInfo", grade.grade);
         },
         signOff() {
             var credsFile = path.join(electron.getPath("userData"), "delta.json");
