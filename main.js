@@ -65,7 +65,7 @@ ipcMain.on("validate-creds", (event, creds) => {
         });
 });
 
-ipcMain.on("prepare-main", (event) => {
+ipcMain.once("prepare-main", (event) => {
     mainWin.loadURL(url.format({
         pathname: path.join(__dirname, "index.html"),
         protocol: "file:",
@@ -73,13 +73,13 @@ ipcMain.on("prepare-main", (event) => {
     }));
 });
 
-ipcMain.on("content-loaded", (event) => {
+ipcMain.once("content-loaded", (event) => {
     try {
         authWin.close();
         mainWin.show();
     } catch (err) { }
 });
 
-app.on("ready", function () {
+app.once("ready", function () {
     createWindow();
 });

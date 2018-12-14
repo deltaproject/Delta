@@ -43,7 +43,7 @@ var app = new Vue({
                 }
     
                 ipcRenderer.send("validate-creds", app.creds);
-                ipcRenderer.on("login-success", (event, isSuccess) => {
+                ipcRenderer.once("login-success", (event, isSuccess) => {
                     if (isSuccess) {
                         app.loginSuccess = true;
     
