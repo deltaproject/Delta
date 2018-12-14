@@ -292,6 +292,12 @@
                         <p>{{ i.name }}</p>
                         <p>{{ trimContent(i.description) }}</p>
                     </div>
+
+                    <div class="btnPanel">
+                        <div class="cardButton infoDetails"
+                            @click="showAssignmentInfo(i)"
+                            title="Meer informatie"><i class="fas fa-info"></i></div>
+                    </div>
                 </div>
             </div>
         </div>
