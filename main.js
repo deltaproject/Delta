@@ -30,6 +30,7 @@ function createWindow() {
         height: 700,
         frame: false,
         resizable: false,
+        show: false,
         icon: path.join(__dirname, 'img/icons/icon@64px.png')
     });
 
@@ -42,6 +43,10 @@ function createWindow() {
         protocol: "file:",
         slashes: true
     }));
+
+    authWin.once("ready-to-show", function () {
+        authWin.show();
+    });
 }
 
 ipcMain.on("validate-creds", (event, creds) => {
@@ -66,7 +71,7 @@ ipcMain.on("prepare-main", (event) => {
         protocol: "file:",
         slashes: true
     }));
-})
+});
 
 ipcMain.on("content-loaded", (event) => {
     try {
