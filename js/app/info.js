@@ -17,5 +17,9 @@ var app = new Vue({
 ipc.on("info-data", function (event, data) {
     app.header = data.header;
     app.content = data.content;
-    app.tableData = data.tableData;
+    data.tableData.forEach(i => {
+        if (i.value != null && i.value != undefined && i.value != "") {
+            app.tableData.push(i);
+        }
+    });
 });
