@@ -1,0 +1,26 @@
+.infoIcon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto;
+    background: linear-gradient(to right bottom, rgb(49, 84, 241), cyan);
+
+    i {
+        color: white;
+        vertical-align: middle;
+        font-style: normal;
+        font-weight: bold;
+
+        &.icon {
+            font-size: 40px;
+        }
+
+        &.text {
+            font-size: 36px;
+        }
+    }
+}

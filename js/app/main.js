@@ -170,8 +170,14 @@ var app = new Vue({
                 sendNotify("Huiswerk gemarkeerd als onafgerond.", "success");
             }
         },
-        showInfoDetails(appointment) {
-            dialogInfo("Deze functie is helaas nog niet beschikbaar.");
+        showAppointmentInfo(appointment) {
+            showInfoDialog(appointment.classes[0], [
+                    { "name": "Datum", "value": moment(appointment.start).format("LL") },
+                    { "name": "Locatie", "value": appointment.location },
+                    { "name": "Docent" +  (appointment.teachers.length == 1 ? "" : "en"),
+                        "value": `${appointment.teachers[0].fullName} (${appointment.teachers[0].teacherCode})` },
+                    { "name": "Afgerond", "value": appointment.isDone ? "Ja" : "Nee" },
+                ], appointment.content);
         },
         signOff() {
             var credsFile = path.join(electron.getPath("userData"), "delta.json");
