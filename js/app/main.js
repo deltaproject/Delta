@@ -184,7 +184,7 @@ var app = new Vue({
                     { "name": "Beschrijving", "value": grade.description },
                     { "name": "Datum van aflegging", "value": moment(grade.testDate).format("LL") },
                     { "name": "Invoerdatum", "value": moment(grade.dateFilledIn).format("LL") },
-                    { "name": "Weging", "value": grade.weight }
+                    { "name": "Weging", "value": grade.weight.toString() }
                 ]);
         },
         signOff() {
