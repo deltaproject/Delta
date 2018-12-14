@@ -104,7 +104,11 @@ var app = new Vue({
             return moment(date).format("H:mm");
         },
         formatDateHuman(date) {
-            return moment(date).format("LL");
+            if (date != undefined && date != null) {
+                return moment(date).format("LL");
+            } else {
+                return null;
+            }
         },
         getDateDifference(date1, date2, returnRawDays) {
             var firstConvert = moment(date1);
@@ -172,7 +176,7 @@ var app = new Vue({
         },
         showAppointmentInfo(appointment) {
             showInfoDialog(appointment.classes[0], [
-                    { "name": "Datum", "value": moment(appointment.start).format("LL") },
+                    { "name": "Datum", "value": this.formatDateHuman(appointment.start) },
                     { "name": "Locatie", "value": appointment.location },
                     { "name": "Docent" +  (appointment.teachers.length == 1 ? "" : "en"),
                         "value": `${appointment.teachers[0].fullName} (${appointment.teachers[0].teacherCode})` },
@@ -182,10 +186,20 @@ var app = new Vue({
         showGradeInfo(grade) {
             showInfoDialog(grade.class.description, [
                     { "name": "Beschrijving", "value": grade.description },
-                    { "name": "Datum van afname", "value": moment(grade.testDate).format("LL") },
-                    { "name": "Invoerdatum", "value": moment(grade.dateFilledIn).format("LL") },
+                    { "name": "Datum van afname", "value": this.formatDateHuman(grade.testDate) },
+                    { "name": "Invoerdatum", "value": this.formatDateHuman(grade.dateFilledIn) },
                     { "name": "Weging", "value": grade.weight.toString() }
                 ], null, "gradeInfo", grade.grade);
+        },
+        showAssignmentInfo(assignment) {
+            console.log(assignment.class);
+            
+            showInfoDialog(assignment.name, [
+                    { "name": "Vak", "value": assignment.class },
+                    { "name": "Deadline", "value": this.formatDateHuman(assignment.deadline) },
+                    { "name": "Ingeleverd op", "value": this.formatDateHuman(assignment.handedInOn) },
+                    { "name": "Voltooid", "value": assignment.finished ? "Ja" : "Nee" }
+                ], assignment.description, "assignmentInfo", "fas fa-edit");
         },
         signOff() {
             var credsFile = path.join(electron.getPath("userData"), "delta.json");
