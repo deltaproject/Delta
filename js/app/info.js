@@ -5,6 +5,8 @@ var app = new Vue({
     data: {
         header: "",
         content: null,
+        type: "",
+        icon: "",
         tableData: []
     },
     methods: {
@@ -17,6 +19,9 @@ var app = new Vue({
 ipc.on("info-data", function (event, data) {
     app.header = data.header;
     app.content = data.content;
+    app.type = data.type;
+    app.icon = data.icon;
+    
     data.tableData.forEach(i => {
         if (i.value != null && i.value != undefined && i.value != "") {
             app.tableData.push(i);

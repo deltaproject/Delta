@@ -1,4 +1,6 @@
-function showInfoDialog(header, tableData, content = null) {
+function showInfoDialog(header, tableData,
+    content = null, type = "appointmentInfo", icon = "far fa-calendar-check") {
+    
     infoWin = new remote.BrowserWindow({
         width: 400,
         height: 650,
@@ -19,6 +21,8 @@ function showInfoDialog(header, tableData, content = null) {
             header: header,
             content: content,
             tableData: tableData,
+            type: type,
+            icon: icon
         });
 
         infoWin.show();
