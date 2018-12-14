@@ -207,6 +207,12 @@
 
                         <p>{{ i.class.description }} <p class="detail">{{ i.weight.toFixed(1) }}x</p></p>
                     </div>
+
+                    <div class="btnPanel">
+                        <div class="cardButton infoDetails"
+                            @click="showGradeInfo(i)"
+                            title="Meer informatie"><i class="fas fa-info"></i></div>
+                    </div>
                 </div>
             </div>
         </div>
