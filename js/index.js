@@ -106,6 +106,7 @@ function refreshData(initial = false) {
     
     m.assignments()
         .then((assignments) => {
+            assignments.reverse();
             app.magister.assignments = assignments;
             if (initial)
                 contentLoaded++;
