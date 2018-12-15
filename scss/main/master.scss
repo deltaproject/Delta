@@ -65,9 +65,10 @@ body {
             margin-left: 15px;
             vertical-align: middle;
             transition: transform 0.3s;
+            -webkit-user-drag: none;
 
             &:hover {
-                transform: scale(1.2);
+                transform: scale(1.1);
             }
         }
     }
