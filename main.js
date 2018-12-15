@@ -46,6 +46,9 @@ function createWindow() {
 
     authWin.once("ready-to-show", function () {
         authWin.show();
+        if (process.argv.includes("--debug")) {
+            authWin.webContents.openDevTools();
+        }
     });
 }
 
@@ -77,6 +80,9 @@ ipcMain.once("content-loaded", (event) => {
     try {
         authWin.close();
         mainWin.show();
+        if (process.argv.includes("--debug")) {
+            mainWin.webContents.openDevTools();
+        }
     } catch (err) { }
 });
 
