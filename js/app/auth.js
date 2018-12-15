@@ -1,3 +1,5 @@
+var rm = require("electron").remote;
+
 var app = new Vue({
     el: "#app",
     data: {
@@ -5,6 +7,7 @@ var app = new Vue({
         saveCreds: true,
         loginIncorrect: false,
         schoolIncorrect: false,
+        isGuest: false,
         isBusy: false,
         loginSuccess: false,
         creds: {
@@ -67,3 +70,8 @@ var app = new Vue({
         }
     }
 });
+
+if (rm.process.argv.includes("--guest")) {
+    app.isGuest = true;
+    app.saveCreds = false;
+}

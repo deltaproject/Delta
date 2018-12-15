@@ -14,7 +14,9 @@ document.querySelector("body").addEventListener("keyup", function () {
     }
 });
 
-if (fs.existsSync(credsFile)) {
+if (!remote.process.argv.includes("--guest") &&
+    fs.existsSync(credsFile)) {
+    
     let rawJson = fs.readFileSync(credsFile);
     app.creds = JSON.parse(rawJson);
     app.login();
