@@ -76,8 +76,10 @@ input[name="saveCreds"] {
 }
 
 .guestContainer {
-    padding-top: 45px;
-    margin: 30px auto;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin: 20px auto;
     width: 100%;
 }
 
