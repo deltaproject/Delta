@@ -37,8 +37,9 @@
                         placeholder="Wachtwoord" :class="{ error: loginIncorrect }"
                         :disabled="isBusy">
                 
-                <div class="checkContainer no-select">
-                    <input v-model="saveCreds" name="saveCreds" type="checkbox" :disabled="isBusy">
+                <div class="checkContainer no-select" v-show="!isGuest">
+                    <input v-model="saveCreds" name="saveCreds" type="checkbox"
+                        :disabled="isBusy">
                     <span>Onthoud mij</span>
                 </div>
 
@@ -48,6 +49,12 @@
                 <div v-if="isBusy" class="spinner">
                     <i class="fas fa-circle-notch spin"></i>
                     <p v-if="loginSuccess" class="detail no-select" >Gegevens laden...</p>
+                </div>
+                
+                <div class="guestContainer">
+                    <p class="detail guestLabel no-select" v-if="isGuest">
+                        De gastmodus is ingeschakeld waardoor je inloggegevens niet worden opgeslagen.
+                    </p>
                 </div>
             </div>
         </div>
