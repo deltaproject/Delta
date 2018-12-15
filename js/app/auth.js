@@ -75,3 +75,8 @@ if (rm.process.argv.includes("--guest")) {
     app.isGuest = true;
     app.saveCreds = false;
 }
+
+if (rm.process.argv.includes("--school")) {
+    var index = rm.process.argv.indexOf("--school") + 1;
+    app.creds.school = rm.process.argv[index];
+}
