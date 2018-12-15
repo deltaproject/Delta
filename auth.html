@@ -24,7 +24,7 @@
             <div class="loginContainer">
                 <input type="text" name="school" list="schools" v-model="creds.school"
                         placeholder="Schoolnaam" :class="{ error: schoolIncorrect }"
-                        :disabled="isBusy" @keyup="getSchools()">
+                        :disabled="isBusy || (isGuest && creds.school != '')" @keyup="getSchools()">
 
                 <datalist id="schools">
                     <option v-for="i in schoolQuery" :value="i.name">
