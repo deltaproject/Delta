@@ -46,15 +46,15 @@
                 <input type="submit" name="signIn" value="Log in" id="btnSubmit"
                         @click="login()" :disabled="!isFormFilled || isBusy">
                 
-                <div v-if="isBusy" class="spinner">
-                    <i class="fas fa-circle-notch spin"></i>
-                    <p v-if="loginSuccess" class="detail no-select" >Gegevens laden...</p>
-                </div>
-                
                 <div class="guestContainer no-select">
                     <p class="detail guestLabel" v-if="isGuest">
                         De gastmodus is ingeschakeld waardoor je inloggegevens niet worden opgeslagen.
                     </p>
+                </div>
+                
+                <div v-if="isBusy" class="spinner">
+                    <i class="fas fa-circle-notch spin"></i>
+                    <p v-if="loginSuccess" class="detail no-select" >Gegevens laden...</p>
                 </div>
             </div>
         </div>
