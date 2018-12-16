@@ -3,6 +3,7 @@ var app = new Vue({
     data: {
         isBeta: false,
         isRefreshCooldown: false,
+        isUpdateRunning: false,
         agendaDate: "",
         showDoneHomework: false,
         showReadMail: false,
@@ -213,6 +214,8 @@ var app = new Vue({
             }
         },
         downloadUpdates(releaseData) {
+            app.isUpdateRunning = true;
+
             let targetPlatform;
             let targetUrl;
             let targetFilename;
@@ -241,6 +244,8 @@ var app = new Vue({
             var filePath = path.join(downloadsPath, targetFilename);
 
             download(targetUrl, downloadsPath).then(() => {
+                app.isUpdateRunning = false;
+
                 var updateData = {
                     targetPlatform: targetPlatform,
                     targetUrl: targetUrl,
