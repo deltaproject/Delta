@@ -1,6 +1,7 @@
 @import '../global';
 @import '../titleBar';
 @import '../notify';
+@import 'keyframes';
 @import 'cards';
 @import 'cardContainers';
 @import 'cardButtons';
@@ -152,4 +153,42 @@ body {
     font-size: 16px;
     padding: 0 15px;
     border-radius: 8px;
+}
+
+.update {
+    display: inline-block;
+    vertical-align: middle;
+    animation: glow 1.5s alternate infinite;
+    width: 95px;
+    height: 20px;
+    line-height: 20px;
+    margin-right: 20px;
+    border-radius: 5px;
+    text-align: center;
+
+    span {
+        vertical-align: middle;
+        margin: auto;
+        color: white;
+        font-size: 12px;
+
+        i {
+            animation: dots 1.4s infinite;
+            animation-fill-mode: both;
+            font-style: normal;
+            font-size: 1.3em;
+
+            &:nth-child(2) {
+                animation-delay: 0.2s;
+            }
+            
+            &:nth-child(3) {
+                animation-delay: 0.4s;
+            }
+        }
+
+        &::after {
+            animation: dots 1s infinite;
+        }
+    }
 }
