@@ -269,7 +269,11 @@ var app = new Vue({
         },
         installUpdates(updateData) {
             if (updateData.targetPlatform == "windows") {
-                shell.openItem(updateData.targetPath);
+                var installerProcess = spawn(updateData.targetPath, ["/silent"], {
+                    detached: true
+                });
+
+                installerProcess.unref();
             } else {
                 shell.showItemInFolder(updateData.targetPath);
             }
