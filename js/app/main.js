@@ -190,22 +190,24 @@ var app = new Vue({
             showInfoDialog(appointment.classes[0], tableData, appointment.content);
         },
         showGradeInfo(grade) {
-            showInfoDialog(grade.class.description, [
-                    { "name": "Beschrijving", "value": grade.description },
-                    { "name": "Datum van afname", "value": this.formatDateHuman(grade.testDate) },
-                    { "name": "Invoerdatum", "value": this.formatDateHuman(grade.dateFilledIn) },
-                    { "name": "Weging", "value": grade.weight.toString() }
-                ], null, "gradeInfo", grade.grade);
+            var tableData = [
+                { "name": "Beschrijving", "value": grade.description },
+                { "name": "Datum van afname", "value": this.formatDateHuman(grade.testDate) },
+                { "name": "Invoerdatum", "value": this.formatDateHuman(grade.dateFilledIn) },
+                { "name": "Weging", "value": grade.weight.toString() }
+            ];
+
+            showInfoDialog(grade.class.description, tableData, null, "gradeInfo", grade.grade);
         },
         showAssignmentInfo(assignment) {
-            console.log(assignment.class);
+            var tableData = [
+                { "name": "Vak", "value": assignment.class },
+                { "name": "Deadline", "value": this.formatDateHuman(assignment.deadline) },
+                { "name": "Ingeleverd op", "value": this.formatDateHuman(assignment.handedInOn) },
+                { "name": "Voltooid", "value": assignment.finished ? "Ja" : "Nee" }
+            ];
             
-            showInfoDialog(assignment.name, [
-                    { "name": "Vak", "value": assignment.class },
-                    { "name": "Deadline", "value": this.formatDateHuman(assignment.deadline) },
-                    { "name": "Ingeleverd op", "value": this.formatDateHuman(assignment.handedInOn) },
-                    { "name": "Voltooid", "value": assignment.finished ? "Ja" : "Nee" }
-                ], assignment.description, "assignmentInfo", "fas fa-edit");
+            showInfoDialog(assignment.name, tableData, assignment.description, "assignmentInfo", "fas fa-edit");
         },
         signOff() {
             var credsFile = path.join(electron.getPath("userData"), "delta.json");
