@@ -4,6 +4,7 @@ var app = new Vue({
         isBeta: false,
         isRefreshCooldown: false,
         isUpdateRunning: false,
+        isSettingsMenu: false,
         agendaDate: "",
         showDoneHomework: false,
         showReadMail: false,
@@ -164,6 +165,9 @@ var app = new Vue({
         }
     },
     methods: {
+        toggleSettings() {
+            app.isSettingsMenu = !app.isSettingsMenu;
+        },
         toggleHomeworkState(appointment) {
             appointment.isDone = !appointment.isDone;
             appointment.saveChanges();
