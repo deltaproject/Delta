@@ -57,7 +57,8 @@
                     <p>Geen afspraken voor morgen.</p>
                 </div>
 
-                <div v-for="i in magister.appointments" :class="{ scrapped: i.isCancelled }" class="bigListItem">
+                <div v-for="i in magister.appointments" class="bigListItem"
+                    :class="{ scrapped: i.isCancelled }" @click="showAppointmentInfo(i)">
                     <div class="itemContainer calendarItem">{{ i.startBySchoolhour }}</div>
                     <div v-if="i.startBySchoolhour != i.endBySchoolhour" class="itemContainer calendarItem">{{ i.endBySchoolhour }}</div>
                     <div class="itemDesc">
@@ -225,7 +226,7 @@
             <div>
                 <div v-if="magister.tests.length == 0" class="no-info">
                     <i class="fas fa-pen-fancy"></i>
-                    <p>Je hebt geen toetsen voor de komende week.</p>
+                    <p>Je hebt geen toetsen voor de komende twee weken.</p>
                 </div>
 
                 <div v-for="i in magister.tests" class="smallCard">
