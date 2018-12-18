@@ -176,13 +176,18 @@ var app = new Vue({
             }
         },
         showAppointmentInfo(appointment) {
-            showInfoDialog(appointment.classes[0], [
-                    { "name": "Datum", "value": this.formatDateHuman(appointment.start) },
-                    { "name": "Locatie", "value": appointment.location },
-                    { "name": "Docent" +  (appointment.teachers.length == 1 ? "" : "en"),
-                        "value": `${appointment.teachers[0].fullName} (${appointment.teachers[0].teacherCode})` },
-                    { "name": "Afgerond", "value": appointment.isDone ? "Ja" : "Nee" },
-                ], appointment.content);
+            var tableData = [
+                { "name": "Datum", "value": this.formatDateHuman(appointment.start) },
+                { "name": "Locatie", "value": appointment.location },
+                { "name": "Docent" +  (appointment.teachers.length == 1 ? "" : "en"),
+                    "value": `${appointment.teachers[0].fullName} (${appointment.teachers[0].teacherCode})` }
+            ];
+
+            if (appointment.content != null) {
+                tableData.push({ "name": "Afgerond", "value": appointment.isDone ? "Ja" : "Nee" });
+            }
+
+            showInfoDialog(appointment.classes[0], tableData, appointment.content);
         },
         showGradeInfo(grade) {
             showInfoDialog(grade.class.description, [
