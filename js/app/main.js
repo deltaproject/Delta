@@ -10,6 +10,7 @@ var app = new Vue({
         showReadMail: false,
         profile: {
             username: "Onbekende gebruiker",
+            userDesc: "",
             imgUrl: "./img/icons/user.png"
         },
         magister: {
