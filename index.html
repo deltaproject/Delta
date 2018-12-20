@@ -16,8 +16,9 @@
     <title-bar></title-bar>
 
     <div class="settingsMenu" v-show="isSettingsMenu">
-        <h1>Onder constructie</h1>
-        <p>Hier wordt nog aan gewerkt.</p>
+        <div class="closeSettings" @click="toggleSettings()">
+            <i class="fas fa-times"></i>
+        </div>
     </div>
 
     <div id="notifyContainer"></div>
