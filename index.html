@@ -15,11 +15,15 @@
     <div id="app">
     <title-bar></title-bar>
 
-    <div class="settingsMenu" v-show="isSettingsMenu">
-        <div class="closeSettings" @click="toggleSettings()">
-            <i class="fas fa-times"></i>
+    <transition name="settings">
+        <div class="settingsMenu" v-show="isSettingsMenu">
+            <div class="closeSettings" @click="toggleSettings()">
+                <i class="fas fa-times"></i>
+            </div>
+
+            <p class="btnSignOff" title="Meld je af bij Delta" @click="signOff()">Afmelden</p>
         </div>
-    </div>
+    </transition>
 
     <div id="notifyContainer"></div>
 
@@ -32,7 +36,6 @@
             <div class="update" v-if="isUpdateRunning">
                 <span>Updaten<i>.</i><i>.</i><i>.</i></span>
             </div>
-            <p class="btnSignOff" title="Meld je af bij Delta" @click="signOff()">Afmelden</p>
             <i class="btnRefresh fas fa-sync-alt" title="Ververs gegevens"
                 @click="setRefreshCooldown()"
                 :class="{ disabled: isRefreshCooldown, spin: isRefreshCooldown }"
