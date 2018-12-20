@@ -15,24 +15,36 @@
     <div id="app">
     <title-bar></title-bar>
 
+    <transition name="settings">
+        <div class="settingsMenu no-select" v-show="isSettingsMenu">
+            <div class="closeSettings" @click="toggleSettings()">
+                <i class="fas fa-times"></i>
+            </div>
+
+            <h1 class="username-big">{{ profile.username }}</h1>
+            <h2 class="userDesc">{{ profile.userDesc }}</h2>
+            <p class="btnSignOff" title="Meld je af bij Delta" @click="signOff()">Afmelden</p>
+        </div>
+    </transition>
+
     <div id="notifyContainer"></div>
 
     <div class="statusBar no-select">
         <h1 class="title-big">
             <span>Project: </span>Delta<span class="beta-badge" v-if="isBeta"></span>
+            <i class="btnRefresh fas fa-sync-alt" title="Ververs gegevens"
+                @click="setRefreshCooldown()"
+                :class="{ disabled: isRefreshCooldown, spin: isRefreshCooldown }"
+                onclick="refreshData()"></i>
         </h1>
 
         <div class="profileInfo">
             <div class="update" v-if="isUpdateRunning">
                 <span>Updaten<i>.</i><i>.</i><i>.</i></span>
             </div>
-            <p class="btnSignOff" title="Meld je af bij Delta" @click="signOff()">Afmelden</p>
-            <i class="btnRefresh fas fa-sync-alt" title="Ververs gegevens"
-                @click="setRefreshCooldown()"
-                :class="{ disabled: isRefreshCooldown, spin: isRefreshCooldown }"
-                onclick="refreshData()"></i>
             <h1 class="username">{{ profile.username }}</h1>
-            <img class="profileIcon" :src="profile.imgUrl" title="Instellingen en profiel">
+            <img class="profileIcon" :src="profile.imgUrl" title="Instellingen en profiel"
+                @click="toggleSettings()">
         </div>
     </div>
     

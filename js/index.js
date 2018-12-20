@@ -124,6 +124,17 @@ function refreshData(initial = false) {
 app.profile.username = m.profileInfo.getFullName(false);
 app.agendaDate = dayFormat;
 
+m.courses().then((courses) => {
+    var currentCourse = _.last(courses);
+    const userDesc = [
+        m.school.name,
+        currentCourse.type.description,
+        currentCourse.group.description
+    ];
+
+    app.profile.userDesc = userDesc.join(" - ");
+});
+
 if (m != null) {
     console.log("Successfully authenticated with Magister!");
 } else {

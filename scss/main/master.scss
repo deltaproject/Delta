@@ -5,6 +5,7 @@
 @import 'cards';
 @import 'cardContainers';
 @import 'cardButtons';
+@import 'settings';
 
 body {
     margin: 50px 20px 20px;
@@ -36,6 +37,10 @@ body {
     span:first-of-type {
         color: rgb(241, 107, 102);
     }
+}
+
+.username-big {
+    font-weight: bolder;
 }
 
 .statusBar {
@@ -78,7 +83,7 @@ body {
         transition: transform 0.2s, background-color 0.5s;
         border-radius: 50%;
         padding: 10px;
-        margin-right: 50px;
+        margin-left: 10px;
         font-size: 24px;
         color: white;
         background: rgb(31, 130, 243);
@@ -94,28 +99,6 @@ body {
         &:hover {
             transform: rotate(180deg);
             background: rgb(0, 183, 255);
-        }
-    }
-
-    .btnSignOff {
-        $bgColor: rgb(247, 75, 75);
-
-        cursor: pointer;
-        display: inline-block;
-        color: $bgColor;
-        background: white;
-        margin-right: 25px;
-        font-weight: bold;
-        font-size: 0.9em;
-        text-align: center;
-        border-radius: 7px;
-        padding: 5px 10px;
-        transition: background-color 0.5s, color 0.3s;
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.158);
-
-        &:hover {
-            color: white;
-            background: $bgColor;
         }
     }
 }
