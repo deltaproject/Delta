@@ -24,6 +24,10 @@
         background: linear-gradient(to right bottom, rgb(9, 199, 9), rgb(49, 241, 145));
     }
 
+    &.testInfo {
+        background: linear-gradient(to right bottom, rgb(252, 100, 90), rgb(177, 16, 4));
+    }
+
     &.gradeInfo {
         background: linear-gradient(to right bottom, rgb(139, 49, 241), rgb(204, 0, 255));
 

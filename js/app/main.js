@@ -214,6 +214,16 @@ var app = new Vue({
             
             showInfoDialog(assignment.name, tableData, assignment.description, "assignmentInfo", "fas fa-edit");
         },
+        showTestInfo(test) {
+            var tableData = [
+                { "name": "Datum", "value": this.formatDateHuman(test.start) },
+                { "name": "Locatie", "value": test.location },
+                { "name": "Docent" +  (test.teachers.length == 1 ? "" : "en"),
+                    "value": `${test.teachers[0].fullName} (${test.teachers[0].teacherCode})` }
+            ];
+            
+            showInfoDialog(test.classes[0], tableData, test.content, "testInfo", "fas fa-exclamation");
+        },
         signOff() {
             var credsFile = path.join(electron.getPath("userData"), "delta.json");
             try {

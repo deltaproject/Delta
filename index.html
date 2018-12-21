@@ -256,6 +256,12 @@
                             over {{ getDateDifference(new Date(), i.start, true) }} dag{{ getDateDifference(new Date(), i.start, true) > 1 ? "en" : "" }}</span>
                     </p>
                     <p>{{ trimContent(i.content) }}</p>
+
+                    <div class="btnPanel">
+                        <div class="cardButton infoDetails"
+                            @click="showTestInfo(i)"
+                            title="Meer informatie"><i class="fas fa-info"></i></div>
+                    </div>
                 </div>
             </div>
         </div>
