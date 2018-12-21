@@ -28,3 +28,9 @@ ipc.on("info-data", function (event, data) {
         }
     });
 });
+
+document.body.addEventListener("keyup", function (event) {
+    if (event.keyCode == 27) {
+        app.closeInfo();
+    }
+});
