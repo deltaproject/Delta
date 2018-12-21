@@ -222,6 +222,14 @@ var app = new Vue({
                     "value": `${test.teachers[0].fullName} (${test.teachers[0].teacherCode})` }
             ];
             
+            let testType;
+            if (test.infoType == 2) testType = "Proefwerk";
+            else if (test.infoType == 4) testType = "Schriftelijke overhoring";
+            else if (test.infoType == 5) testType = "Mondelinge overhoring";
+            else testType = "Overig";
+
+            tableData.push({ "name": "Type", "value": testType });
+
             showInfoDialog(test.classes[0], tableData, test.content, "testInfo", "fas fa-exclamation");
         },
         signOff() {
