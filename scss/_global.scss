@@ -32,7 +32,11 @@ html {
 
 ::-webkit-scrollbar-thumb:window-inactive,
 ::-webkit-scrollbar-thumb {
-    background: rgb(143, 143, 143);
+    background: rgb(160, 160, 160);
+
+    &:hover {
+        background: rgb(146, 146, 146);
+    }
 }
 
 input[type="checkbox"] {
