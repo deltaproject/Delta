@@ -75,7 +75,7 @@
                     <div v-if="i.startBySchoolhour != i.endBySchoolhour" class="itemContainer calendarItem">{{ i.endBySchoolhour }}</div>
                     <div class="itemDesc">
                         <p>
-                            {{ i.classes[0] }}
+                            {{ i.classes[0] != null ? i.classes[0] : i.description }}
                             <span> {{ formatTime(i.start) }} - {{ formatTime(i.end) }} </span>
                             <span class="location">{{ i.location }}</span>
                         </p>
@@ -97,13 +97,12 @@
                     <i class="far fa-smile-wink"></i>
                     <p>Je hebt geen huiswerk voor {{ agendaDate }}.</p>
                 </div>
-
+                
                 <div v-for="i in magister.filterHomework(false)" class="smallCard">
                     <div class="todo">
                         <div class="itemContainer homeworkItem">
                             <i class="far fa-bookmark"></i>
                         </div>
-
 
                         <p>{{ i.classes[0] }}</p>
                         <p>{{ trimContent(i.content) }}</p>
