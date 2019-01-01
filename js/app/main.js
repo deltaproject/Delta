@@ -8,6 +8,13 @@ var app = new Vue({
         agendaDate: "",
         showDoneHomework: false,
         showReadMail: false,
+        isLoaded: {
+            appointments: false,
+            messages: false,
+            grades: false,
+            assignments: false,
+            tests: false
+        },
         profile: {
             username: "Onbekende gebruiker",
             userDesc: "",
