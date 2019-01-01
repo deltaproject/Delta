@@ -29,18 +29,20 @@ var dayFormat = moment(agendaDate).format("dddd");
 inTwoWeeks = moment(inTwoWeeks).add(14, 'days').toDate();
 
 function resetLoadState() {
-    for (var key in app.isLoaded) {
+    const keys = [
+        "appointments", "messages", "grades",
+        "assignments", "tests", "insights"
+    ];
+
+    keys.forEach(key => {
         if (app.isLoaded.hasOwnProperty(key)) {
             app.isLoaded[key] = false;
         }
-    }
 
-    app.magister.appointments = [];
-    app.magister.messages = [];
-    app.magister.grades = [];
-    app.magister.assignments = [];
-    app.magister.tests = [];
-    app.magister.insights = [];
+        if (app.magister.hasOwnProperty(key)) {
+            app.magister[key] = [];
+        }
+    });
 }
 
 function refreshHomework() {
