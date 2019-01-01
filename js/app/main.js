@@ -250,6 +250,22 @@ var app = new Vue({
                     "Probeer Delta opnieuw op te starten en vervolgens opnieuw af te melden.");
             }
         },
+        verifyInstall(updateData, releaseData) {
+            app.isUpdateRunning = false;
+
+            dialogQuestion(
+                `Er is een update beschikbaar, versie ${releaseData.tag_name}. ` +
+                "Hij is al gedownload op je computer.\nWil je hem nu installeren?",
+                "Update",
+                ["Installeer nu", "Later"], 1,
+                function(response) {
+                    var install = response == 0 ? true : false;
+                    if (install) {
+                        app.installUpdates(updateData);
+                    }
+                }
+            );
+        },
         downloadUpdates(releaseData) {
             app.isUpdateRunning = true;
 
@@ -280,28 +296,20 @@ var app = new Vue({
             var downloadsPath = electron.getPath('downloads');
             var filePath = path.join(downloadsPath, targetFilename);
 
-            download(targetUrl, downloadsPath).then(() => {
-                app.isUpdateRunning = false;
+            var updateData = {
+                targetPlatform: targetPlatform,
+                targetUrl: targetUrl,
+                targetFilename: targetFilename,
+                targetPath: filePath
+            };
 
-                var updateData = {
-                    targetPlatform: targetPlatform,
-                    targetUrl: targetUrl,
-                    targetFilename: targetFilename,
-                    targetPath: filePath
-                };
-    
-                dialogQuestion(
-                    `Er is een update beschikbaar, versie ${releaseData.tag_name}. ` +
-                    "Hij is al gedownload op je computer.\nWil je hem nu installeren?",
-                    "Update",
-                    ["Installeer nu", "Later"], 1,
-                    function(response) {
-                        var install = response == 0 ? true : false;
-                        if (install) {
-                            app.installUpdates(updateData);
-                        }
-                    }
-                );
+            if (fs.existsSync(filePath)) {
+                this.verifyInstall(updateData, releaseData);
+                return;                
+            }
+
+            download(targetUrl, downloadsPath).then(() => {
+                this.verifyInstall(updateData, releaseData);
             });
         },
         installUpdates(updateData) {
