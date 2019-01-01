@@ -31,6 +31,9 @@ Voor een overzicht van alle (bèta)versies/releases van Delta kun je terecht op 
 > **Let op:** het is niet de bedoeling om handmatig de stylesheet aan te passen in `dist/css/styles.css`, dit is namelijk een automatisch gegenereerd bestand.
 Zie stap 5 voor informatie over het aanpassen van stylesheets.
 
+# Voor scholen en docenten
+Er is een Enterprise-versie gepland voor Delta die geschikt is voor docenten op het voortgezet onderwijs. Deze zal voorlopig nog niet tot ontwikkeling worden gebracht. Scholen kunnen overigens wel nu al gebruik maken van de **Gastmodus voor scholen**, dit is een speciale modus voor Delta die geschikt is voor schoolcomputers/openbare computers voor leerlingen om in een veilige omgeving in te kunnen loggen bij Delta zonder dat hun inloggegevens worden opgeslagen.
+
 # Een bijdrage leveren
 Zie [Een bijdrage leveren](https://github.com/deltaproject/Delta/blob/master/docs/CONTRIBUTING.md) voor details over het maken voor Pull Requests enzovoorts.
 
