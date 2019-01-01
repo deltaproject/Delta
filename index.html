@@ -52,7 +52,12 @@
         <div class="card" id="prestaties">
             <h1>Prestaties</h1>
             <div>
-                <div v-if="magister.getLastGrades().length == 0" class="no-info">
+                <div class="cardLoading" v-if="!isLoaded.grades">
+                    <i class="fas fa-circle-notch spin"></i>
+                </div>
+
+                <div v-if="magister.getLastGrades().length == 0 && isLoaded.grades"
+                    class="no-info">
                     <i class="fas fa-chart-line"></i>
                     <p>Prestaties komen hier te staan als je meer cijfers haalt.</p>
                 </div>
@@ -64,7 +69,12 @@
         <div class="card" id="agenda">
             <h1>Agenda <span>voor {{ agendaDate }}</span></h1>
             <div :class="{ bigList: magister.appointments.length > 0 }">
-                <div v-if="magister.appointments.length == 0" class="no-info">
+                <div class="cardLoading" v-if="!isLoaded.appointments">
+                    <i class="fas fa-circle-notch spin"></i>
+                </div>
+
+                <div v-if="magister.appointments.length == 0 && isLoaded.appointments"
+                    class="no-info">
                     <i class="far fa-calendar"></i>
                     <p>Geen afspraken voor {{ agendaDate }}.</p>
                 </div>
@@ -86,14 +96,18 @@
 
         <div class="card" id="huiswerk">
             <h1>Huiswerk <span>voor {{ agendaDate }}</span></h1>
-            <div class="checkContainer">
+            <div class="checkContainer" v-if="isLoaded.appointments">
                 <input v-model="showDoneHomework" name="huiswerkDone" type="checkbox">
                 <span>Toon voltooide</span>
             </div>
 
             <div>
-                <div v-if="(magister.filterHomework(false).length == 0 && !showDoneHomework) ||
-                    magister.appointments.length == 0" class="no-info">
+                <div class="cardLoading" v-if="!isLoaded.appointments">
+                    <i class="fas fa-circle-notch spin"></i>
+                </div>
+
+                <div v-if="isLoaded.appointments && ((magister.filterHomework(false).length == 0 && !showDoneHomework) ||
+                    magister.appointments.length == 0)" class="no-info">
                     <i class="far fa-smile-wink"></i>
                     <p>Je hebt geen huiswerk voor {{ agendaDate }}.</p>
                 </div>
@@ -144,14 +158,18 @@
 
         <div class="card" id="berichten">
             <h1>Berichten</h1>
-            <div class="checkContainer">
+            <div class="checkContainer" v-if="isLoaded.messages">
                 <input v-model="showReadMail" name="readMail" type="checkbox">
                 <span>Toon gelezen</span>
             </div>
 
             <div>
-                <div v-if="(magister.filterMessages(false).length == 0 && !showReadMail) ||
-                    magister.messages.length == 0" class="no-info">
+                <div class="cardLoading" v-if="!isLoaded.messages">
+                    <i class="fas fa-circle-notch spin"></i>
+                </div>
+
+                <div v-if="isLoaded.messages && ((magister.filterMessages(false).length == 0 && !showReadMail) ||
+                    magister.messages.length == 0)" class="no-info">
                     <i class="far fa-envelope-open"></i>
                     <p>Geen nieuwe berichten.</p>
                 </div>
@@ -206,7 +224,12 @@
         <div class="card" id="cijfers">
             <h1>Laatste cijfers</h1>
             <div>
-                <div v-if="magister.getLastGrades().length == 0" class="no-info">
+                <div class="cardLoading" v-if="!isLoaded.grades">
+                    <i class="fas fa-circle-notch spin"></i>
+                </div>
+
+                <div v-if="magister.getLastGrades().length == 0 && isLoaded.grades"
+                    class="no-info">
                     <i class="fas fa-chart-pie"></i>
                     <p>Je hebt nog geen cijfers.</p>
                 </div>
@@ -235,7 +258,12 @@
         <div class="card" id="toetsen">
             <h1>Toetsen <span>komende twee weken</span></h1>
             <div>
-                <div v-if="magister.tests.length == 0" class="no-info">
+                <div class="cardLoading" v-if="!isLoaded.tests">
+                    <i class="fas fa-circle-notch spin"></i>
+                </div>
+
+                <div v-if="magister.tests.length == 0 && isLoaded.tests"
+                    class="no-info">
                     <i class="fas fa-pen-fancy"></i>
                     <p>Je hebt geen toetsen voor de komende twee weken.</p>
                 </div>
@@ -279,7 +307,11 @@
         <div class="card" id="inzichten">
             <h1>Inzichten</h1>
             <div>
-                <div v-if="magister.insights.length == 0" class="no-info">
+                <div class="cardLoading" v-if="!isLoaded.grades">
+                    <i class="fas fa-circle-notch spin"></i>
+                </div>
+                
+                <div v-if="magister.insights.length == 0 && isLoaded.grades" class="no-info">
                     <i class="fas fa-search"></i>
                     <p>Inzichten worden aangevuld in de loop van het schooljaar.</p>
                 </div>
@@ -300,7 +332,12 @@
         <div class="card" id="opdrachten">
             <h1>Opdrachten</h1>
             <div>
-                <div v-if="magister.assignments.length == 0" class="no-info">
+                <div class="cardLoading" v-if="!isLoaded.assignments">
+                    <i class="fas fa-circle-notch spin"></i>
+                </div>
+                
+                <div v-if="magister.assignments.length == 0 && isLoaded.assignments"
+                    class="no-info">
                     <i class="fas fa-book"></i>
                     <p>Geen openstaande opdrachten.</p>
                 </div>

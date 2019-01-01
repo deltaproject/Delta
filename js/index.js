@@ -26,20 +26,17 @@ if ([5, 6].includes(today.getDay())) {
 }
 
 var dayFormat = moment(agendaDate).format("dddd");
-var contentLoaded = 0;
 inTwoWeeks = moment(inTwoWeeks).add(14, 'days').toDate();
 
-function isContentLoaded(callback) {
-    if (contentLoaded == 5) {
-        callback();
-    } else {
-        window.setTimeout(() => {
-            isContentLoaded(callback);
-        }, 100);
+function resetLoadState() {
+    for (var key in app.isLoaded) {
+        if (app.isLoaded.hasOwnProperty(key)) {
+            app.isLoaded[key] = false;
+        }
     }
 }
 
-function refreshHomework(initial = false) {
+function refreshHomework() {
     m.appointments(agendaDate, inTwoWeeks)
         .then((appointments) => {
             let tests = [];
@@ -52,13 +49,13 @@ function refreshHomework(initial = false) {
             }
 
             app.magister.tests = tests;
-
-            if (initial)
-                contentLoaded++;
+            app.isLoaded.tests = true;
         });
 }
 
-function refreshData(initial = false) {
+function refreshData() {
+    resetLoadState();
+
     if (app.isRefreshCooldown) {
         return;
     }
@@ -66,11 +63,10 @@ function refreshData(initial = false) {
     m.appointments(agendaDate, agendaDate)
         .then((appointments) => {
             app.magister.appointments = appointments;
-            if (initial)
-                contentLoaded++;
+            app.isLoaded.appointments = true;
         });
 
-    refreshHomework(true);
+    refreshHomework();
 
     m.courses().then((courses) => {
         _.last(courses).grades()
@@ -89,10 +85,9 @@ function refreshData(initial = false) {
         
                 app.magister.grades = grades;
                 app.magister.insights = computeInsights();
+                app.isLoaded.grades = true;
 
                 refreshGraph(validGrades);
-                if (initial)
-                    contentLoaded++;
         });
     });
     
@@ -100,8 +95,7 @@ function refreshData(initial = false) {
         .then((folders) => {
             folders[0].messages().then((messages) => {
                 app.magister.messages = messages.messages;
-                if (initial)
-                    contentLoaded++;
+                app.isLoaded.messages = true;
             });
         });
     
@@ -109,16 +103,8 @@ function refreshData(initial = false) {
         .then((assignments) => {
             assignments.reverse();
             app.magister.assignments = assignments;
-            if (initial)
-                contentLoaded++;
+            app.isLoaded.assignments = true;
         });
-
-    if (initial) {
-        isContentLoaded(() => {
-            ipcRenderer.send("content-loaded");
-            app.checkUpdates();
-        });
-    }
 }
 
 app.profile.username = m.profileInfo.getFullName(false);
@@ -141,4 +127,7 @@ if (m != null) {
     console.log("Unable to authenticate with Magister.");
 }
 
-refreshData(true);
+ipcRenderer.send("content-loaded");
+app.checkUpdates();
+
+refreshData();
