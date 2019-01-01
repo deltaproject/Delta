@@ -96,7 +96,7 @@
 
         <div class="card" id="huiswerk">
             <h1>Huiswerk <span>voor {{ agendaDate }}</span></h1>
-            <div class="checkContainer">
+            <div class="checkContainer" v-if="isLoaded.appointments">
                 <input v-model="showDoneHomework" name="huiswerkDone" type="checkbox">
                 <span>Toon voltooide</span>
             </div>
@@ -158,7 +158,7 @@
 
         <div class="card" id="berichten">
             <h1>Berichten</h1>
-            <div class="checkContainer">
+            <div class="checkContainer" v-if="isLoaded.messages">
                 <input v-model="showReadMail" name="readMail" type="checkbox">
                 <span>Toon gelezen</span>
             </div>
