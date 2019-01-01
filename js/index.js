@@ -34,6 +34,13 @@ function resetLoadState() {
             app.isLoaded[key] = false;
         }
     }
+
+    app.magister.appointments = [];
+    app.magister.messages = [];
+    app.magister.grades = [];
+    app.magister.assignments = [];
+    app.magister.tests = [];
+    app.magister.insights = [];
 }
 
 function refreshHomework() {
