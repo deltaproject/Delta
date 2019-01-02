@@ -146,19 +146,20 @@ function initData() {
 }
 
 if (remote.process.argv.includes("--guest")) {
-    app.auth.isGuest = true;
-    app.auth.saveCreds = false;
+    const schoolIndex = remote.process.argv.indexOf("--guest") + 1;
+    const schoolName = remote.process.argv[schoolIndex];
+
+    if (schoolName) {
+        app.auth.creds.school = schoolName;
+        app.auth.isGuest = true;
+        app.auth.saveCreds = false;
+    }
 } else {
     if (fs.existsSync(credsFile)) {
         let rawJson = fs.readFileSync(credsFile);
         app.auth.creds = JSON.parse(rawJson);
         app.login();
     }
-}
-
-if (remote.process.argv.includes("--school")) {
-    var index = remote.process.argv.indexOf("--school") + 1;
-    app.auth.creds.school = remote.process.argv[index];
 }
 
 document.getElementById("authContainer").addEventListener("keyup", (event) => {
