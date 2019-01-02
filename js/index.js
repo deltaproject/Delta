@@ -17,7 +17,7 @@ moment.locale("nl");
 
 const credsFile = path.join(electron.getPath("userData"), "delta.json");
 
-var m = remote.getGlobal("m");
+let m;
 var today = new Date();
 var agendaDate = new Date();
 var inTwoWeeks = new Date();
@@ -30,6 +30,7 @@ if ([5, 6].includes(today.getDay())) {
 
 var dayFormat = moment(agendaDate).format("dddd");
 inTwoWeeks = moment(inTwoWeeks).add(14, 'days').toDate();
+app.agendaDate = dayFormat;
 
 function resetLoadState() {
     const keys = [
@@ -119,24 +120,29 @@ function refreshData() {
         });
 }
 
-app.profile.username = m.profileInfo.getFullName(false);
-app.agendaDate = dayFormat;
+function initData() {
+    m = remote.getGlobal("m");
 
-m.courses().then((courses) => {
-    var currentCourse = _.last(courses);
-    const userDesc = [
-        m.school.name,
-        currentCourse.type.description,
-        currentCourse.group.description
-    ];
+    if (m != null) {
+        console.log("Successfully authenticated with Magister!");
+    } else {
+        console.log("Unable to authenticate with Magister.");
+    }
 
-    app.profile.userDesc = userDesc.join(" - ");
-});
+    m.courses().then((courses) => {
+        var currentCourse = _.last(courses);
+        const userDesc = [
+            m.school.name,
+            currentCourse.type.description,
+            currentCourse.group.description
+        ];
+    
+        app.profile.userDesc = userDesc.join(" - ");
+    });
 
-if (m != null) {
-    console.log("Successfully authenticated with Magister!");
-} else {
-    console.log("Unable to authenticate with Magister.");
+    app.profile.username = m.profileInfo.getFullName(false);
+    refreshData();
+    app.checkUpdates();
 }
 
 if (remote.process.argv.includes("--guest")) {
@@ -154,6 +160,3 @@ if (remote.process.argv.includes("--school")) {
     var index = remote.process.argv.indexOf("--school") + 1;
     app.auth.creds.school = remote.process.argv[index];
 }
-
-ipcRenderer.send("content-loaded");
-app.checkUpdates();

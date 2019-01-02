@@ -222,7 +222,7 @@ var app = new Vue({
                             }); 
                         }
                         
-                        refreshData();
+                        initData();
                     } else {
                         app.auth.loginIncorrect = true;
                         app.auth.isBusy = false;
