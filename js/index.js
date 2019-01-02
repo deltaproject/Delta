@@ -1,3 +1,4 @@
+const { default: magister, getSchools } = require("magister.js");
 const { remote, ipcRenderer } = require("electron");
 const { spawn } = require('child_process');
 const path = require("path");
@@ -14,7 +15,9 @@ const Vue = require("vue/dist/vue");
 var $ = require("jquery/dist/jquery");
 moment.locale("nl");
 
-var m = remote.getGlobal("m");
+const credsFile = path.join(electron.getPath("userData"), "delta.json");
+
+let m;
 var today = new Date();
 var agendaDate = new Date();
 var inTwoWeeks = new Date();
@@ -27,6 +30,7 @@ if ([5, 6].includes(today.getDay())) {
 
 var dayFormat = moment(agendaDate).format("dddd");
 inTwoWeeks = moment(inTwoWeeks).add(14, 'days').toDate();
+app.agendaDate = dayFormat;
 
 function resetLoadState() {
     const keys = [
@@ -116,27 +120,50 @@ function refreshData() {
         });
 }
 
-app.profile.username = m.profileInfo.getFullName(false);
-app.agendaDate = dayFormat;
+function initData() {
+    m = remote.getGlobal("m");
 
-m.courses().then((courses) => {
-    var currentCourse = _.last(courses);
-    const userDesc = [
-        m.school.name,
-        currentCourse.type.description,
-        currentCourse.group.description
-    ];
+    if (m != null) {
+        console.log("Successfully authenticated with Magister!");
+    } else {
+        console.log("Unable to authenticate with Magister.");
+    }
 
-    app.profile.userDesc = userDesc.join(" - ");
-});
+    m.courses().then((courses) => {
+        var currentCourse = _.last(courses);
+        const userDesc = [
+            m.school.name,
+            currentCourse.type.description,
+            currentCourse.group.description
+        ];
+    
+        app.profile.userDesc = userDesc.join(" - ");
+    });
 
-if (m != null) {
-    console.log("Successfully authenticated with Magister!");
-} else {
-    console.log("Unable to authenticate with Magister.");
+    app.profile.username = m.profileInfo.getFullName(false);
+    refreshData();
+    app.checkUpdates();
 }
 
-ipcRenderer.send("content-loaded");
-app.checkUpdates();
+if (remote.process.argv.includes("--guest")) {
+    const schoolIndex = remote.process.argv.indexOf("--guest") + 1;
+    const schoolName = remote.process.argv[schoolIndex];
 
-refreshData();
+    if (schoolName) {
+        app.auth.creds.school = schoolName;
+        app.auth.isGuest = true;
+        app.auth.saveCreds = false;
+    }
+} else {
+    if (fs.existsSync(credsFile)) {
+        let rawJson = fs.readFileSync(credsFile);
+        app.auth.creds = JSON.parse(rawJson);
+        app.login();
+    }
+}
+
+document.getElementById("authContainer").addEventListener("keyup", (event) => {
+    if (event.keyCode == 13 && app.isAuthFormFilled && !app.auth.isBusy) {
+        app.login();
+    }
+});

@@ -8,6 +8,20 @@ var app = new Vue({
         agendaDate: "",
         showDoneHomework: false,
         showReadMail: false,
+        auth: {
+            schoolQuery: [],
+            saveCreds: true,
+            loginIncorrect: false,
+            schoolIncorrect: false,
+            isGuest: false,
+            isBusy: false,
+            loginSuccess: false,
+            creds: {
+                school: '',
+                username: '',
+                password: ''
+            }
+        },
         isLoaded: {
             appointments: false,
             messages: false,
@@ -172,7 +186,52 @@ var app = new Vue({
                    "Klik om te downloaden.";
         }
     },
+    computed: {
+        isAuthFormFilled: function() {
+            return this.auth.creds.school.length > 0 &&
+                   this.auth.creds.username.length > 0 &&
+                   this.auth.creds.password.length > 0;
+        }
+    },
     methods: {
+        login() {
+            app.auth.isBusy = true;
+            app.auth.loginIncorrect = false;
+            app.auth.schoolIncorrect = false;
+            app.auth.loginSuccess = false;
+            
+            app.getSchools(() => {
+                if (app.auth.schoolQuery.length == 0) {
+                    app.auth.schoolIncorrect = true;
+                    app.auth.isBusy = false;
+                    sendNotify("De schoolnaam die je hebt ingevoerd bestaat niet. Check of je de volledige naam hebt gebruikt van de school.", "error");
+                    return;
+                }
+    
+                ipcRenderer.send("validate-creds", app.auth.creds);
+                ipcRenderer.once("login-success", (event, isSuccess) => {
+                    if (isSuccess) {
+                        app.auth.loginSuccess = true;
+                        app.auth.isBusy = false;
+    
+                        let rawJson = JSON.stringify(app.auth.creds);
+                        if (app.auth.saveCreds) {
+                            fs.writeFile(credsFile, rawJson, 'utf8', (err) => {
+                                if (err) {
+                                    console.log("Unable to save credentials to file: " + err);
+                                }
+                            }); 
+                        }
+                        
+                        initData();
+                    } else {
+                        app.auth.loginIncorrect = true;
+                        app.auth.isBusy = false;
+                        sendNotify("Je gebruikersnaam en/of wachtwoord kloppen niet.", "error");
+                    }
+                });
+            });
+        },
         toggleSettings() {
             app.isSettingsMenu = !app.isSettingsMenu;
         },
@@ -249,6 +308,13 @@ var app = new Vue({
                 dialogError("Er ging iets fout tijdens het afmelden. " +
                     "Probeer Delta opnieuw op te starten en vervolgens opnieuw af te melden.");
             }
+        },
+        getSchools(callback = null) {
+            getSchools(this.auth.creds.school)
+                .then((schools) => {
+                    app.auth.schoolQuery = schools;
+                    if (callback != null) callback();
+                });
         },
         verifyInstall(updateData, releaseData) {
             app.isUpdateRunning = false;

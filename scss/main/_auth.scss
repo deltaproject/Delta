@@ -1,12 +1,4 @@
-@import '../global';
-@import '../notify';
-@import '../titleBar';
 @import 'spinner';
-
-.container {
-    text-align: center;
-    margin-top: 14vh;
-}
 
 .loginContainer input {
     font-family: Poppins;
@@ -82,4 +74,24 @@ input[name="saveCreds"] {
 .guestLabel {
     width: 80%;
     margin: 0 auto;
+}
+
+#authContainer {
+    z-index: 100;
+    background: white;
+    box-shadow: $defaultShadow;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 500px;
+    height: 100%;
+    text-align: center;
+
+    .authContent {
+        padding-top: 20vh;
+    }
+
+    &.loggedIn {
+        animation: slideOutLeft 0.4s forwards;
+    }
 }
