@@ -78,15 +78,18 @@ input[name="saveCreds"] {
 
 #authContainer {
     z-index: 100;
-    padding-top: 120px;
     background: white;
     box-shadow: $defaultShadow;
     position: absolute;
     top: 0;
     left: 0;
     width: 500px;
-    height: 85%;
+    height: 100%;
     text-align: center;
+
+    .authContent {
+        padding-top: 20vh;
+    }
 
     &.loggedIn {
         animation: slideOutLeft 0.4s forwards;
