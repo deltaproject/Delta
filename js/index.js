@@ -1,3 +1,4 @@
+const { default: magister, getSchools } = require("magister.js");
 const { remote, ipcRenderer } = require("electron");
 const { spawn } = require('child_process');
 const path = require("path");
@@ -13,6 +14,8 @@ const download = require("download");
 const Vue = require("vue/dist/vue");
 var $ = require("jquery/dist/jquery");
 moment.locale("nl");
+
+const credsFile = path.join(electron.getPath("userData"), "delta.json");
 
 var m = remote.getGlobal("m");
 var today = new Date();
@@ -136,7 +139,21 @@ if (m != null) {
     console.log("Unable to authenticate with Magister.");
 }
 
+if (remote.process.argv.includes("--guest")) {
+    app.auth.isGuest = true;
+    app.auth.saveCreds = false;
+} else {
+    if (fs.existsSync(credsFile)) {
+        let rawJson = fs.readFileSync(credsFile);
+        app.creds = JSON.parse(rawJson);
+        app.login();
+    }
+}
+
+if (remote.process.argv.includes("--school")) {
+    var index = remote.process.argv.indexOf("--school") + 1;
+    app.auth.creds.school = remote.process.argv[index];
+}
+
 ipcRenderer.send("content-loaded");
 app.checkUpdates();
-
-refreshData();
