@@ -160,3 +160,9 @@ if (remote.process.argv.includes("--school")) {
     var index = remote.process.argv.indexOf("--school") + 1;
     app.auth.creds.school = remote.process.argv[index];
 }
+
+document.getElementById("authContainer").addEventListener("keyup", (event) => {
+    if (event.keyCode == 13 && app.isAuthFormFilled && !app.auth.isBusy) {
+        app.login();
+    }
+});
