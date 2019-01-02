@@ -212,6 +212,7 @@ var app = new Vue({
                 ipcRenderer.once("login-success", (event, isSuccess) => {
                     if (isSuccess) {
                         app.auth.loginSuccess = true;
+                        app.auth.isBusy = false;
     
                         let rawJson = JSON.stringify(app.auth.creds);
                         if (app.auth.saveCreds) {
