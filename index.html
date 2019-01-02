@@ -29,6 +29,49 @@
 
     <div id="notifyContainer"></div>
 
+    <div id="authContainer">
+        <img src="./img/icons/icon.png" class="logo no-select">
+        <h1 class="no-select">Inloggen</h1>
+        <div class="login">
+            <div class="loginContainer">
+                <input type="text" name="school" list="schools" v-model="auth.creds.school"
+                        placeholder="Schoolnaam" :class="{ error: auth.schoolIncorrect }"
+                        :disabled="auth.isBusy || (auth.isGuest && auth.creds.school != '')" @keyup="getSchools()">
+
+                <datalist id="schools">
+                    <option v-for="i in auth.schoolQuery" :value="i.name">
+                </datalist>
+
+                <input type="text" name="username" v-model="auth.creds.username"
+                        placeholder="Gebruikersnaam" :class="{ error: auth.loginIncorrect }"
+                        :disabled="auth.isBusy">
+                <input type="password" name="password" v-model="auth.creds.password"
+                        placeholder="Wachtwoord" :class="{ error: auth.loginIncorrect }"
+                        :disabled="auth.isBusy">
+                
+                <div class="checkContainer no-select" v-show="!auth.isGuest">
+                    <input v-model="auth.saveCreds" name="saveCreds" type="checkbox"
+                        :disabled="auth.isBusy">
+                    <span>Onthoud mij</span>
+                </div>
+
+                <input type="submit" name="signIn" value="Log in" id="btnSubmit"
+                        @click="login()" :disabled="!isAuthFormFilled || auth.isBusy">
+                
+                <div class="guestContainer no-select">
+                    <p class="detail guestLabel" v-if="auth.isGuest">
+                        De gastmodus is ingeschakeld waardoor je inloggegevens niet worden opgeslagen.
+                    </p>
+                </div>
+                
+                <div v-if="auth.isBusy" class="spinner">
+                    <i class="fas fa-circle-notch spin"></i>
+                    <p v-if="auth.loginSuccess" class="detail no-select" >Gegevens laden...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="statusBar no-select">
         <h1 class="title-big">
             <span>Project: </span>Delta<span class="beta-badge" v-if="isBeta"></span>
