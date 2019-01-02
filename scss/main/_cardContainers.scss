@@ -94,15 +94,11 @@
     border-radius: 50%;
     margin-bottom: -10px;
     font-size: 22px;
-    box-shadow: $defaultShadow;
+    color: black;
+    background: rgb(226, 226, 226);
 
     &.unread {
         color: white;
         background: rgb(65, 65, 65);
-    }
-
-    &.read {
-        color: black;
-        background: white;
     }
 }
