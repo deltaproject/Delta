@@ -35,7 +35,8 @@ app.agendaDate = dayFormat;
 function resetLoadState() {
     const keys = [
         "appointments", "messages", "grades",
-        "assignments", "tests", "insights"
+        "assignments", "tests", "insights",
+        "files"
     ];
 
     keys.forEach(key => {
@@ -117,6 +118,12 @@ function refreshData() {
             assignments.reverse();
             app.magister.assignments = assignments;
             app.isLoaded.assignments = true;
+        });
+
+    m.fileFolders()
+        .then((folders) => {
+            app.magister.files = folders;
+            app.isLoaded.files = true;
         });
 }
 

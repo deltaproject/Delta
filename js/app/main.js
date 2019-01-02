@@ -27,7 +27,8 @@ var app = new Vue({
             messages: false,
             grades: false,
             assignments: false,
-            tests: false
+            tests: false,
+            files: false
         },
         profile: {
             username: "Onbekende gebruiker",
@@ -41,6 +42,7 @@ var app = new Vue({
             assignments: [],
             tests: [],
             insights: [],
+            files: [],
             filterMessages(readState, maxMessages = 8) {
                 let array = [];
                 for (let i = 0; i < this.messages.length; i++) {
@@ -308,6 +310,9 @@ var app = new Vue({
                 dialogError("Er ging iets fout tijdens het afmelden. " +
                     "Probeer Delta opnieuw op te starten en vervolgens opnieuw af te melden.");
             }
+        },
+        browse(magisterFolder) {
+            sendNotify("Het is momenteel nog niet mogelijk om te browsen door Bestanden.", "error");
         },
         getSchools(callback = null) {
             getSchools(this.auth.creds.school)
