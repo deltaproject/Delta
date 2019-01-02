@@ -13,7 +13,6 @@ if (isDev) {
 }
 
 let mainWin;
-let authWin;
 
 function createWindow() {
     mainWin = new BrowserWindow({
@@ -24,30 +23,20 @@ function createWindow() {
         icon: path.join(__dirname, 'img/icons/icon@64px.png')
     });
 
-    authWin = new BrowserWindow({
-        parent: mainWin,
-        width: 500,
-        height: 700,
-        frame: false,
-        resizable: false,
-        show: false,
-        icon: path.join(__dirname, 'img/icons/icon@64px.png')
-    });
-
     mainWin.on("closed", function () {
         app.quit();
     });
 
-    authWin.loadURL(url.format({
-        pathname: path.join(__dirname, "auth.html"),
+    mainWin.loadURL(url.format({
+        pathname: path.join(__dirname, "index.html"),
         protocol: "file:",
         slashes: true
     }));
 
-    authWin.once("ready-to-show", function () {
-        authWin.show();
+    mainWin.once("ready-to-show", function () {
+        mainWin.show();
         if (process.argv.includes("--debug")) {
-            authWin.webContents.openDevTools();
+            mainWin.webContents.openDevTools();
         }
     });
 }
@@ -62,28 +51,10 @@ ipcMain.on("validate-creds", (event, creds) => {
         }))
         .then((m) => {
             global.m = m;
-            authWin.webContents.send("login-success", true);
+            mainWin.webContents.send("login-success", true);
         }, (err) => {
-            authWin.webContents.send("login-success", false);
+            mainWin.webContents.send("login-success", false);
         });
-});
-
-ipcMain.once("prepare-main", (event) => {
-    mainWin.loadURL(url.format({
-        pathname: path.join(__dirname, "index.html"),
-        protocol: "file:",
-        slashes: true
-    }));
-});
-
-ipcMain.once("content-loaded", (event) => {
-    try {
-        authWin.close();
-        mainWin.show();
-        if (process.argv.includes("--debug")) {
-            mainWin.webContents.openDevTools();
-        }
-    } catch (err) { }
 });
 
 app.once("ready", function () {
