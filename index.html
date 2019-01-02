@@ -339,12 +339,21 @@
             </div>
         </div>
 
-        <div class="card" id="afwezigheid">
-            <h1>Afwezigheid</h1>
-            <div>
-                <div class="no-info">
-                    <i class="far fa-frown"></i>
-                    <p>Deze functie is helaas nog niet beschikbaar.</p>
+        <div class="card" id="bestanden">
+            <h1>Bestanden</h1>
+            <div :class="{ bigList: magister.files.length > 0 }">
+                <div class="cardLoading" v-if="!isLoaded.files">
+                    <i class="fas fa-circle-notch spin"></i>
+                </div>
+
+                <div v-if="magister.files.length == 0 && isLoaded.files"
+                    class="no-info">
+                    <i class="far fa-file"></i>
+                    <p>Er zijn geen bestanden gevonden.</p>
+                </div>
+
+                <div v-for="i in magister.files" class="bigListItem" @click="browse(i)">
+                    <p class="folderName"><i class="fas fa-folder"></i>{{ i.name }}</p>
                 </div>
             </div>
         </div>
@@ -401,6 +410,16 @@
                             @click="showAssignmentInfo(i)"
                             title="Meer informatie"><i class="fas fa-info"></i></div>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="afwezigheid">
+            <h1>Afwezigheid</h1>
+            <div>
+                <div class="no-info">
+                    <i class="far fa-frown"></i>
+                    <p>Deze functie is helaas nog niet beschikbaar.</p>
                 </div>
             </div>
         </div>
