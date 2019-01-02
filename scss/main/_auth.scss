@@ -1,0 +1,90 @@
+@import 'spinner';
+
+.loginContainer input {
+    font-family: Poppins;
+    outline: none;
+
+    &[type="text"],
+    &[type="password"] {
+        display: block;
+        padding: 10px 8px;
+        margin: 10px auto;
+        font-size: 16px;
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.247);
+        transition: box-shadow 0.5s;
+        width: 60%;
+
+        &.error {
+            box-shadow: 0 0 10px rgb(218, 47, 47) !important;
+            animation: shake 0.8s;
+        }
+
+        &:focus {
+            box-shadow: 0 0 10px rgba(18, 156, 255, 0.795);
+        }
+    }
+
+    &[type="submit"] {
+        padding: 10px 45px;
+        border: 2px solid transparent;
+        border-radius: 8px;
+        background: rgb(40, 212, 189);
+        color: white;
+        font-size: 16px;
+        font-weight: bolder;
+        transition: background-color 0.5s, border-color 0.5s ;
+        margin-top: 10px;
+
+        &:hover {
+            background: rgb(85, 235, 255);
+        }
+
+        &:focus {
+            border-color: rgb(65, 174, 238);
+        }
+
+        &:disabled {
+            background: #c2c2c2;
+        }
+    }
+}
+
+input[name="saveCreds"] {
+    &::after {
+        vertical-align: -10% !important;
+    }    
+}
+
+.logo {
+    width: 128px;
+    height: 128px;
+    -webkit-user-drag: none;
+}
+
+.guestContainer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin: 20px auto;
+    width: 100%;
+}
+
+.guestLabel {
+    width: 80%;
+    margin: 0 auto;
+}
+
+#authContainer {
+    z-index: 100;
+    padding-top: 120px;
+    background: white;
+    box-shadow: $defaultShadow;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 500px;
+    height: 100%;
+    text-align: center;
+}
