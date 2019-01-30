@@ -1,4 +1,4 @@
-/* globals Vue, electron, path, fs, moment, sendNotify, ipcRenderer, credsFile, initData, $, refreshHomework, showInfoDialog, dialogError, getSchools, dialogQuestion, os, download, shell, spawn */
+/* globals Vue, remote, electron, path, fs, moment, sendNotify, ipcRenderer, credsFile, initData, $, refreshHomework, showInfoDialog, dialogError, getSchools, dialogQuestion, os, download, shell, spawn */
 var app = new Vue({
   el: '#app',
   data: {
@@ -20,7 +20,8 @@ var app = new Vue({
       creds: {
         school: '',
         username: '',
-        password: ''
+        password: '',
+        token: ''
       }
     },
     isLoaded: {
@@ -184,7 +185,7 @@ var app = new Vue({
     }
   },
   methods: {
-    login () {
+    login (useToken = false) {
       app.auth.isBusy = true
       app.auth.loginIncorrect = false
       app.auth.schoolIncorrect = false
@@ -198,14 +199,22 @@ var app = new Vue({
           return
         }
 
-        ipcRenderer.send('validate-creds', app.auth.creds)
+        if (useToken) {
+          ipcRenderer.send('validate-token', app.auth.creds)
+        } else {
+          ipcRenderer.send('validate-creds', app.auth.creds)
+        }
+
         ipcRenderer.once('login-success', (event, isSuccess) => {
           if (isSuccess) {
             app.auth.loginSuccess = true
             app.auth.isBusy = false
 
-            let rawJson = JSON.stringify(app.auth.creds)
+            app.auth.creds.token = remote.getGlobal('m').token
+            app.auth.creds.password = '' // Assures it can't be read from console anymore
+
             if (app.auth.saveCreds) {
+              let rawJson = `{"school": "${app.auth.creds.school}", "username": "${app.auth.creds.username}", "token": "${app.auth.creds.token}"}`
               fs.writeFile(credsFile, rawJson, 'utf8', (err) => {
                 if (err) {
                   console.log('Unable to save credentials to file: ' + err)
@@ -220,7 +229,52 @@ var app = new Vue({
             sendNotify('Je gebruikersnaam en/of wachtwoord kloppen niet.', 'error')
           }
         })
+        ipcRenderer.once('token-success', (event, isSuccess) => {
+          if (isSuccess) {
+            app.auth.loginSuccess = true
+            app.auth.isBusy = false
+
+            initData()
+          } else {
+            app.auth.loginIncorrect = false
+            app.auth.isBusy = false
+            app.auth.token = ''
+          }
+        })
       })
+    },
+    signOff () {
+      if (!app.auth.saveCreds) {
+        try {
+          fs.unlinkSync(credsFile)
+        } catch (err) {
+          if (err.code !== 'ENOENT') {
+            dialogError(err.message)
+            electron.quit()
+          }
+        }
+
+        app.auth.schoolQuery = []
+        app.auth.creds = {
+          school: '',
+          username: '',
+          password: '',
+          token: ''
+        }
+      } else {
+        let rawJson = `{"school": "${app.auth.creds.school}", "username": "${app.auth.creds.username}", "token": ""}`
+        fs.writeFile(credsFile, rawJson, 'utf8', (err) => {
+          if (err) {
+            console.log('Unable to save credentials to file: ' + err)
+          }
+        })
+      }
+
+      // When logging off delete the token
+      app.auth.creds.token = ''
+
+      app.isSettingsMenu = false
+      app.auth.loginSuccess = false
     },
     toggleSettings () {
       app.isSettingsMenu = !app.isSettingsMenu
@@ -297,30 +351,6 @@ var app = new Vue({
       tableData.push({ 'name': 'Type', 'value': testType })
 
       showInfoDialog(test.classes[0], tableData, test.content, 'testInfo', 'fas fa-exclamation')
-    },
-    signOff () {
-      var credsFile = path.join(electron.getPath('userData'), 'delta.json')
-      try {
-        fs.unlinkSync(credsFile)
-      } catch (err) {
-        if (err.code !== 'ENOENT') {
-          dialogError(err.message)
-          electron.quit()
-        }
-      }
-
-      if (!app.auth.saveCreds) {
-        app.auth.schoolQuery = []
-        app.auth.creds = {
-          school: '',
-          username: '',
-          password: ''
-
-        }
-      }
-
-      app.isSettingsMenu = false
-      app.auth.loginSuccess = false
     },
     browse (magisterFolder) {
       sendNotify('Het is momenteel nog niet mogelijk om te browsen door Bestanden.', 'error')
