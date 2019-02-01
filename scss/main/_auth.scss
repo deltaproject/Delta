@@ -7,46 +7,22 @@
     &[type="text"],
     &[type="password"] {
         display: block;
-        padding: 10px 8px;
+        padding: 8px;
         margin: 10px auto;
         font-size: 16px;
-        border: none;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.247);
-        transition: box-shadow 0.5s;
+        border: 2px solid transparent;
+        border-radius: 8px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.18);
+        transition: border-color 0.4s, background-color 0.3s;
         width: 35%;
 
         &.error {
-            box-shadow: 0 0 10px rgb(218, 47, 47) !important;
+            border: 2px solid red;
             animation: shake 0.8s;
         }
 
         &:focus {
-            box-shadow: 0 0 10px rgba(18, 156, 255, 0.795);
-        }
-    }
-
-    &[type="submit"] {
-        padding: 10px 45px;
-        border: 2px solid transparent;
-        border-radius: 8px;
-        background: rgb(40, 212, 189);
-        color: white;
-        font-size: 16px;
-        font-weight: bolder;
-        transition: background-color 0.5s, border-color 0.5s ;
-        margin-top: 10px;
-
-        &:hover {
-            background: rgb(85, 235, 255);
-        }
-
-        &:focus {
-            border-color: rgb(65, 174, 238);
-        }
-
-        &:disabled {
-            background: #c2c2c2;
+            border: 2px solid rgb(41, 141, 255);
         }
     }
 }
@@ -58,8 +34,8 @@ input[name="saveCreds"] {
 }
 
 .logo {
-    width: 128px;
-    height: 128px;
+    width: 140px;
+    height: 140px;
     -webkit-user-drag: none;
 }
 
@@ -87,7 +63,51 @@ input[name="saveCreds"] {
     height: 100%;
     text-align: center;
 
+    #btnSubmit {
+        padding: 8px 38px;
+        border: 2px solid transparent;
+        border-radius: 9px;
+        background: rgb(41, 141, 255);
+        color: white;
+        font-size: 16px;
+        font-weight: bolder;
+        font-family: Poppins;
+        transition: background-color 0.5s, border-color 0.5s ;
+        margin-top: 10px;
+
+        i {
+            margin-left: 6px;
+            font-size: 15px;
+            transition: transform 0.5s;
+        }
+
+        &:focus {
+            outline: none;
+        }
+
+        &:disabled {
+            background: #c2c2c2;
+        }
+
+        &:enabled {
+            cursor: pointer;
+
+            &:hover {
+                background: rgb(83, 163, 255);
+
+                i {
+                    opacity: 1;
+                    transform: translateX(5px);
+                }
+            }
+        }
+    }
+
     .authContent {
         padding-top: 20vh;
+
+        .loginHeader {
+            font-size: 32px;
+        }
     }
 }

@@ -37,7 +37,7 @@
         <div id="authContainer" v-show="!auth.loginSuccess">
             <div class="authContent">
                 <img src="./img/icons/icon.png" class="logo no-select">
-                <h1 class="no-select">Inloggen</h1>
+                <h1 class="no-select loginHeader">Inloggen</h1>
 
                 <div class="login">
                     <div class="loginContainer">
@@ -61,7 +61,9 @@
                             <span>Onthoud mij</span>
                         </div>
                         
-                        <input type="submit" name="signIn" value="Log in" id="btnSubmit" @click="login()" :disabled="!isAuthFormFilled || auth.isBusy">
+                        <button id="btnSubmit" @click="login()" :disabled="!isAuthFormFilled || auth.isBusy">
+                            Log in<i class="fas fa-chevron-right"></i>
+                        </button>
                         
                         <div class="guestContainer no-select">
                             <p class="detail guestLabel" v-if="auth.isGuest">
