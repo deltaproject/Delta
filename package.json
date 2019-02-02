@@ -2,7 +2,10 @@
   "name": "delta",
   "productName": "Delta",
   "version": "2.0.0",
-  "author": "Kees van Voorthuizen",
+  "author": "Kees van Voorthuizen <kees.van.voorthuizen@gmail.com>",
+  "contributors": [
+    "Julian van Doorn <jvdoorn@antarc.com>"
+  ],
   "description": "Een moderne versie van Magister, gemaakt voor leerlingen.",
   "license": "MPL-2.0",
   "main": "./dist/electron/main.js",
