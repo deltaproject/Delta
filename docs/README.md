@@ -32,7 +32,14 @@ Voor een overzicht van alle (bèta)versies/releases van Delta kun je terecht op 
 4. Start Delta met `yarn run dev` (of `npm run dev`).
 
 # Voor scholen en docenten
-Er is een Enterprise-versie gepland voor Delta die geschikt is voor docenten op het voortgezet onderwijs. Deze zal voorlopig nog niet tot ontwikkeling worden gebracht. Scholen kunnen overigens wel nu al gebruik maken van de **Gastmodus voor scholen**, dit is een speciale modus voor Delta die geschikt is voor schoolcomputers/openbare computers voor leerlingen om in een veilige omgeving in te kunnen loggen bij Delta zonder dat hun inloggegevens worden opgeslagen.
+Er is een Enterprise-versie gepland voor Delta die geschikt is voor docenten op het voortgezet onderwijs. Deze zal voorlopig nog niet tot ontwikkeling worden gebracht. Scholen kunnen overigens wel nu al gebruik maken van de **gastmodus voor scholen**, dit is een speciale modus voor Delta die geschikt is voor schoolcomputers/openbare computers voor leerlingen om in een veilige omgeving in te kunnen loggen bij Delta zonder dat hun inloggegevens worden opgeslagen.
+
+De gastmodus kan worden aangezet door een bestand `school.json` aan te maken in de app data folder van Delta (`%APPDATA%/Delta/` op Windows en `~/Library/Application Support/Delta/` op OS X). Het bestand dient de volgende inhoud te hebben:
+```json
+{ "schoolname": "Naam van de school"}
+```
+
+U kunt dit bestand beveiligen door de schrijftoegang in te nemen. Delta heeft alleen leestoegang nodig om de gastmodus te activeren. U kunt bestigen dat de gastmodus is geactiveerd door naar het inlogscherm van Delta te gaan.
 
 # Een bijdrage leveren
 Zie [Een bijdrage leveren](https://github.com/deltaproject/Delta/blob/master/docs/CONTRIBUTING.md) voor details over het maken voor Pull Requests enzovoorts.
