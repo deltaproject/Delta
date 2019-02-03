@@ -17,9 +17,6 @@
   const app = remote.app
   const path = require('path')
 
-  const schoolFile = path.join(app.getPath('userData'), 'school.json')
-  const credentialsFile = path.join(app.getPath('userData'), 'credentials.json')
-
   export default {
     name: 'delta',
     components: {
@@ -29,9 +26,10 @@
     },
     data: function () {
       return {
+        magister: undefined,
         files: {
-          schoolFile: schoolFile,
-          credentialsFile: credentialsFile
+          schoolFile: path.join(app.getPath('userData'), 'school.json'),
+          credentialsFile: path.join(app.getPath('userData'), 'credentials.json')
         }
       }
     },
