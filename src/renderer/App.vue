@@ -16,7 +16,7 @@
   const { remote } = require('electron')
   const app = remote.app
   const path = require('path')
-
+  
   const schoolFile = path.join(app.getPath('userData'), 'school.json')
   const credentialsFile = path.join(app.getPath('userData'), 'credentials.json')
 
