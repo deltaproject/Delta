@@ -1,6 +1,6 @@
 <template>
   <section id="login-section" class="fdb-block">
-    <div class="container" v-if="!state.authenticated">
+    <div class="container" v-if="!$parent.magister">
       <div class="row justify-content-center">
         <div class="col-12 col-md-8 col-lg-8 col-xl-6">
           <div class="row">
@@ -15,19 +15,19 @@
               :disabled="state.busy || (guestMode && credentials.schoolname != '')" @keyup="getSchools()">
 
               <datalist id="schools">
-                <option v-for="school in schoolQuery" :value="school.name" :key="i.name"></option>
+                <option v-for="school in schoolQuery" :value="school.name" :key="school.name"></option>
               </datalist>
             </div>
           </div>
           <div class="row align-items-center mt-4">
             <div class="col">
               <input type="text" name="username" class="form-control" v-model="credentials.username"
-              placeholder="Gebruikersnaam" :class="{ 'is-invalid': state.errors.invalidCredentials }"
+              placeholder="Gebruikersnaam" :class="{ 'is-invalid': state.errors.invalidUsername }"
               :disabled="state.busy">
             </div>
             <div class="col">
               <input type="password" name="password" class="form-control" v-model="credentials.password"
-              placeholder="Wachtwoord" :class="{ 'is-invalid': state.errors.invalidCredentials }"
+              placeholder="Wachtwoord" :class="{ 'is-invalid': state.errors.invalidPassword }"
               :disabled="state.busy">
             </div>
           </div>
@@ -55,8 +55,9 @@
 </template>
 
 <script>
-  const { getSchools } = require('magister.js')
+  const { default: magister, getSchools } = require('magister.js')
   const fs = require('fs')
+  const request = require('request')
 
   export default {
     name: 'login-section',
@@ -72,11 +73,11 @@
         saveCredentials: true,
         schoolQuery: [],
         state: {
-          authenticated: false,
           busy: true,
           errors: {
             invalidSchoolname: false,
-            invalidCredentials: false
+            invalidUsername: false,
+            invalidPassword: false
           }
         }
       }
@@ -89,14 +90,76 @@
       }
     },
     methods: {
-      getSchools () {
+      getSchools (callback = undefined) {
         if (this.credentials.schoolname.length > 2) {
           getSchools(this.credentials.schoolname).then((schools) => {
             this.schoolQuery = schools
+
+            if (callback) {
+              callback(schools)
+            }
           })
         }
       },
       login () {
+        // Say that we are busy
+        this.state.busy = true
+
+        // Retrieve the school
+        this.getSchools((schools) => {
+          // Check if there is a school
+          if (schools.length === 0) {
+            this.state.errors.invalidSchoolname = true
+            // We are done so reflect that in the state
+            this.state.busy = false
+          } else {
+            // Let the user now the school name is correct
+            this.state.errors.invalidSchoolname = false
+
+            // Continue to authentication
+            request('https://raw.githubusercontent.com/simplyGits/magisterjs-authcode/master/code.json', { json: true }, (err, res, code) => {
+              // Our authentication parameters
+              var authenticationParameters = {
+                school: schools[0],
+                username: this.credentials.username,
+                password: this.credentials.password
+              }
+
+              // If we were able to fetch the authCode use it
+              if (!err && res.statusCode === 200) {
+                authenticationParameters.authCode = code
+              }
+
+              // Attempt to authenticate
+              magister(authenticationParameters)
+                .then((m) => {
+                  this.state.errors.invalidPassword = false
+                  this.state.errors.invalidUsername = false
+                  // Set the magister instance in the main app
+                  this.$parent.magister = m
+
+                  // Get the token
+                  this.credentials.token = m.token
+                  // Remove the password for security
+                  this.credentials.password = ''
+                  // We are done so reflect that in the state
+                  this.state.busy = false
+                })
+                .catch((err) => {
+                  if (err.message === 'Invalid password') {
+                    this.state.errors.invalidUsername = false // is correct else we get the 2nd error
+                    this.state.errors.invalidPassword = true
+                  } else if (err.message === 'Invalid username') {
+                    this.state.errors.invalidUsername = true
+                    this.state.errors.invalidPassword = true // just looks nice
+                  }
+
+                  // We are done so reflect that in the state
+                  this.state.busy = false
+                })
+            })
+          }
+        })
       }
     },
     created () {
@@ -137,6 +200,11 @@
             console.log(`An unkown error occured trying to read the credentials file: ${err.message}`)
           }
         }
+      }
+
+      // Check if we have an authentication token
+      if (this.credentials.token.length > 0) {
+        // TODO: Authenticate using the token
       }
 
       this.state.busy = false
