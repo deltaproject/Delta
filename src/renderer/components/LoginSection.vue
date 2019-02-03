@@ -15,7 +15,7 @@
               :disabled="$parent.state.authenticating || ($parent.authentication.isGuest && $parent.authentication.credentials.schoolname != '')" @keyup="$parent.getSchools()">
 
               <datalist id="schools">
-                <option v-for="i in $parent.authentication.schoolQuery" :value="i.name"></option>
+                <option v-for="i in $parent.authentication.schoolQuery" :value="i.name" :key="i.name"></option>
               </datalist>
             </div>
           </div>
