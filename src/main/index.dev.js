@@ -10,8 +10,10 @@
 // Install `electron-debug` with `devtron`
 require('electron-debug')({ showDevTools: true })
 
+import { app } from 'electron'
+
 // Install `vue-devtools`
-require('electron').app.on('ready', () => {
+app.on('ready', () => {
   let installExtension = require('electron-devtools-installer')
   installExtension.default(installExtension.VUEJS_DEVTOOLS)
     .then(() => {})
@@ -19,6 +21,12 @@ require('electron').app.on('ready', () => {
       console.log('Unable to install `vue-devtools`: \n', err)
     })
 })
+
+// Fix paths and app name
+const { productName } = require('../../package.json')
+app.setName(productName)
+
+app.setPath('userData', require('path').join(app.getPath('appData'), productName))
 
 // Require `main` process to boot app
 require('./index')
