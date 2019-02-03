@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <login-section ref="login-section"></login-section>
-    <status-bar ref="status-bar"></status-bar>
-    <settings-flyout ref="settings-flyout"></settings-flyout>
+    <login-section ref="loginSection"></login-section>
+    <status-bar ref="statusBar"></status-bar>
+    <settings-flyout ref="settingsFlyout"></settings-flyout>
 
     <div id="notifyContainer"></div>
   </div>
@@ -34,6 +34,12 @@
       }
     },
     methods: {
+      login () {
+        this.$refs.loginSection.login()
+      },
+      logout () {
+        this.$refs.loginSection.logout()
+      }
     }
   }
 </script>

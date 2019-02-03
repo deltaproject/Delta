@@ -142,6 +142,25 @@
                   this.credentials.token = m.token
                   // Remove the password for security
                   this.credentials.password = ''
+
+                  if (this.saveCredentials) {
+                    try {
+                      fs.writeFileSync(this.$parent.files.credentialsFile,
+                        `{"schoolname": "${this.credentials.schoolname}", "username": "${this.credentials.username}", "token": "${this.credentials.token}"}`
+                      )
+                    } catch (err) {
+                      console.log(`An error occured while saving credentials: ${err.message}`)
+                    }
+                  } else {
+                    try {
+                      fs.unlinkSync(this.$parent.files.credentialsFile)
+                    } catch (err) {
+                      if (!err.code === 'ENOENT') {
+                        console.log(`An unkown error occured trying to delete credential file: ${err.message}`)
+                      }
+                    }
+                  }
+
                   // We are done so reflect that in the state
                   this.state.busy = false
                 })
@@ -160,6 +179,17 @@
             })
           }
         })
+      },
+      logout () {
+        this.$parent.magister = undefined
+
+        if (!this.saveCredentials) {
+          if (!this.guestMode) {
+            this.credentials.schoolname = ''
+          }
+          this.credentials.schoolname = ''
+          this.credentials.token = ''
+        }
       }
     },
     created () {
@@ -204,10 +234,48 @@
 
       // Check if we have an authentication token
       if (this.credentials.token.length > 0) {
-        // TODO: Authenticate using the token
-      }
+        // Retrieve the school
+        this.getSchools((schools) => {
+          // Check if there is a school
+          if (schools.length === 0) {
+            // We are done so reflect that in the state
+            this.state.busy = false
+          } else {
+            // Continue to authentication
+            request('https://raw.githubusercontent.com/simplyGits/magisterjs-authcode/master/code.json', { json: true }, (err, res, code) => {
+              // Our authentication parameters
+              var authenticationParameters = {
+                school: schools[0],
+                token: this.credentials.token
+              }
 
-      this.state.busy = false
+              // If we were able to fetch the authCode use it
+              if (!err && res.statusCode === 200) {
+                authenticationParameters.authCode = code
+              }
+
+              // Attempt to authenticate
+              magister(authenticationParameters)
+                .then((m) => {
+                  // Set the magister instance in the main app
+                  this.$parent.magister = m
+                  // We are done so reflect that in the state
+                  this.state.busy = false
+                })
+                .catch((err) => {
+                  if (!err.message === 'Cannot read property \'Id\' of undefined') { // This generally means the token was invalid
+                    console.log(`An unkown error occured trying to authenticate using previous token: ${err.message}`)
+                  }
+                  // We are done so reflect that in the state
+                  this.state.busy = false
+                })
+            })
+          }
+        })
+      } else {
+        // We are done so reflect that in the state
+        this.state.busy = false
+      }
     }
   }
 </script>
