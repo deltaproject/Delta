@@ -142,6 +142,17 @@
                   this.credentials.token = m.token
                   // Remove the password for security
                   this.credentials.password = ''
+
+                  if (this.saveCredentials) {
+                    try {
+                      fs.writeFileSync(this.$parent.files.credentialsFile,
+                        `{"schoolname": "${this.credentials.schoolname}", "username": "${this.credentials.username}", "token": "${this.credentials.token}"}`
+                      )
+                    } catch (err) {
+                      console.log(`An error occured while saving credentials: ${err.message}`)
+                    }
+                  }
+
                   // We are done so reflect that in the state
                   this.state.busy = false
                 })
