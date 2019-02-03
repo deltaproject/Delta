@@ -151,6 +151,14 @@
                     } catch (err) {
                       console.log(`An error occured while saving credentials: ${err.message}`)
                     }
+                  } else {
+                    try {
+                      fs.unlinkSync(this.$parent.files.credentialsFile)
+                    } catch (err) {
+                      if (!err.code === 'ENOENT') {
+                        console.log(`An unkown error occured trying to delete credential file: ${err.message}`)
+                      }
+                    }
                   }
 
                   // We are done so reflect that in the state
