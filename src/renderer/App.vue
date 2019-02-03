@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <login-section ref="login-section"></login-section>
-    <status-bar></status-bar>
-    <settings-flyout></settings-flyout>
+    <status-bar ref="status-bar"></status-bar>
+    <settings-flyout ref="settings-flyout"></settings-flyout>
 
     <div id="notifyContainer"></div>
   </div>
@@ -16,7 +16,7 @@
   const { remote } = require('electron')
   const app = remote.app
   const path = require('path')
-  
+
   const schoolFile = path.join(app.getPath('userData'), 'school.json')
   const credentialsFile = path.join(app.getPath('userData'), 'credentials.json')
 
