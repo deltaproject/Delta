@@ -1,6 +1,6 @@
 <template>
-  <section id="login-section" class="fdb-block">
-    <div class="container" v-if="!$parent.magister">
+  <section id="login-section" class="fdb-block" v-if="!$parent.magister">
+    <div class="container">
       <div class="row justify-content-center">
         <div class="col-12 col-md-8 col-lg-8 col-xl-6">
           <div class="row">
