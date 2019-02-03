@@ -179,6 +179,17 @@
             })
           }
         })
+      },
+      logout () {
+        this.$parent.magister = undefined
+
+        if (!this.saveCredentials) {
+          if (!this.guestMode) {
+            this.credentials.schoolname = ''
+          }
+          this.credentials.schoolname = ''
+          this.credentials.token = ''
+        }
       }
     },
     created () {
