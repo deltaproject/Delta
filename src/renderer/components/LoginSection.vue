@@ -33,15 +33,18 @@
           </div>
           <div class="row align-items-center mt-4">
             <div class="col">
-              <div class="form-check">
+              <div class="form-check" v-if="!$parent.authentication.isGuest">
                 <label class="form-check-label">
                   <input class="form-check-input" v-model="$parent.authentication.saveCredentials" name="saveCreds" type="checkbox" :disabled="$parent.state.authenticating">
                   Onthoud mij
                 </label>
               </div>
+              <div v-if="$parent.authentication.isGuest">
+                <p>De gastmodus is ingeschakeld. Dit houdt in dat je gegevens niet worden opgeslagen.</p>
+              </div>
 
               <button type="submit" class="btn btn-primary btn-block mt-4" @click="$parent.login()" :disabled="!isFormFilled || $parent.state.authenticating">
-                Log in <i class="fas fa-chevron-right"></i>
+                Log in <i v-if="!$parent.state.authenticating" class="fa fa-chevron-right"></i><i v-if="$parent.state.authenticating" class="fa fa-spinner fa-spin"></i>
               </button>
             </div>
           </div>
