@@ -92,6 +92,11 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
+"@magisterjs/authcode@*":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@magisterjs/authcode/-/authcode-1.3.0.tgz#3979de18f5441f1ea91f46fa7135ba1a317d6afb"
+  integrity sha512-8HVZzMHkAZ2mt4bsx/H/3VE6PEjQWGPJuSNfGFt8kueGdFU+GPAwHmPmRnKDpWCvGdpoWHxgN1dU4VHG1b55DQ==
+
 "@types/node@^8.0.24", "@types/node@^8.0.7":
   version "8.10.39"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-8.10.39.tgz#e7e87ad00364dd7bc485c940926345b8ec1a26ca"
@@ -3157,6 +3162,11 @@ decompress-zip@0.3.0:
     q "^1.1.2"
     readable-stream "^1.1.8"
     touch "0.0.3"
+
+dedent@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/dedent/-/dedent-0.7.0.tgz#2495ddbaf6eb874abb0e1be9df22d2e5a544326c"
+  integrity sha1-JJXduvbrh0q7Dhvp3yLS5aVEMmw=
 
 deep-eql@^3.0.1:
   version "3.0.1"
@@ -6701,6 +6711,17 @@ lru-cache@^5.1.1:
   dependencies:
     yallist "^3.0.2"
 
+magister.js@^2.0.0-alpha.8:
+  version "2.0.0-alpha.8"
+  resolved "https://registry.yarnpkg.com/magister.js/-/magister.js-2.0.0-alpha.8.tgz#9a41175fc0b5f4c2ab90399907aed7b493f1126d"
+  integrity sha512-hNQYUSq2iRunOaNRHBQZY04O+yrTgFoOIA4ilmztFww3uHHtsdpZbuJ8240xInQYBDoM7Ymt6vM1Uf3Ba4Ifew==
+  dependencies:
+    "@magisterjs/authcode" "*"
+    dedent "^0.7.0"
+    lodash "^4.17.11"
+    moment "^2.23.0"
+    node-fetch "^2.3.0"
+
 mailcomposer@4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/mailcomposer/-/mailcomposer-4.0.1.tgz#0e1c44b2a07cf740ee17dc149ba009f19cadfeb4"
@@ -7055,6 +7076,11 @@ mocha@^5.2.0:
     mkdirp "0.5.1"
     supports-color "5.4.0"
 
+moment@^2.23.0:
+  version "2.24.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
+  integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
+
 move-concurrently@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/move-concurrently/-/move-concurrently-1.0.1.tgz#be2c005fda32e0b29af1f05d7c4b33214c701f92"
@@ -7188,6 +7214,11 @@ node-abi@^2.0.0:
   integrity sha512-kCnEh6af6Z6DB7RFI/7LHNwqRjvJW7rgrv3lhIFoQ/+XhLPI/lJYwsk5vzvkldPWWgqnAMcuPF5S8/jj56kVOA==
   dependencies:
     semver "^5.4.1"
+
+node-fetch@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.3.0.tgz#1a1d940bbfb916a1d3e0219f037e89e71f8c5fa5"
+  integrity sha512-MOd8pV3fxENbryESLgVIeaGKrdl+uaYhCSSVkjeOb/31/njTpcis5aWfdqgNlHIrKOLRbMnfPINPOML2CIFeXA==
 
 node-forge@0.7.5:
   version "0.7.5"
