@@ -4,7 +4,7 @@
       <span>Project: </span>Delta
       <i class="btn-refresh fas fa-sync-alt" title="Ververs gegevens"
       :class="{ disabled: $parent.state.busy, spin: $parent.state.busy }"
-      v-on:click="$parent.loadData()"></i>
+      v-on:click="$parent.loadCache()"></i>
     </h1>
 
     <div class="profile-info">
