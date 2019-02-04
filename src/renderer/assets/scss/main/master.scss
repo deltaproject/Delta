@@ -9,23 +9,8 @@
 @import 'auth';
 
 body {
-    margin: 50px 20px 20px;
-}
-
-.beta-badge {
-    color: white;
-    background: rgb(236, 31, 31);
-    font-size: 14px;
-    padding: 4px 9px;
-    border-radius: 6px;
-    margin-left: 18px;
-    vertical-align: middle;
-    box-shadow: $defaultShadow;
-
-    &::before {
-        content: "Beta";
-        text-transform: uppercase;
-    }
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 .title-big {
