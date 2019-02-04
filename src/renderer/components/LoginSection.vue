@@ -26,7 +26,7 @@
             <span>Onthoud mij</span>
           </div>
 
-          <button id="btnSubmit" @click="login()" :disabled="!isFormFilled || state.busy">
+          <button id="btnSubmit" v-on:click="login()" :disabled="!isFormFilled || state.busy">
             Log in<i class="fas fa-chevron-right"></i>
           </button>
 
