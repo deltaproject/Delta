@@ -30,6 +30,15 @@
         files: {
           schoolFile: path.join(app.getPath('userData'), 'school.json'),
           credentialsFile: path.join(app.getPath('userData'), 'credentials.json')
+        },
+        state: {
+          busy: false,
+          updating: false
+        },
+        cache: {
+          profile: {
+            username: ''
+          }
         }
       }
     },
@@ -39,6 +48,9 @@
       },
       logout () {
         this.$refs.loginSection.logout()
+      },
+      loadData () {
+        this.state.busy = true
       }
     }
   }
