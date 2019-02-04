@@ -180,12 +180,31 @@
       logout () {
         this.$parent.magister = undefined
 
+        // Clear credentials if needed
         if (!this.saveCredentials) {
+          // In guest mode the school name needs to be preserved
           if (!this.guestMode) {
             this.credentials.schoolname = ''
           }
-          this.credentials.schoolname = ''
-          this.credentials.token = ''
+          // Clear the username
+          this.credentials.username = ''
+        }
+
+        // Clear the token
+        this.credentials.token = ''
+        // Delete the token from saved credentials
+        try {
+          // Load the saved credentials
+          var savedCredentials = JSON.parse(fs.readFileSync(this.$parent.files.credentialsFile))
+          // Delete the token from it
+          savedCredentials.token = ''
+          // Rewrite the file
+          fs.writeFileSync(this.$parent.files.credentialsFile, JSON.stringify(savedCredentials))
+        } catch (err) {
+          // Handle any errors
+          if (err.code !== 'ENOENT') { // The file didn't exist so we didn't need to delete the token
+            console.log(`An unkown error occured trying to delete the token from the credentials file: ${err.message}`)
+          }
         }
       }
     },
