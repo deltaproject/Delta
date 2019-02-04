@@ -12,7 +12,7 @@
         <span title="Delta is een update aan het downloaden">Updaten<i>.</i><i>.</i><i>.</i></span>
       </div>
       <h1 class="username">{{ $parent.cache.profile.name }}</h1>
-      <img src="../assets/imgs/user.png" title="Instellingen en profiel" @click="toggleSettings()">
+      <img src="../assets/imgs/user.png" title="Instellingen en profiel" @click="() => { $parent.state.show.settings = true }">
     </div>
   </div>
 </template>

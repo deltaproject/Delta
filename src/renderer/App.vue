@@ -36,6 +36,9 @@
           updating: false,
           cached: {
             profile: undefined
+          },
+          show: {
+            settings: false
           }
         },
         cache: {
@@ -78,6 +81,7 @@
         this.$refs.loginSection.login()
       },
       logout () {
+        this.state.show.settings = false
         this.$refs.loginSection.logout()
       },
       clearCache () {
