@@ -1,57 +1,49 @@
 <template>
-  <section id="login-section" class="fdb-block" v-if="!$parent.magister">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-12 col-md-8 col-lg-8 col-xl-6">
-          <div class="row">
-            <div class="col text-center">
-              <h1>Delta - Log In</h1>
-            </div>
-          </div>
-          <div class="row align-items-center mt-4">
-            <div class="col">
-              <input type="text" name="school" class="form-control" list="schools" v-model="credentials.schoolname"
-              placeholder="Schoolnaam" :class="{ 'is-invalid': state.errors.invalidSchoolname }"
-              :disabled="state.busy || (guestMode && credentials.schoolname != '')" @keyup="getSchools()">
+  <div id="authContainer" v-if="!$parent.magister" v-on:keyup="submit">
+    <div class="authContent">
+      <img src="../assets/imgs/logo.png" class="logo no-select">
+      <h1 class="no-select loginHeader">Inloggen</h1>
 
-              <datalist id="schools">
-                <option v-for="school in schoolQuery" :value="school.name" :key="school.name"></option>
-              </datalist>
-            </div>
-          </div>
-          <div class="row align-items-center mt-4">
-            <div class="col">
-              <input type="text" name="username" class="form-control" v-model="credentials.username"
-              placeholder="Gebruikersnaam" :class="{ 'is-invalid': state.errors.invalidUsername }"
-              :disabled="state.busy">
-            </div>
-            <div class="col">
-              <input type="password" name="password" class="form-control" v-model="credentials.password"
-              placeholder="Wachtwoord" :class="{ 'is-invalid': state.errors.invalidPassword }"
-              :disabled="state.busy">
-            </div>
-          </div>
-          <div class="row align-items-center mt-4">
-            <div class="col">
-              <div class="form-check" v-if="!guestMode">
-                <label class="form-check-label">
-                  <input class="form-check-input" v-model="saveCredentials" name="saveCreds" type="checkbox" :disabled="state.busy">
-                  Onthoud mij
-                </label>
-              </div>
-              <div v-if="guestMode">
-                <p>De gastmodus is ingeschakeld. Dit houdt in dat je gegevens niet worden opgeslagen.</p>
-              </div>
+      <div class="login">
+        <div class="loginContainer">
+          <input type="text" name="school" list="schools" v-model="credentials.schoolname"
+          placeholder="Schoolnaam" :class="{ error: state.errors.invalidSchoolname }"
+          :disabled="state.busy || (guestMode && credentials.schoolname !== '')" v-on:keyup="getSchools()">
 
-              <button type="submit" class="btn btn-primary btn-block mt-4" @click="login()" :disabled="!isFormFilled || state.busy">
-                Log in <i v-if="!state.busy" class="fa fa-chevron-right"></i><i v-if="state.busy" class="fa fa-spinner fa-spin"></i>
-              </button>
-            </div>
+          <datalist id="schools">
+            <option v-for="school in schoolQuery" :value="school.name"></option>
+          </datalist>
+
+          <input type="text" name="username" v-model="credentials.username"
+          placeholder="Gebruikersnaam" :class="{ error: state.errors.invalidUsername }"
+          :disabled="state.busy">
+          <input type="password" name="password" v-model="credentials.password"
+          placeholder="Wachtwoord" :class="{ error: state.errors.invalidPassword }"
+          :disabled="state.busy">
+
+          <div class="checkContainer no-select" v-show="!guestMode">
+            <input v-model="saveCredentials" name="saveCreds" type="checkbox" :disabled="state.busy">
+            <span>Onthoud mij</span>
+          </div>
+
+          <button id="btnSubmit" @click="login()" :disabled="!isFormFilled || state.busy">
+            Log in<i class="fas fa-chevron-right"></i>
+          </button>
+
+          <div class="guestContainer no-select">
+            <p class="detail guestLabel" v-if="guestMode">
+              De gastmodus is ingeschakeld waardoor je inloggegevens niet worden opgeslagen.
+            </p>
+          </div>
+
+          <div v-if="state.busy" class="spinner">
+            <i class="fas fa-circle-notch spin"></i>
+            <p class="detail no-select">Bezig met aanmelden...</p>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>
@@ -90,6 +82,11 @@
       }
     },
     methods: {
+      submit (event) {
+        if (event.keyCode === 13 && this.isFormFilled && !this.state.busy) {
+          this.login()
+        }
+      },
       getSchools (callback = undefined) {
         if (this.credentials.schoolname.length > 2) {
           getSchools(this.credentials.schoolname).then((schools) => {
