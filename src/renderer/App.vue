@@ -37,7 +37,7 @@
         },
         cache: {
           profile: {
-            username: ''
+            name: ''
           }
         }
       }

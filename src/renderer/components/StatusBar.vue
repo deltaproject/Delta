@@ -11,7 +11,7 @@
       <div class="update" v-if="$parent.state.updating">
         <span title="Delta is een update aan het downloaden">Updaten<i>.</i><i>.</i><i>.</i></span>
       </div>
-      <h1 class="username">{{ $parent.cache.profile.username }}</h1>
+      <h1 class="username">{{ $parent.cache.profile.name }}</h1>
       <img src="../assets/imgs/user.png" title="Instellingen en profiel" @click="toggleSettings()">
     </div>
   </div>
