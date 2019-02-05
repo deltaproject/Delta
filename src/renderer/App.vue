@@ -61,6 +61,8 @@ export default {
         if (newMagister !== undefined && oldMagister === undefined) {
           // The user most likely logged in
           this.loadCache()
+
+          // Check for updates
           this.update()
         } else if (newMagister === undefined && oldMagister !== undefined) {
           // The user most likely logged out

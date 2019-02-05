@@ -34,18 +34,21 @@ Voor een overzicht van alle (bèta)versies/releases van Delta kun je terecht op 
 # Voor scholen en docenten
 Er is een Enterprise-versie gepland voor Delta die geschikt is voor docenten op het voortgezet onderwijs. Deze zal voorlopig nog niet tot ontwikkeling worden gebracht. Scholen kunnen overigens wel nu al gebruik maken van de **gastmodus voor scholen**, dit is een speciale modus voor Delta die geschikt is voor schoolcomputers/openbare computers voor leerlingen om in een veilige omgeving in te kunnen loggen bij Delta zonder dat hun inloggegevens worden opgeslagen.
 
-De gastmodus kan worden aangezet door een bestand `school.json` aan te maken in de app data folder van Delta (`%APPDATA%/Delta/` op Windows en `~/Library/Application Support/Delta/` op OS X). Het bestand dient de volgende inhoud te hebben:
+De gastmodus kan worden aangezet door een bestand `school.json` aan te maken in de app data folder van Delta (`%APPDATA%\Delta\` op Windows en `~/Library/Application Support/Delta/` op OS X). Het bestand dient de volgende inhoud te hebben:
 ```json
-{ "schoolname": "Naam van de school"}
+{ "schoolname": "Naam van de school" }
 ```
 
-U kunt dit bestand beveiligen door de schrijftoegang in te nemen. Delta heeft alleen leestoegang nodig om de gastmodus te activeren. U kunt bestigen dat de gastmodus is geactiveerd door naar het inlogscherm van Delta te gaan.
+U kunt dit bestand beveiligen door de schrijftoegang in te nemen. Delta heeft alleen leestoegang nodig om de gastmodus te activeren. U kunt bevestigen dat de gastmodus is geactiveerd als er bij het inlogscherm een melding verschijnt dat de gastmodus is ingeschakeld.
 
 # Een bijdrage leveren
 Zie [Een bijdrage leveren](https://github.com/deltaproject/Delta/blob/master/docs/CONTRIBUTING.md) voor details over het maken voor Pull Requests enzovoorts.
 
 # Roadmap
 Je kunt [hier de Roadmap bekijken](https://github.com/deltaproject/Delta/projects/1) van Delta. Hierin staan de mogelijk verwachte functies die je binnenkort zult tegenkomen in Delta. Wil jij bijdragen aan een van deze nieuwe functies? Zie **Een bijdrage leveren** voor details.
+
+# Bijdragers
+Met dank aan [Julian van Doorn (@Argetan)](https://github.com/Argetan) voor het verder uitbreiden en steunen van Delta.
 
 # Credits
 Met speciale dank aan [Lieuwe Rooijakkers (@lieuwex)](https://github.com/lieuwex) voor het maken van [MagisterJS](https://github.com/simplyGits/MagisterJS), die Delta mogelijk maakte.
