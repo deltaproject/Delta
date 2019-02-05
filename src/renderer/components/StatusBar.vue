@@ -8,8 +8,9 @@
     </h1>
 
     <div class="profile-info">
-      <div class="update" v-if="$parent.state.updating">
-        <span title="Delta is een update aan het downloaden">Updaten<i>.</i><i>.</i><i>.</i></span>
+      <div class="update" v-if="$parent.state.update.checking || $parent.state.update.downloading || $parent.state.update.installing">
+        <span v-if="$parent.state.update.downloading" title="Delta is een update aan het downloaden.">Downloaden<i>.</i><i>.</i><i>.</i></span>
+        <span v-else-if="$parent.state.update.checking" title="Delta is aan het controleren op updates.">Controleren<i>.</i><i>.</i><i>.</i></span>
       </div>
       <h1 class="username">{{ $parent.cache.profile.name }}</h1>
       <img src="../assets/imgs/user.png" title="Instellingen en profiel" @click="() => { $parent.state.show.settings = true }">
