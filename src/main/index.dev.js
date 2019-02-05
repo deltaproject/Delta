@@ -22,8 +22,9 @@ app.on('ready', () => {
     })
 })
 
-// Fix paths and app name
-const { productName } = require('../../package.json')
+// Fix paths, version and app name
+const { productName, version } = require('../../package.json')
+app.setVersion(version)
 app.setName(productName)
 
 app.setPath('userData', require('path').join(app.getPath('appData'), productName))
