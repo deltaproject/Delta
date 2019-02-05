@@ -108,6 +108,8 @@ export default {
         this.state.cached.profile = true
       },
       async update () {
+        // Do not check for updates if we are in guest mode.
+        if (this.$refs.loginSection.guestMode) { return }
         // Start with checking if there is an update
         this.state.update.checking = true
 
