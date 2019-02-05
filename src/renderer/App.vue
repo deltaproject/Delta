@@ -150,10 +150,7 @@ export default {
                 fileName = release.assets[i].name
               }
             }
-
             var downloadPath = path.join(app.getPath('downloads'), fileName)
-            console.log(downloadPath)
-            console.log(downloadURL)
 
             // Check if we already downloaded the
             // update before
