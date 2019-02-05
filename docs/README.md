@@ -47,6 +47,9 @@ Zie [Een bijdrage leveren](https://github.com/deltaproject/Delta/blob/master/doc
 # Roadmap
 Je kunt [hier de Roadmap bekijken](https://github.com/deltaproject/Delta/projects/1) van Delta. Hierin staan de mogelijk verwachte functies die je binnenkort zult tegenkomen in Delta. Wil jij bijdragen aan een van deze nieuwe functies? Zie **Een bijdrage leveren** voor details.
 
+# Contributors
+Met dank aan [Julian van Doorn (@Argetan)](https://github.com/Argetan) voor het verder uitbreiden en steunen van Delta.
+
 # Credits
 Met speciale dank aan [Lieuwe Rooijakkers (@lieuwex)](https://github.com/lieuwex) voor het maken van [MagisterJS](https://github.com/simplyGits/MagisterJS), die Delta mogelijk maakte.
 
