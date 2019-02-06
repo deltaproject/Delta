@@ -1,4 +1,4 @@
-<!-- TODO: reduce #getAppointments() calls -->
+<!-- TODO: reduce #getAppointments() calls, possibly by watching for changes in $parent.cache.appointments with a delay -->
 <template>
   <div class="card" id="agenda">
     <h1>Agenda <span v-show="this.$parent.cache.appointments.length != 0">voor {{ formatDateTime(targetDate, 'dddd') }}</span></h1>
