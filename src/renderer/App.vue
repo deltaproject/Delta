@@ -104,7 +104,13 @@ export default {
         this.$refs.loginSection.logout()
       },
       clearCache () {
-        // Reset cache
+        // REMOVE profile data
+        this.cache.profile.name = ''
+
+        // REMOVE appointments
+        this.cache.appointments = []
+
+        // Reset cache state
         var cachedKeys = Object.keys(this.state.cached)
         for (var i = cachedKeys.length - 1; i >= 0; i--) {
           this.state.cached[cachedKeys[i]] = false
