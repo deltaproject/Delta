@@ -3,6 +3,7 @@
     <login-section ref="loginSection"></login-section>
     <status-bar ref="statusBar"></status-bar>
     <settings-flyout ref="settingsFlyout"></settings-flyout>
+    <agenda-card ref="agendaCard"></agenda-card>
 
     <div id="notifyContainer"></div>
   </div>
@@ -12,6 +13,7 @@
   import LoginSection from '@/components/LoginSection'
   import StatusBar from '@/components/StatusBar'
   import SettingsFlyout from '@/components/SettingsFlyout'
+  import AgendaCard from '@/components/AgendaCard'
 
   const { remote } = require('electron')
   const app = remote.app
@@ -27,7 +29,8 @@ export default {
     components: {
       LoginSection,
       StatusBar,
-      SettingsFlyout
+      SettingsFlyout,
+      AgendaCard
     },
     data: function () {
       return {
@@ -43,7 +46,8 @@ export default {
             downloading: false
           },
           cached: {
-            profile: undefined
+            profile: false,
+            appointments: false
           },
           show: {
             settings: false
@@ -52,7 +56,8 @@ export default {
         cache: {
           profile: {
             name: ''
-          }
+          },
+          appointments: []
         }
       }
     },
@@ -102,12 +107,34 @@ export default {
           this.state.cached[cachedKeys[i]] = false
         }
       },
-      loadCache () {
+      async loadCache () {
         this.clearCache()
 
-        // Cache profile data
+        // CACHE profile data
         this.cache.profile.name = this.magister.profileInfo.getFullName()
         this.state.cached.profile = true
+
+        // CACHE appointments/agenda
+        var from = new Date() // Today
+        var to = new Date(from.getTime() + ((12 - from.getDay()) * 24 * 60 * 60 * 1000)) // Next week Friday
+
+        // Get all appointments from now till next week Friday
+        var appointments = await this.magister.appointments(from, to)
+        // Add the appointments to cache
+        for (var i = appointments.length - 1; i >= 0; i--) {
+          var appointment = appointments[i]
+          this.cache.appointments.push({
+            start: appointment.start,
+            end: appointment.end,
+            startBy: appointment.startBySchoolhour,
+            endBy: appointment.endBySchoolhour,
+            class: appointment.classes[0] || appointment.description,
+            location: appointment.location,
+            cancelled: appointment.isCancelled
+          })
+        }
+
+        this.state.cached.appointments = true
       },
       async update () {
         // Do not check for updates if we are in guest mode.
