@@ -23,6 +23,9 @@
   const os = require('os')
   const download = require('download')
   const fs = require('fs')
+  const moment = require('moment')
+  
+  moment.locale('nl')
 
 export default {
     name: 'delta',
@@ -114,18 +117,18 @@ export default {
         this.cache.profile.name = this.magister.profileInfo.getFullName()
         this.state.cached.profile = true
 
-        // CACHE appointments/agenda
+        // CACHE appointments
         var from = new Date() // Today
         var to = new Date(from.getTime() + ((12 - from.getDay()) * 24 * 60 * 60 * 1000)) // Next week Friday
 
         // Get all appointments from now till next week Friday
         var appointments = await this.magister.appointments(from, to)
         // Add the appointments to cache
-        for (var i = appointments.length - 1; i >= 0; i--) {
+        for (var i = 0; i < appointments.length; i++) {
           var appointment = appointments[i]
           this.cache.appointments.push({
-            start: appointment.start,
-            end: appointment.end,
+            start: moment(appointment.start),
+            end: moment(appointment.end),
             startBy: appointment.startBySchoolhour,
             endBy: appointment.endBySchoolhour,
             class: appointment.classes[0] || appointment.description,
