@@ -1,0 +1,78 @@
+<!-- TODO: reduce #getAppointments() calls, possibly by watching for changes in $parent.cache.appointments with a delay -->
+<template>
+  <div class="card" id="agenda">
+    <h1>Agenda <span v-show="this.$parent.cache.appointments.length != 0">voor {{ formatDateTime(targetDate, 'dddd') }}</span></h1>
+    <div :class="{ bigList: $parent.cache.appointments.length > 0 }">
+      <div class="cardLoading" v-if="!$parent.state.cached.appointments">
+        <i class="fas fa-circle-notch spin"></i>
+      </div>
+
+      <div v-if="getAppointments(targetDate).length === 0 && $parent.state.cached.appointments" class="no-info">
+        <i class="far fa-calendar"></i>
+        <p>Geen afspraken voor {{ formatDateTime(targetDate, 'dddd') }}.</p>
+      </div>
+
+      <div v-for="appointment in getAppointments(targetDate)" class="bigListItem" :class="{ scrapped: appointment.cancelled }" @click="showAppointmentInfo(i)">
+        <div class="itemContainer calendarItem">{{ appointment.startBy }}</div>
+        <div v-if="appointment.startBy != appointment.endBy" class="itemContainer calendarItem">{{ appointment.endBy }}</div>
+        <div class="itemDesc">
+          <p>
+            {{ appointment.class }}
+            <span> {{ formatDateTime(appointment.start) }} - {{ formatDateTime(appointment.end) }} </span>
+            <span class="location">{{ appointment.location }}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  const moment = require('moment')
+
+  export default {
+    computed: {
+      targetDate () {
+        var now = moment()
+        var target = moment()
+
+        // Get today's appointments
+        var todaysAppointments = this.getAppointments()
+        // Check if there were any appointments
+        if (todaysAppointments.length > 0) {
+          // Fetch today's last appointment
+          var lastAppointment = todaysAppointments[todaysAppointments.length - 1]
+          // Check if the last appointment is over
+          if (lastAppointment.end.isSameOrBefore(now)) {
+            target.add(1, 'days') // Tomorrow
+          }
+        } else {
+          target.add(1, 'days') // Tomorrow
+        }
+
+        // Check if the target is on the weekends
+        if ([0, 6].includes(target.day())) {
+          target.day(7 + 1) // Next week Monday
+        }
+
+        return target
+      }
+    },
+    methods: {
+      getAppointments (from = moment(), to = moment(from)) {
+        from.startOf('day')
+        to.endOf('day')
+
+        return this.$parent.cache.appointments.filter((appointment) => {
+          return (appointment.start.isSameOrAfter(from) && appointment.start.isSameOrBefore(to))
+        })
+      },
+      formatDateTime (date, format = 'H:mm') {
+        return date.format(format)
+      }
+    }
+  }
+</script>
+
+<style lang="scss" scoped>
+</style>
