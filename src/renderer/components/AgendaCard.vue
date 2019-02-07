@@ -17,7 +17,7 @@
         <div v-if="appointment.startBy != appointment.endBy" class="itemContainer calendarItem">{{ appointment.endBy }}</div>
         <div class="itemDesc">
           <p>
-            {{ appointment.class }}
+            {{ appointment.description }}
             <span> {{ formatDateTime(appointment.start) }} - {{ formatDateTime(appointment.end) }} </span>
             <span class="location">{{ appointment.location }}</span>
           </p>

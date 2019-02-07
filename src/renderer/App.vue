@@ -4,6 +4,7 @@
     <status-bar ref="statusBar"></status-bar>
     <settings-flyout ref="settingsFlyout"></settings-flyout>
     <agenda-card ref="agendaCard"></agenda-card>
+    <homework-card ref="homeworkCard"></homework-card>
 
     <div id="notifyContainer"></div>
   </div>
@@ -14,6 +15,7 @@
   import StatusBar from '@/components/StatusBar'
   import SettingsFlyout from '@/components/SettingsFlyout'
   import AgendaCard from '@/components/AgendaCard'
+  import HomeworkCard from '@/components/HomeworkCard'
 
   const { remote } = require('electron')
   const app = remote.app
@@ -33,7 +35,8 @@ export default {
       LoginSection,
       StatusBar,
       SettingsFlyout,
-      AgendaCard
+      AgendaCard,
+      HomeworkCard
     },
     data: function () {
       return {
@@ -132,14 +135,18 @@ export default {
         // Add the appointments to cache
         for (var i = 0; i < appointments.length; i++) {
           var appointment = appointments[i]
+          var description = appointment.classes[0] || appointment.description
+          description = description.charAt(0).toUpperCase() + description.slice(1)
+
           this.cache.appointments.push({
             start: moment(appointment.start),
             end: moment(appointment.end),
             startBy: appointment.startBySchoolhour,
             endBy: appointment.endBySchoolhour,
-            class: appointment.classes[0] || appointment.description,
+            description: description,
             location: appointment.location,
-            cancelled: appointment.isCancelled
+            cancelled: appointment.isCancelled,
+            homework: (appointment.infoType === 1 && appointment.content !== undefined) ? { finished: appointment.isDone, description: appointment.content, class: description, _appointment: appointment } : undefined
           })
         }
 
