@@ -11,7 +11,8 @@
           :disabled="state.busy || (guestMode && credentials.schoolname !== '')" v-on:keyup="getSchools()">
 
           <datalist id="schools">
-            <option v-for="school in schoolQuery" :value="school.name"></option>
+            <option v-for="(school, index) in schoolQuery"
+              :value="school.name" :key="index"></option>
           </datalist>
 
           <input type="text" name="username" v-model="credentials.username"
