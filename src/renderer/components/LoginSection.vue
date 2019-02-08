@@ -142,9 +142,11 @@
 
                   if (this.saveCredentials) {
                     try {
-                      fs.writeFileSync(this.$parent.files.credentialsFile,
-                        `{"schoolname": "${this.credentials.schoolname}", "username": "${this.credentials.username}", "token": "${this.credentials.token}"}`
-                      )
+                      fs.writeFileSync(this.$parent.files.credentialsFile, JSON.stringify({
+                        schoolname: this.credentials.schoolname,
+                        username: this.credentials.username,
+                        token: this.credentials.token
+                      }))
                     } catch (err) {
                       console.log(`An error occured while saving credentials: ${err.message}`)
                     }
