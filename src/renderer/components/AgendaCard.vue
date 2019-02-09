@@ -2,7 +2,7 @@
 <template>
   <div class="card" id="agenda">
     <h1>Agenda <span v-show="this.$parent.cache.appointments.length != 0">voor {{ formatDateTime(targetDate, 'dddd') }}</span></h1>
-    <div :class="{ bigList: $parent.cache.appointments.length > 0 }">
+    <div :class="{ bigList: getAppointments(targetDate).length > 0 }">
       <div class="cardLoading" v-if="!$parent.state.cached.appointments">
         <i class="fas fa-circle-notch spin"></i>
       </div>
