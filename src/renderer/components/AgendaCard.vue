@@ -2,7 +2,7 @@
 <template>
   <div class="card" id="agenda">
     <h1>Agenda <span v-show="this.$parent.cache.appointments.length != 0">voor {{ formatDateTime(targetDate, 'dddd') }}</span></h1>
-    <div :class="{ bigList: $parent.cache.appointments.length > 0 }">
+    <div :class="{ bigList: getAppointments(targetDate).length > 0 }">
       <div class="cardLoading" v-if="!$parent.state.cached.appointments">
         <i class="fas fa-circle-notch spin"></i>
       </div>
@@ -12,7 +12,7 @@
         <p>Geen afspraken voor {{ formatDateTime(targetDate, 'dddd') }}.</p>
       </div>
 
-      <div v-for="appointment in getAppointments(targetDate)" class="bigListItem" :class="{ scrapped: appointment.cancelled }" @click="showAppointmentInfo(i)">
+      <div v-for="appointment in getAppointments(targetDate)" class="bigListItem" :class="{ scrapped: appointment.cancelled }" @click="showAppointmentInfo(appointment)">
         <div class="itemContainer calendarItem">{{ appointment.startBy }}</div>
         <div v-if="appointment.startBy != appointment.endBy" class="itemContainer calendarItem">{{ appointment.endBy }}</div>
         <div class="itemDesc">
@@ -51,8 +51,10 @@
         }
 
         // Check if the target is on the weekends
-        if ([0, 6].includes(target.day())) {
+        if (target.day() === 6) {
           target.day(7 + 1) // Next week Monday
+        } else if (target.day() === 0) {
+          target.day(1) // This week monday (because some fuckers think a week starts on Sunday)
         }
 
         return target
