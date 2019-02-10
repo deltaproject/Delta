@@ -29,6 +29,7 @@
     "postinstall": "npm run lint:fix"
   },
   "dependencies": {
+    "@beyonk/google-fonts-webpack-plugin": "^1.2.2",
     "@fortawesome/fontawesome-free": "^5.7.1",
     "animate.css": "^3.7.0",
     "axios": "^0.18.0",
