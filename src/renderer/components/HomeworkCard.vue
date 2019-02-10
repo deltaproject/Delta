@@ -55,21 +55,10 @@
       }
     },
     methods: {
-      getHomework (finished = undefined) {
-        var homework = []
-
-        for (var i = 0; i < this.$parent.cache.appointments.length; i++) {
-          var appointment = this.$parent.cache.appointments[i]
-
-          if (appointment.homework !== undefined) {
-            var task = appointment.homework
-            if (task.finished === finished || task.finished === false || task.finished === undefined) {
-              homework.push(task)
-            }
-          }
-        }
-
-        return homework
+      getHomework (includeFinished = false) {
+        return this.$parent.cache.homework.filter((homework) => {
+          return homework.finished === includeFinished || homework.finished === false || homework.finished === undefined
+        })
       },
       toggleHomeworkState (homework) {
         homework.finished = !homework.finished
