@@ -60,7 +60,8 @@ export default {
             profile: false,
             appointments: false,
             homework: false,
-            assignments: false
+            assignments: false,
+            files: false
           },
           show: {
             settings: false
@@ -72,7 +73,8 @@ export default {
           },
           appointments: [],
           homework: [],
-          assignments: []
+          assignments: [],
+          folders: []
         }
       }
     },
@@ -116,11 +118,11 @@ export default {
         this.$refs.loginSection.logout()
       },
       clearCache () {
-        // REMOVE profile data
         this.cache.profile.name = ''
-
-        // REMOVE appointments
         this.cache.appointments = []
+        this.cache.homework = []
+        this.cache.assignments = []
+        this.cache.folders = []
 
         // Reset cache state
         var cachedKeys = Object.keys(this.state.cached)
