@@ -1,10 +1,13 @@
 <template>
   <div id="app">
     <login-section ref="loginSection"></login-section>
+
     <status-bar ref="statusBar"></status-bar>
     <settings-flyout ref="settingsFlyout"></settings-flyout>
+    
     <agenda-card ref="agendaCard"></agenda-card>
     <homework-card ref="homeworkCard"></homework-card>
+    <assignments-card ref="assignmentsCard"></assignments-card>
 
     <div id="notifyContainer"></div>
   </div>
@@ -16,6 +19,7 @@
   import SettingsFlyout from '@/components/SettingsFlyout'
   import AgendaCard from '@/components/AgendaCard'
   import HomeworkCard from '@/components/HomeworkCard'
+  import AssignmentsCard from '@/components/AssignmentsCard'
 
   const { remote } = require('electron')
   const app = remote.app
@@ -36,7 +40,8 @@ export default {
       StatusBar,
       SettingsFlyout,
       AgendaCard,
-      HomeworkCard
+      HomeworkCard,
+      AssignmentsCard
     },
     data: function () {
       return {
@@ -53,7 +58,9 @@ export default {
           },
           cached: {
             profile: false,
-            appointments: false
+            appointments: false,
+            homework: false,
+            assignments: false
           },
           show: {
             settings: false
@@ -63,7 +70,9 @@ export default {
           profile: {
             name: ''
           },
-          appointments: []
+          appointments: [],
+          homework: [],
+          assignments: []
         }
       }
     },
@@ -122,35 +131,45 @@ export default {
       async loadCache () {
         this.clearCache()
 
+        // These dates are passed to magister.js, that's why it are Date objects and not Moment objects.
+        var from = new Date() // Today
+        var to = new Date(from.getTime() + ((12 - from.getDay()) * 24 * 60 * 60 * 1000)) // Next week Friday
+
         // CACHE profile data
         this.cache.profile.name = this.magister.profileInfo.getFullName()
         this.state.cached.profile = true
 
-        // CACHE appointments
-        var from = new Date() // Today
-        var to = new Date(from.getTime() + ((12 - from.getDay()) * 24 * 60 * 60 * 1000)) // Next week Friday
-
-        // Get all appointments from now till next week Friday
-        var appointments = await this.magister.appointments(from, to)
-        // Add the appointments to cache
-        for (var i = 0; i < appointments.length; i++) {
-          var appointment = appointments[i]
+        // CACHE appointments and homework
+        this.cache.appointments = (await this.magister.appointments(from, to)).map((appointment) => {
           var description = appointment.classes[0] || appointment.description
           description = description.charAt(0).toUpperCase() + description.slice(1)
 
-          this.cache.appointments.push({
-            start: moment(appointment.start),
-            end: moment(appointment.end),
-            startBy: appointment.startBySchoolhour,
-            endBy: appointment.endBySchoolhour,
-            description: description,
-            location: appointment.location,
-            cancelled: appointment.isCancelled,
-            homework: (appointment.infoType === 1 && appointment.content !== undefined) ? { finished: appointment.isDone, description: appointment.content, class: description, _appointment: appointment } : undefined
-          })
-        }
+          appointment.description = description
+
+          if (appointment.infoType === 1 && appointment.content !== undefined) {
+            this.cache.homework.push({
+              finished: appointment.isDone,
+              description: appointment.content,
+              class: description,
+              _appointment: appointment
+            })
+          }
+
+          return appointment
+        })
 
         this.state.cached.appointments = true
+        this.state.cached.homework = true
+
+        // CACHE assignments
+        Promise.all((await this.magister.assignments()).map(async (assignment) => {
+          assignment.versions = await assignment.versions() // Fetch the version history
+          return assignment
+        })).then((assignments) => {
+          this.cache.assignments = assignments // Once it resolved set the assignment array
+        })
+
+        this.state.cached.assignments = true
       },
       async update () {
         // Do not check for updates if we are in guest mode.

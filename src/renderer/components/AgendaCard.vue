@@ -13,8 +13,8 @@
       </div>
 
       <div v-for="appointment in getAppointments(targetDate)" class="bigListItem" :class="{ scrapped: appointment.cancelled }" @click="showAppointmentInfo(appointment)">
-        <div class="itemContainer calendarItem">{{ appointment.startBy }}</div>
-        <div v-if="appointment.startBy != appointment.endBy" class="itemContainer calendarItem">{{ appointment.endBy }}</div>
+        <div class="itemContainer calendarItem">{{ appointment.startBySchoolhour }}</div>
+        <div v-if="appointment.startBySchoolhour != appointment.endBySchoolhour" class="itemContainer calendarItem">{{ appointment.endBySchoolhour }}</div>
         <div class="itemDesc">
           <p>
             {{ appointment.description }}
@@ -43,7 +43,7 @@
           // Fetch today's last appointment
           var lastAppointment = todaysAppointments[todaysAppointments.length - 1]
           // Check if the last appointment is over
-          if (lastAppointment.end.isSameOrBefore(now)) {
+          if (now.isSameorAfter(lastAppointment.end)) {
             target.add(1, 'days') // Tomorrow
           }
         } else {
@@ -66,11 +66,11 @@
         to.endOf('day')
 
         return this.$parent.cache.appointments.filter((appointment) => {
-          return (appointment.start.isSameOrAfter(from) && appointment.start.isSameOrBefore(to))
+          return (from.isSameOrBefore(appointment.start) && to.isSameOrAfter(appointment.start))
         })
       },
       formatDateTime (date, format = 'H:mm') {
-        return date.format(format)
+        return moment(date).format(format)
       }
     }
   }
