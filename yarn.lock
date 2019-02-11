@@ -7023,15 +7023,15 @@ lru-cache@^5.1.1:
   dependencies:
     yallist "^3.0.2"
 
-magister.js@^2.0.0-alpha.8:
-  version "2.0.0-alpha.8"
-  resolved "https://registry.yarnpkg.com/magister.js/-/magister.js-2.0.0-alpha.8.tgz#9a41175fc0b5f4c2ab90399907aed7b493f1126d"
-  integrity sha512-hNQYUSq2iRunOaNRHBQZY04O+yrTgFoOIA4ilmztFww3uHHtsdpZbuJ8240xInQYBDoM7Ymt6vM1Uf3Ba4Ifew==
+magister.js@^2.0.0-alpha.9:
+  version "2.0.0-alpha.9"
+  resolved "https://registry.yarnpkg.com/magister.js/-/magister.js-2.0.0-alpha.9.tgz#e85b80596364b85c4255fd1fedd556b9cbe6c584"
+  integrity sha512-4rO7pKzAf4MufPREU5Nn9XgLhMbNr6PP1w/Llr2xAHp+SKiHStxzkSkM5bey1OTECZjQ+/LB/HRLGNuFxv2hig==
   dependencies:
     "@magisterjs/authcode" "*"
     dedent "^0.7.0"
     lodash "^4.17.11"
-    moment "^2.23.0"
+    moment "^2.24.0"
     node-fetch "^2.3.0"
 
 mailcomposer@4.0.1:
@@ -7398,7 +7398,7 @@ mocha@^5.2.0:
     mkdirp "0.5.1"
     supports-color "5.4.0"
 
-moment@^2.23.0, moment@^2.24.0:
+moment@^2.24.0:
   version "2.24.0"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
   integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==

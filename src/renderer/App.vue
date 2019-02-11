@@ -33,7 +33,7 @@
   
   moment.locale('nl')
 
-export default {
+  export default {
     name: 'delta',
     components: {
       LoginSection,
@@ -60,7 +60,8 @@ export default {
             profile: false,
             appointments: false,
             homework: false,
-            assignments: false
+            assignments: false,
+            files: false
           },
           show: {
             settings: false
@@ -72,7 +73,8 @@ export default {
           },
           appointments: [],
           homework: [],
-          assignments: []
+          assignments: [],
+          folders: []
         }
       }
     },
@@ -116,17 +118,37 @@ export default {
         this.$refs.loginSection.logout()
       },
       clearCache () {
-        // REMOVE profile data
         this.cache.profile.name = ''
-
-        // REMOVE appointments
         this.cache.appointments = []
+        this.cache.homework = []
+        this.cache.assignments = []
+        this.cache.folders = []
 
         // Reset cache state
         var cachedKeys = Object.keys(this.state.cached)
         for (var i = cachedKeys.length - 1; i >= 0; i--) {
           this.state.cached[cachedKeys[i]] = false
         }
+      },
+      async getFiles (parent) {
+        return parent.files()
+      },
+      async getFolders (parent) {
+        var folders
+        if (parent === undefined) {
+          folders = await this.magister.fileFolders()
+        } else {
+          folders = await parent.folders()
+        }
+
+        for (var i = folders.length - 1; i >= 0; i--) {
+          var folder = folders[i]
+
+          folder.folders = await this.getFolders(folder)
+          folder.files = await this.getFiles(folder)
+        }
+
+        return folders
       },
       async loadCache () {
         this.clearCache()
@@ -170,6 +192,11 @@ export default {
         })
 
         this.state.cached.assignments = true
+
+        // CACHE folders and files
+        this.cache.folders = await this.getFolders()
+
+        this.state.cached.files = true
       },
       async update () {
         // Do not check for updates if we are in guest mode.
