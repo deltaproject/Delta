@@ -141,8 +141,6 @@
           folders = await parent.folders()
         }
 
-        console.log(folders)
-
         for (var i = folders.length - 1; i >= 0; i--) {
           var folder = folders[i]
 
