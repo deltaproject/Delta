@@ -43,7 +43,7 @@
           // Fetch today's last appointment
           var lastAppointment = todaysAppointments[todaysAppointments.length - 1]
           // Check if the last appointment is over
-          if (now.isSameorAfter(lastAppointment.end)) {
+          if (now.isSameOrAfter(lastAppointment.end)) {
             target.add(1, 'days') // Tomorrow
           }
         } else {
