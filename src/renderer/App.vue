@@ -171,6 +171,9 @@ export default {
           this.cache.assignments = assignments // Once it resolved set the assignment array
         })
 
+        // CACHE folders and files
+        this.cache.folders = await this.magister.fileFolders()
+
         this.state.cached.assignments = true
       },
       async update () {
