@@ -33,7 +33,7 @@
   
   moment.locale('nl')
 
-export default {
+  export default {
     name: 'delta',
     components: {
       LoginSection,
@@ -130,6 +130,28 @@ export default {
           this.state.cached[cachedKeys[i]] = false
         }
       },
+      async getFiles (parent) {
+        return parent.files()
+      },
+      async getFolders (parent) {
+        var folders
+        if (parent === undefined) {
+          folders = await this.magister.fileFolders()
+        } else {
+          folders = await parent.folders()
+        }
+
+        console.log(folders)
+
+        for (var i = folders.length - 1; i >= 0; i--) {
+          var folder = folders[i]
+
+          folder.folders = await this.getFolders(folder)
+          folder.files = await this.getFiles(folder)
+        }
+
+        return folders
+      },
       async loadCache () {
         this.clearCache()
 
@@ -171,10 +193,12 @@ export default {
           this.cache.assignments = assignments // Once it resolved set the assignment array
         })
 
-        // CACHE folders and files
-        this.cache.folders = await this.magister.fileFolders()
-
         this.state.cached.assignments = true
+
+        // CACHE folders and files
+        this.cache.folders = await this.getFolders()
+
+        this.state.cached.files = true
       },
       async update () {
         // Do not check for updates if we are in guest mode.
