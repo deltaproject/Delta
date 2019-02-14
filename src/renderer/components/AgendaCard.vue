@@ -12,14 +12,14 @@
         <p>Geen afspraken voor {{ formatDateTime(targetDate, 'dddd') }}.</p>
       </div>
 
-      <div v-for="appointment in getAppointments(targetDate)" class="bigListItem" :class="{ scrapped: appointment.cancelled }" @click="showAppointmentInfo(appointment)">
+      <div v-for="appointment in getAppointments(targetDate)" class="bigListItem" :class="{ scrapped: appointment.isCancelled }" @click="showAppointmentInfo(appointment)">
         <div class="itemContainer calendarItem">{{ appointment.startBySchoolhour }}</div>
         <div v-if="appointment.startBySchoolhour != appointment.endBySchoolhour" class="itemContainer calendarItem">{{ appointment.endBySchoolhour }}</div>
         <div class="itemDesc">
           <p>
             {{ appointment.description }}
             <span> {{ formatDateTime(appointment.start) }} - {{ formatDateTime(appointment.end) }} </span>
-            <span class="location">{{ appointment.location }}</span>
+            <span class="location" v-if="appointment.location">{{ appointment.location }}</span>
           </p>
         </div>
       </div>
