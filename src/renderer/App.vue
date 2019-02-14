@@ -61,7 +61,8 @@
             appointments: false,
             homework: false,
             assignments: false,
-            files: false
+            files: false,
+            messages: false
           },
           show: {
             settings: false
@@ -74,7 +75,8 @@
           appointments: [],
           homework: [],
           assignments: [],
-          folders: []
+          folders: [],
+          messageFolders: []
         }
       }
     },
@@ -123,6 +125,7 @@
         this.cache.homework = []
         this.cache.assignments = []
         this.cache.folders = []
+        this.cache.messageFolders = []
 
         // Reset cache state
         var cachedKeys = Object.keys(this.state.cached)
@@ -197,6 +200,15 @@
         this.cache.folders = await this.getFolders()
 
         this.state.cached.files = true
+
+        // CACHE messages
+        this.cache.messageFolders = (await this.magister.messageFolders()).filter(messageFolder => !['bin', 'sent'].includes(messageFolder.type))
+        for (var i = this.cache.messageFolders.length - 1; i >= 0; i--) {
+          var messageFolder = this.cache.messageFolders[i]
+          messageFolder.messages = messageFolder.messages({ count: 10, fill: true, fillPersons: true })
+        }
+
+        this.state.cached.messages = true
       },
       async update () {
         // Do not check for updates if we are in guest mode.
