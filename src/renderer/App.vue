@@ -202,10 +202,10 @@
         this.state.cached.files = true
 
         // CACHE messages
-        this.cache.messageFolders = (await this.magister.messageFolders()).filter(messageFolder => !['bin', 'sent'].includes(messageFolder.type))
+        this.cache.messageFolders = (await this.magister.messageFolders()).filter(messageFolder => !['bin'].includes(messageFolder.type))
         for (var i = this.cache.messageFolders.length - 1; i >= 0; i--) {
           var messageFolder = this.cache.messageFolders[i]
-          messageFolder.messages = messageFolder.messages({ count: 10, fill: true, fillPersons: true })
+          messageFolder.messages = await messageFolder.messages({ count: 10, fill: true, fillPersons: true })
         }
 
         this.state.cached.messages = true
