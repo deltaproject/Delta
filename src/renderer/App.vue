@@ -137,11 +137,6 @@
         }
       },
       notify (message, level, duration = 10) {
-        const levels = { // eslint-disable-line no-unused-vars
-          ERROR: 'error',
-          SUCCESS: 'success'
-        }
-
         var notificationID = uuid()
 
         this.notifications.push({
