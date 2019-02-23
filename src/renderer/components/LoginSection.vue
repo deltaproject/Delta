@@ -110,6 +110,8 @@
             this.state.errors.invalidSchoolname = true
             // We are done so reflect that in the state
             this.state.busy = false
+            // Send a notification
+            this.$parent.notify('We konden je school niet vinden.', 'error', 5)
           } else {
             // Let the user now the school name is correct
             this.state.errors.invalidSchoolname = false
@@ -168,9 +170,13 @@
                   if (err.message === 'Invalid password') {
                     this.state.errors.invalidUsername = false // is correct else we get the 2nd error
                     this.state.errors.invalidPassword = true
+                    // Send a notification
+                    this.$parent.notify('Je wachtwoord is niet juist.', 'error', 5)
                   } else if (err.message === 'Invalid username') {
                     this.state.errors.invalidUsername = true
-                    this.state.errors.invalidPassword = true // just looks nice
+                    this.state.errors.invalidPassword = true // Can't have a correct password without a username
+                    // Send a notification
+                    this.$parent.notify('Je gebruikersnaam is niet jusit.', 'error', 5)
                   }
 
                   // We are done so reflect that in the state
