@@ -17,14 +17,20 @@ div.notification {
     border-radius: 10px;
     animation: fadeInLeft 0.5s;
 
+    // Maybe get the colours that are used in Bootstrap for this?
     &.error {
         color: white;
-        background: rgba(241, 58, 58, 0.80);
+        background: rgba(241, 58, 58, 0.8);
     }
 
     &.success {
         color: white;
         background: rgba(73, 204, 33, 0.8);
+    }
+
+    &.info {
+        color: black;
+        background: rgba(112, 182, 255, 0.8);
     }
 
     &.dismissed {

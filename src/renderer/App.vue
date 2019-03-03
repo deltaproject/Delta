@@ -1,5 +1,10 @@
 <template>
   <div id="app">
+    <div id="notifyContainer">
+      <div v-for="notification in this.notifications" :id="notification.id" class="notification" :class="notification.level">
+        {{ notification.message }}
+      </div>
+    </div>
     <login-section ref="loginSection"></login-section>
 
     <status-bar ref="statusBar"></status-bar>
@@ -32,6 +37,8 @@
   const download = require('download')
   const fs = require('fs')
   const moment = require('moment')
+  const uuid = require('uuid/v4')
+  const _ = require('lodash')
   
   moment.locale('nl')
 
@@ -80,7 +87,8 @@
           assignments: [],
           folders: [],
           messageFolders: []
-        }
+        },
+        notifications: []
       }
     },
     watch: {
@@ -135,6 +143,21 @@
         for (var i = cachedKeys.length - 1; i >= 0; i--) {
           this.state.cached[cachedKeys[i]] = false
         }
+      },
+      notify (message, level, duration = 10) {
+        var notificationID = uuid()
+
+        this.notifications.push({
+          message: message,
+          level: level,
+          id: notificationID
+        })
+
+        _.delay(() => {
+          this.notifications = this.notifications.filter((notification) => {
+            return notification.id !== notificationID
+          })
+        }, duration * 1000)
       },
       async getFiles (parent) {
         return parent.files()

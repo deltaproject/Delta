@@ -37,6 +37,7 @@
     "download": "^7.1.0",
     "magister.js": "https://github.com/simplyGits/MagisterJS.git#d82ee0c",
     "moment": "^2.24.0",
+    "uuid": "^3.3.2",
     "vue": "^2.5.16",
     "vue-electron": "^1.0.6"
   },
