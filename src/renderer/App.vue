@@ -13,6 +13,9 @@
     <agenda-card ref="agendaCard"></agenda-card>
     <homework-card ref="homeworkCard"></homework-card>
     <assignments-card ref="assignmentsCard"></assignments-card>
+    <messages-card ref="messagesCard""></messages-card>
+
+    <div id="notifyContainer"></div>
   </div>
 </template>
 
@@ -23,6 +26,7 @@
   import AgendaCard from '@/components/AgendaCard'
   import HomeworkCard from '@/components/HomeworkCard'
   import AssignmentsCard from '@/components/AssignmentsCard'
+  import MessagesCard from '@/components/MessagesCard'
 
   const { remote } = require('electron')
   const app = remote.app
@@ -46,7 +50,8 @@
       SettingsFlyout,
       AgendaCard,
       HomeworkCard,
-      AssignmentsCard
+      AssignmentsCard,
+      MessagesCard
     },
     data: function () {
       return {
@@ -66,7 +71,8 @@
             appointments: false,
             homework: false,
             assignments: false,
-            files: false
+            files: false,
+            messages: false
           },
           show: {
             settings: false
@@ -79,7 +85,8 @@
           appointments: [],
           homework: [],
           assignments: [],
-          folders: []
+          folders: [],
+          messageFolders: []
         },
         notifications: []
       }
@@ -129,6 +136,7 @@
         this.cache.homework = []
         this.cache.assignments = []
         this.cache.folders = []
+        this.cache.messageFolders = []
 
         // Reset cache state
         var cachedKeys = Object.keys(this.state.cached)
@@ -218,6 +226,16 @@
         this.cache.folders = await this.getFolders()
 
         this.state.cached.files = true
+
+        // CACHE messages
+        this.cache.messageFolders = (await this.magister.messageFolders()).filter(messageFolder => ![].includes(messageFolder.type))
+        for (var i = this.cache.messageFolders.length - 1; i >= 0; i--) {
+          var messageFolder = this.cache.messageFolders[i]
+          messageFolder.messages = (await messageFolder.messages({ count: null, fill: false, fillPersons: false })).messages
+          messageFolder.unreadCount = messageFolder.messages.filter(message => !message.isRead).length
+        }
+
+        this.state.cached.messages = true
       },
       async update () {
         // Do not check for updates if we are in guest mode.
