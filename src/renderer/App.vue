@@ -8,6 +8,7 @@
     <agenda-card ref="agendaCard"></agenda-card>
     <homework-card ref="homeworkCard"></homework-card>
     <assignments-card ref="assignmentsCard"></assignments-card>
+    <messages-card ref="messagesCard""></messages-card>
 
     <div id="notifyContainer"></div>
   </div>
@@ -20,6 +21,7 @@
   import AgendaCard from '@/components/AgendaCard'
   import HomeworkCard from '@/components/HomeworkCard'
   import AssignmentsCard from '@/components/AssignmentsCard'
+  import MessagesCard from '@/components/MessagesCard'
 
   const { remote } = require('electron')
   const app = remote.app
@@ -41,7 +43,8 @@
       SettingsFlyout,
       AgendaCard,
       HomeworkCard,
-      AssignmentsCard
+      AssignmentsCard,
+      MessagesCard
     },
     data: function () {
       return {
@@ -202,10 +205,11 @@
         this.state.cached.files = true
 
         // CACHE messages
-        this.cache.messageFolders = (await this.magister.messageFolders()).filter(messageFolder => !['bin'].includes(messageFolder.type))
+        this.cache.messageFolders = (await this.magister.messageFolders()).filter(messageFolder => ![].includes(messageFolder.type))
         for (var i = this.cache.messageFolders.length - 1; i >= 0; i--) {
           var messageFolder = this.cache.messageFolders[i]
-          messageFolder.messages = await messageFolder.messages({ count: 10, fill: true, fillPersons: true })
+          messageFolder.messages = (await messageFolder.messages({ count: null, fill: false, fillPersons: false })).messages
+          messageFolder.unreadCount = messageFolder.messages.filter(message => !message.isRead).length
         }
 
         this.state.cached.messages = true
