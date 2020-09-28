@@ -20,6 +20,9 @@
   <br><br>
 </div>
 
+> # ⚠️ Ontwikkeling stopgezet ⚠️
+> Ik heb onvoldoende tijd om Project: Delta te onderhouden, omdat ik fulltime bezig ben aan een grootschalig closed-source project, [Tribecamp](https://github.com/tribecamp), wat deels geïnspireerd is door Delta. [Wil je een maintainer worden? Bekijk dan deze issue.](https://github.com/deltaproject/Delta/issues/57)
+
 # Installatie
 Je kunt de laatste versie van Delta installeren door naar [deltaproject.github.io](https://deltaproject.github.io) te gaan, naar de sectie Downloads te scrollen en vervolgens op de download te klikken die geschikt is voor jouw besturingssysteem.
 
